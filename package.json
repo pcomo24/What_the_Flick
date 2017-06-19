@@ -23,6 +23,7 @@
     "express": "^4.15.3",
     "hbs": "^4.0.1",
     "morgan": "^1.8.2",
+    "nodemon": "^1.11.0",
     "node-pg-migrate": "^2.2.1",
     "pg": "^6.2.4",
     "pg-promise": "^5.9.3"
