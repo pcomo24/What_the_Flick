@@ -55,7 +55,7 @@ movies.newMovie();
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/movie/';
 
-var api_key = 'api_key=7e1972182eb6105c196b67794648a379&';
+var api_key = 'api_key=' + process.env.API_KEY;
 var film_id = movies.newMovie() + '?';
 
 //axios request
@@ -112,8 +112,8 @@ app.get('/highscores', function(request, response, next) {
 
 
 app.post('/guess', function(request, response, next) {
-  var answer = request.body.answer.toLowerCase().replace(" ", "");
-  var title2 = title.toLowerCase().replace(" ", "");
+  var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
+  var title2 = title.toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
   if (answer === title) {
