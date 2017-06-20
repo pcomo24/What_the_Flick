@@ -14,7 +14,9 @@ var db = pgp({database: 'highscores'});
 app.set('view engine', 'hbs');
 
 // global variables
-var username, score, lives;
+var username,
+var score = 0;
+var lives = 1;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -89,10 +91,14 @@ app.post('/guess', function(request, response, next) {
   } else {
     lives -= 1;
     if (lives === 0) {
-      response.redirect
+      response.redirect('/game_over');
     }
   }
 });
+
+app.get('/game_over', function(request, response) {
+    res.render('game_over.hbs')
+})
 
 //Port 3000 is optional
 app.listen(3000, function() {
