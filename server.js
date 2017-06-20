@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const promise = require('bluebird');
+const Promise = require('bluebird');
 const morgan = require('morgan');
 const axios = require('axios');
 const pgp = require('pg-promise')({
@@ -25,11 +25,11 @@ app.use('/static', express.static('public'));
 var base_url = 'https://api.themoviedb.org/3/movie/';
 var api_key = 'api_key=7e1972182eb6105c196b67794648a379&';
 var film_id = (Math.floor(Math.random() * 1000) + 1) + '?';
-
+//declare as global vars for use in hbs render
 var img_url;
 var title;
 //axios request
-axios.get('https://api.themoviedb.org/3/movie/157336')
+axios.get(base_url + film_id + api_key)
     .then(function (response) {
         console.log(response.data);
         img_url = response.data.backdrop_path;
