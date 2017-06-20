@@ -76,11 +76,11 @@ axios.get(base_url + film_id + api_key)
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
-    var context = {
-        imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url,
-        title: title
-    };
-  response.render('index.hbs', context);
+      var context = {
+          imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url,
+          title: title
+      };
+    response.render('index.hbs', context);
 });
 
 //Login
@@ -91,13 +91,12 @@ app.post('/login', function(request, response, next) {
   response.redirect('index.hbs')
 });
 
-app.post('/new_High_Score', function(request, response, next) {
+app.post('/something', function(request, response, next) {
 //maybe need a cookie from which to log the username for stretch goal
 //var username =
-  username = request.query.username;
-  score = request.query.score;
+  username = request.body.playerName;
 //high_scores should be whatever the table name is per jj
-  db.query(`INSERT INTO highscores VALUES (default, ${username}, ${score})`)
+  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[username, score] )
     .then(function() {
 //highscores.hbs should be whatever frontend hbs has the highscores per paul or alston
       response.redirect('/highscores');
@@ -119,9 +118,11 @@ app.post('/guess', function(request, response, next) {
   var title2 = title.toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
-  if (answer === title) {
+  if (answer == title2) {
+    console.log('they matched')
     score += 1;
   } else {
+    console.log('no match')
     lives -= 1;
     if (lives === 0) {
       response.redirect('/game_over');
@@ -131,7 +132,7 @@ app.post('/guess', function(request, response, next) {
 });
 
 app.get('/game_over', function(request, response) {
-    res.render('game_over.hbs', score)
+    response.render('game_over.hbs', {score:score})
 });
 
 //Port 3000 is optional
