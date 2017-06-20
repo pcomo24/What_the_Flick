@@ -15,6 +15,8 @@ app.set('view engine', 'hbs');
 
 // global variables
 var username, score, lives;
+var img_url;
+var title;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -52,14 +54,14 @@ movies.newMovie();
 
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/movie/';
-var api_key = 'api_key=7e1972182eb6105c196b67794648a379&';
+
+var api_key = 'api_key=' + process.env.API_KEY;
 var film_id = movies.newMovie() + '?';
-//declare as global vars for use in hbs render
-var img_url;
-var title;
+
 //axios request
 axios.get(base_url + film_id + api_key)
     .then(function (response) {
+        movieTitle = response.data.title;
         console.log(response.data);
         img_url = response.data.backdrop_path;
         title = response.data.title;
@@ -108,9 +110,10 @@ app.get('/highscores', function(request, response, next) {
     .catch(next);
 });
 
+
 app.post('/guess', function(request, response, next) {
-  var answer = request.body.answer.toLowerCase().replace(" ", "");
-  var title2 = title.toLowerCase().replace(" ", "");
+  var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
+  var title2 = title.toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
   if (answer === title) {
@@ -121,6 +124,7 @@ app.post('/guess', function(request, response, next) {
       response.redirect
     }
   }
+
 });
 
 //Port 3000 is optional
