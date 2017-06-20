@@ -27,8 +27,8 @@ app.use('/static', express.static('public'));
 
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/movie/';
-var api_key = 'api_key=7e1972182eb6105c196b67794648a379&';
-var film_id = (Math.floor(Math.random() * 1000) + 1) + '?';
+var api_key = 'api_key=7e1972182eb6105c196b67794648a379';
+var film_id = (Math.floor(Math.random() * 1000) + 1);
 // app.post('/search_results', function(req, res) {
 //
 //     // .then(function (resultData) {
@@ -89,7 +89,7 @@ app.post('/new_High_Score', function(request, response, next) {
 });
 
 app.get('/highscores', function(request, response, next) {
-  db.any("SELECT * FROM highscores ORDER BY score")
+  db.any("SELECT * FROM highscores ORDER BY score DESC LIMIT 10")
     .then(function(results) {
       response.render('highscores.hbs', {results:results});
     })
