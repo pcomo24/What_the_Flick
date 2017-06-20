@@ -131,7 +131,7 @@ app.post('/guess', function(request, response, next) {
 });
 
 app.get('/game_over', function(request, response) {
-    res.render('game_over.hbs')
+    res.render('game_over.hbs', score)
 });
 
 //Port 3000 is optional
