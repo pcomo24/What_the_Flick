@@ -14,9 +14,12 @@ var db = pgp({database: 'highscores'});
 app.set('view engine', 'hbs');
 
 // global variables
-var username, score, lives;
+var username;
+var score = 0;
+var lives = 1;
 var img_url;
 var title;
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,11 +27,11 @@ app.use('/static', express.static('public'));
 
 function Movies() {
   this.nextMovie;
-  this.movies = []
+  this.movies = [];
   this.addMovie = function () {
     this.movies.push(this.nextMovie);
   console.log('Played Movies are ' + this.movies)
-  }
+  };
 
   this.newMovie = function () {
     this.nextMovie = Math.ceil(Math.random() * 1000);
@@ -43,7 +46,7 @@ function Movies() {
       }
     }
     this.nextMovie = this.nextMovie.toString();
-    console.log('Added ' + this.nextMovie)
+    console.log('Added ' + this.nextMovie);
     this.addMovie();
     return this.nextMovie;
   }
@@ -76,7 +79,7 @@ app.get('/', function(request, response) {
     var context = {
         imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url,
         title: title
-    }
+    };
   response.render('index.hbs', context);
 });
 
@@ -91,7 +94,7 @@ app.post('/login', function(request, response, next) {
 app.post('/new_High_Score', function(request, response, next) {
 //maybe need a cookie from which to log the username for stretch goal
 //var username =
-  username = request.query.username
+  username = request.query.username;
   score = request.query.score;
 //high_scores should be whatever the table name is per jj
   db.query(`INSERT INTO highscores VALUES (default, ${username}, ${score})`)
@@ -121,13 +124,17 @@ app.post('/guess', function(request, response, next) {
   } else {
     lives -= 1;
     if (lives === 0) {
-      response.redirect
+      response.redirect('/game_over');
     }
   }
 
 });
 
+app.get('/game_over', function(request, response) {
+    res.render('game_over.hbs', score)
+});
+
 //Port 3000 is optional
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!')
-})
+});
