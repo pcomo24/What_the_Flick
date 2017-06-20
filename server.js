@@ -1,6 +1,7 @@
 const express = require('express');
 const promise = require('bluebird');
 const morgan = require('morgan');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const pgp = require('pg-promise')({
   promiseLib: Promise
 });
@@ -10,6 +11,8 @@ const dbConfig = require('./db-config');
 const db = pgp(dbConfig);
 
 const app = express();
+//check if this dependency is necessary in production, if so save in packages.json
+var xhr = new XMLHttpRequest();
 
 var username, score;
 
@@ -17,8 +20,44 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 
+
+//set url parts as variables to be concatenated
+var base_url = 'https://api.themoviedb.org/3/movie/';
+var api_key = 'api_key=7e1972182eb6105c196b67794648a379&';
+var film_id = (Math.floor(Math.random() * 1000) + 1) + '?';
+app.post('/search_results', function(req, res) {
+    .then(function (resultData) {
+        api_url = req.body.search;
+        console.log(resultData)
+    })
+})
+
+//xhr request to get data from api
+var data = null;
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+        console.log(this.responseText);
+    }
+});
+
+xhr.open("GET", base_url + film_id + '?' + api_key);
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "5c3fc906-100f-1a57-68a9-fabebf603107");
+//api data returned as varible 'data'
+xhr.send(data);
+console.log(data);
+
 // index.hbs should be renamed if different per paul or alston
+//in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
+    var context {
+        imgUrl: data.poster_path,
+        title: data.title
+    }
   response.render('index.hbs');
 });
 
