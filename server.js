@@ -29,12 +29,13 @@ app.use('/static', express.static('public'));
 var base_url = 'https://api.themoviedb.org/3/movie/';
 var api_key = 'api_key=7e1972182eb6105c196b67794648a379&';
 var film_id = (Math.floor(Math.random() * 1000) + 1) + '?';
-app.post('/search_results', function(req, res) {
-    .then(function (resultData) {
-        api_url = req.body.search;
-        console.log(resultData)
-    })
-})
+// app.post('/search_results', function(req, res) {
+//
+//     // .then(function (resultData) {
+//     //     api_url = req.body.search;
+//     //     console.log(resultData)
+//     })
+// })
 
 //xhr request to get data from api
 var data = null;
@@ -58,11 +59,11 @@ console.log(data);
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
-    var context {
+    var context = {
         imgUrl: data.poster_path,
         title: data.title
     }
-  response.render('index.hbs');
+  response.render('index.hbs', context);
 });
 
 //Login
@@ -88,7 +89,7 @@ app.post('/new_High_Score', function(request, response, next) {
 });
 
 app.get('/highscores', function(request, response, next) {
-  db.any("SELECT * FROM highscores")
+  db.any("SELECT * FROM highscores ORDER BY score")
     .then(function(results) {
       response.render('highscores.hbs', {results:results});
     })
