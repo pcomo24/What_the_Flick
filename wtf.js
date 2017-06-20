@@ -91,10 +91,10 @@ app.post('/login', function(request, response, next) {
   response.redirect('index.hbs')
 });
 
-app.post('/new_High_Score', function(request, response, next) {
+app.post('/something', function(request, response, next) {
 //maybe need a cookie from which to log the username for stretch goal
 //var username =
-  username = request.query.username;
+  username = request.body.playerName;
   score = request.query.score;
 //high_scores should be whatever the table name is per jj
   db.query(`INSERT INTO highscores VALUES (default, ${username}, ${score})`)
@@ -131,7 +131,7 @@ app.post('/guess', function(request, response, next) {
 });
 
 app.get('/game_over', function(request, response) {
-    res.render('game_over.hbs', score)
+    response.render('game_over.hbs', {score: score})
 });
 
 //Port 3000 is optional
