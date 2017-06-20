@@ -20,11 +20,40 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 
+function Movies() {
+  this.nextMovie;
+  this.movies = []
+  this.addMovie = function () {
+    this.movies.push(this.nextMovie);
+  console.log('Played Movies are ' + this.movies)
+  }
+
+  this.newMovie = function () {
+    this.nextMovie = Math.ceil(Math.random() * 1000);
+    for(var i = 0; i < this.movies.length;i++) {
+      if (this.nextMovie === this.movies[i]) {
+        console.log('Duplicate found ' + this.nextMovie)
+        this.newMovie();
+        return;
+      }else if (this.movies.length > 10){
+        //G A M E   O V E R
+        return;
+      }
+    }
+    this.nextMovie = this.nextMovie.toString();
+    console.log('Added ' + this.nextMovie)
+    this.addMovie();
+    return this.nextMovie;
+  }
+}
+
+var movies = new Movies();
+movies.newMovie();
 
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/movie/';
 var api_key = 'api_key=7e1972182eb6105c196b67794648a379&';
-var film_id = (Math.floor(Math.random() * 1000) + 1) + '?';
+var film_id = movies.newMovie() + '?';
 //declare as global vars for use in hbs render
 var img_url;
 var title;
