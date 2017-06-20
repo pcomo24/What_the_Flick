@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const promise = require('bluebird');
+const Promise = require('bluebird');
 const morgan = require('morgan');
 const axios = require('axios');
 const pgp = require('pg-promise')({
