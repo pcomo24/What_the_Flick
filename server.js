@@ -13,7 +13,6 @@ var db = pgp({database: 'highscores'});
 // import handlebars
 app.set('view engine', 'hbs');
 
-
 // global variables
 var username, score;
 
@@ -30,7 +29,7 @@ var film_id = (Math.floor(Math.random() * 1000) + 1) + '?';
 var img_url;
 var title;
 //axios request
-axios.get('https://api.themoviedb.org/3/movie/157336?api_key=7e1972182eb6105c196b67794648a379')
+axios.get('https://api.themoviedb.org/3/movie/157336')
     .then(function (response) {
         console.log(response.data);
         img_url = response.data.backdrop_path;
@@ -73,7 +72,7 @@ app.post('/new_High_Score', function(request, response, next) {
 });
 
 app.get('/highscores', function(request, response, next) {
-  db.any("SELECT * FROM highscores")
+  db.any("SELECT * FROM highscores ORDER BY score DESC LIMIT 10")
     .then(function(results) {
       response.render('highscores.hbs', {results:results});
     })
