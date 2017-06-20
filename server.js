@@ -13,9 +13,8 @@ var db = pgp({database: 'highscores'});
 // import handlebars
 app.set('view engine', 'hbs');
 
-
 // global variables
-var username, score;
+var username, score, lives;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -73,11 +72,26 @@ app.post('/new_High_Score', function(request, response, next) {
 });
 
 app.get('/highscores', function(request, response, next) {
-  db.any("SELECT * FROM highscores")
+  db.any("SELECT * FROM highscores ORDER BY score DESC LIMIT 10")
     .then(function(results) {
       response.render('highscores.hbs', {results:results});
     })
     .catch(next);
+});
+
+app.post('/guess', function(request, response, next) {
+  var answer = request.body.answer.toLowerCase().replace(" ", "");
+  var title2 = title.toLowerCase().replace(" ", "");
+  console.log(answer);
+  console.log(title2);
+  if (answer === title) {
+    score += 1;
+  } else {
+    lives -= 1;
+    if (lives === 0) {
+      response.redirect
+    }
+  }
 });
 
 //Port 3000 is optional
