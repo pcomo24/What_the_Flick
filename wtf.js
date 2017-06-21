@@ -15,10 +15,13 @@ app.set('view engine', 'hbs');
 
 // global variables
 var username;
+// used to keep track of question number
+var q = 0;
 var score = 0;
 var lives = 1;
-var img_url;
-var title;
+var img_url = [];
+var title = [];
+
 
 
 app.use(morgan('dev'));
@@ -55,19 +58,27 @@ function Movies() {
 var movies = new Movies();
 movies.newMovie();
 
-//set url parts as variables to be concatenated
-var base_url = 'https://api.themoviedb.org/3/movie/';
+// temp random generator
+var page, i;
+function random() {
+  page = Math.ceil(Math.random() * 1000);
+  i = Math.floor(Math.random() * 20);
+}
 
-var api_key = 'api_key=' + process.env.API_KEY;
-var film_id = movies.newMovie() + '?';
+//set url parts as variables to be concatenated
+var base_url = 'https://api.themoviedb.org/3/discover/';
+var api_key = 'movie?api_key=' + process.env.API_KEY;
+var options = '&language=en&region=US&page='
+// var page = movies.newMovie();
 
 //axios request
-axios.get(base_url + film_id + api_key)
+axios.get(base_url + api_key + options + page)
     .then(function (response) {
-        movieTitle = response.data.title;
-        console.log(response.data);
-        img_url = response.data.backdrop_path;
-        title = response.data.title;
+      for(let j=0; j<20; j++) {
+        random();
+        img_url.push(response.data.results[j].backdrop_path);
+        title.push(response.data.results[j].title);
+      }
     })
     .catch(function (error) {
         console.error(error);
@@ -77,8 +88,8 @@ axios.get(base_url + film_id + api_key)
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
       var context = {
-          imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url,
-          title: title
+          imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
+          title: title[i]
       };
     response.render('index.hbs', context);
 });
@@ -115,16 +126,22 @@ app.get('/highscores', function(request, response, next) {
 
 app.post('/guess', function(request, response, next) {
   var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
-  var title2 = title.toLowerCase().replace(/\W/g, "");
+  var title2 = title[i].toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
   if (answer == title2) {
     console.log('they matched')
+    q += 1;
     score += 1;
+    // gets new random number
+    // movies.newMovie();
+    random();
+    response.redirect('/?q=' + q);
+
   } else {
     console.log('no match')
     lives -= 1;
-    if (lives === 0) {
+    if (lives <= 0) {
       response.redirect('/game_over');
     }
   }
