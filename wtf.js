@@ -129,7 +129,7 @@ app.post('/guess', function(request, response, next) {
   var title2 = title[i].toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
-  if (answer == title2) {
+  if (answer == title2 && lives > 0) {
     console.log('they matched')
     q += 1;
     score += 1;
