@@ -21,7 +21,7 @@ var score = 0;
 var lives = 1;
 var img_url = [];
 var title = [];
-var overviewHint;
+var overviewHint = [];
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -78,6 +78,7 @@ axios.get(base_url + api_key + options + page)
         random();
         img_url.push(response.data.results[j].backdrop_path);
         title.push(response.data.results[j].title);
+        overviewHint.push(response.data.results[j].overview);
       }
     })
     .catch(function (error) {
@@ -88,11 +89,31 @@ axios.get(base_url + api_key + options + page)
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
+      // creates the multiple choices
+      var choices = [];
+      var tmpRnd;
+      function generateChoices () {
+        tmpRnd = Math.floor(Math.random() * 20);
+        if (choices.includes(title[tmpRnd]))
+          generateChoices();
+        else
+          choices.push(title[tmpRnd]);
+      }
+      for(let j=0; j<5; j++) {
+        generateChoices();
+      }
+
+      // replace random answer with correct answer if not present in choices
+      if (!choices.includes(title[i])) {
+        let replace = Math.floor(Math.random() * 5);
+        choices[replace] = title[i];
+      }
 
       var context = {
           imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
-          title: title[i]
-          overviewHint: overviewHint
+          title: title[i],
+          overviewHint: overviewHint[i],
+          choice: choices
   };
   response.render('index.hbs', context);
 });
@@ -128,6 +149,7 @@ app.get('/highscores', function(request, response, next) {
 
 
 app.post('/guess', function(request, response, next) {
+  console.log(request.body.answer);
   var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
   var title2 = title[i].toLowerCase().replace(/\W/g, "");
   console.log(answer);
