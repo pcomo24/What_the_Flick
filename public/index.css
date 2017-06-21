@@ -1,0 +1,23 @@
+body {
+  background: url("/public/images/08-02-02.png");
+  background-size: cover;
+}
+h2 {
+  color: #FFFF47;
+  font: 'Belgrano', serif;
+}
+a,
+button,
+li,
+h3,
+h4 {
+  color: white;
+  font: 'Amatic SC', cursive;
+}
+.button {
+  background-color: #FFFF47;
+  color: #241E4E;
+}
+.buttonDiv {
+  bottom: 10%;
+}

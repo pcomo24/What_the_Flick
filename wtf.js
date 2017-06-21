@@ -12,6 +12,9 @@ var db = pgp({database: 'highscores', user:'postgres'});
 
 // import handlebars
 app.set('view engine', 'hbs');
+//kube for CSS
+app.use('/kube', express.static('node_modules/imperavi-kube/dist/css'));
+app.use('/public', express.static('public'));
 
 // global variables
 var username;
