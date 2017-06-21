@@ -1,15 +1,21 @@
+<!-- Movie title -->
 <h2>{{title}}</h2>
 
+<!-- Movie picture -->
 <img src={{imgUrl}}>
 
-<br>
-<br>
-<br>
-<br>
+<!-- Hint displays when button pressed -->
+<p id="hint"></p>
 
-
+<!-- Guessing the movie -->
 <form method="POST" action="/guess">
   <label>Type in movie here: </label>
   <input name="answer" type="text">
   <button type="submit">Submit</button>
 </form>
+
+<!-- Hint button -->
+<script>
+  var HINT = "{{overviewHint}}";
+</script>
+<button type="button" onclick="getHint(HINT)">Hint</button>
