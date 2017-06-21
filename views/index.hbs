@@ -9,8 +9,9 @@
 
 <!-- Guessing the movie -->
 <form method="POST" action="/guess">
-  <label>Type in movie here: </label>
-  <input name="answer" type="text">
+  {{#each choice}}
+    <input name="answer" type="radio" value='{{this}}'> {{this}}<br>
+  {{/each}}
   <button type="submit">Submit</button>
 </form>
 
