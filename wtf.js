@@ -25,6 +25,7 @@ var lives = 1;
 var img_url = [];
 var title = [];
 var overviewHint = [];
+var tagline = [];
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -90,7 +91,6 @@ var options = '&language=en&region=US&page='
 // var page = movies.newMovie();
 
 //axios request
-
 axios.get(base_url + api_key + options + page)
     .then(function (response) {
       for(let j=0; j<20; j++) {
@@ -98,6 +98,7 @@ axios.get(base_url + api_key + options + page)
         img_url.push(response.data.results[j].backdrop_path);
         title.push(response.data.results[j].title);
         overviewHint.push(response.data.results[j].overview);
+        //tagline.push(response.data.results[j].tagline);   /*add proper request when better API call comes*/
       }
     })
     .catch(function (error) {
@@ -130,6 +131,7 @@ app.get('/', function(request, response) {
 
       var context = {
           imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
+          tagline: tagline[i],
           title: title[i],
           overviewHint: overviewHint[i],
           choice: choices
