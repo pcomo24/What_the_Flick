@@ -25,35 +25,51 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 
+//Object contains the logic for randomly selecting unique films to lookup from the api.
 function Movies() {
   this.nextMovie;
+//array which stores composite numeric values for previous movie lookups
   this.movies = [];
+//method which pushed composite numeric values to this.movies. Called at the end of this.newMovie.
   this.addMovie = function () {
     this.movies.push(this.nextMovie);
   console.log('Played Movies are ' + this.movies)
   };
-
+//this function creates two random integers which correspond to values within ranges
+//present in "themoviedb.org" database api. The values are checked to be unique,
+//-and then returned as a (2) element array.
   this.newMovie = function () {
-    this.nextMovie = Math.ceil(Math.random() * 1000);
+    var nextMoviePage = Math.ceil(Math.random() * 1000);
+    var nextMovieSelection = Math.ceil(Math.random() * 20);
+//numeric variable nextMovieselection is divided by 100 and added to integer nextMoviePage so
+//-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
+    this.nextMovie =  nextMoviePage + (nextMovieSelection/100);
+//for loop compares new movie against previous movies in session and calls another
+//-if a matching movie is found in the (used) movies array.
     for(var i = 0; i < this.movies.length;i++) {
       if (this.nextMovie === this.movies[i]) {
         console.log('Duplicate found ' + this.nextMovie)
         this.newMovie();
         return;
+//Game over logic can be added here if needed
       }else if (this.movies.length > 10){
         //G A M E   O V E R
         return;
       }
     }
-    this.nextMovie = this.nextMovie.toString();
+//Once lookup values are verified to be unique, they are pushed to an array to checked
+//-against in future calls.
     console.log('Added ' + this.nextMovie);
     this.addMovie();
-    return this.nextMovie;
+//numeric variables nextMoviePage and nextMovieSelection must be converted to
+//-strings before being returned for http interfacing portability.
+    return [String(nextMoviePage), String(nextMovieSelection)];
   }
 }
-
 var movies = new Movies();
+//movies.newMovie() must be called and a value returned before a new movie can be loaded.
 movies.newMovie();
+
 
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/movie/';
