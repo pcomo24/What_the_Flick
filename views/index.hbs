@@ -28,20 +28,14 @@
     <div class="col col-4"></div>
     <div class="col col-4">
         <form method="POST" action="/guess">
-            <label>Type in movie here: </label>
-            <input name="answer" type="text">
+            {{#each choice}}
+                <input name="answer" type="radio" value='{{this}}'> {{this}}<br>
+            {{/each}}
             <button type="submit">Submit</button>
         </form>
     </div>
     <div class="col col-4"></div>
 </div>
-
-<form method="POST" action="/guess">
-  {{#each choice}}
-    <input name="answer" type="radio" value='{{this}}'> {{this}}<br>
-  {{/each}}
-  <button type="submit">Submit</button>
-</form>
 
 <script>
   var hint = "{{overviewHint}}";
