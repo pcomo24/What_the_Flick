@@ -91,6 +91,7 @@ var api_key = 'movie?api_key=' + process.env.API_KEY;
 var options = '&language=en&region=US&page='
 // var page = movies.newMovie();
 
+
 function apiCall(response) {
   axios.get(base_url + api_key + options + page)
       .then(function (api) {

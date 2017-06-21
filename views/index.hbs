@@ -38,6 +38,8 @@
 </div>
 
 <script>
-  var HINT = "{{overviewHint}}";
+  var hint = "{{overviewHint}}";
+  var replaceWord = /{{title}}/gi;
+  hint = hint.replace(replaceWord, "___");
 </script>
-<button type="button" onclick="getHint(HINT)">Hint</button>
+<button type="button" onclick="getHint(hint)">Hint</button>
