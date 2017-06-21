@@ -5,6 +5,7 @@
     </div>
     <div class="col col-4"></div>
 </div>
+
 <div class="row">
     <div class="col col-4"></div>
     <div class="col col-4"><img src={{imgUrl}}></div>
@@ -22,6 +23,7 @@
     <div class="col col-4"><h3>"Tagline Here, if there ever was a tagline here"</h3></div>
     <div class="col col-4"></div>
 </div>
+
 <div class="row">
     <div class="col col-4"></div>
     <div class="col col-4">
@@ -33,6 +35,14 @@
     </div>
     <div class="col col-4"></div>
 </div>
+
+<form method="POST" action="/guess">
+  {{#each choice}}
+    <input name="answer" type="radio" value='{{this}}'> {{this}}<br>
+  {{/each}}
+  <button type="submit">Submit</button>
+</form>
+
 <script>
   var HINT = "{{overviewHint}}";
 </script>
