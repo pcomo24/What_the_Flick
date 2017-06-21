@@ -2,8 +2,12 @@
 <html>
   <header>
     <title>{{title}}</title>
+    <link rel="stylesheet" href="/kube/kube.css">
+    <link rel="stylesheet" href="/public/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Belgrano|Oswald" rel="stylesheet">
   </header>
   <body>
+
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,6 +27,14 @@
     </nav>
 
     {{{body}}}
+    <div class="row buttonDiv">
+        <div class="col col-2 black"></div>
+        <div class="col col-4 text-left"><a href="/" class="button round">Game</a></div>
+        <div class="col col-4 text-right"><a href="/highscores" class="button round">Hi Scores</a></div>
+        <div class="col col-2"></div>
+    </div>
+
+
   </body>
   <script>
   function getHint(overviewHint) {
