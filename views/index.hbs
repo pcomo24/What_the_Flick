@@ -10,6 +10,13 @@
     <div class="col col-4"><img src={{imgUrl}}></div>
     <div class="col col-4"></div>
 </div>
+
+<div class="row>
+  <div class="col col-12">
+    <p id="hint"></p>
+  </div>
+</div>
+
 <div class="row">
     <div class="col col-4"></div>
     <div class="col col-4"><h3>"Tagline Here, if there ever was a tagline here"</h3></div>
@@ -26,4 +33,7 @@
     </div>
     <div class="col col-4"></div>
 </div>
-
+<script>
+  var HINT = "{{overviewHint}}";
+</script>
+<button type="button" onclick="getHint(HINT)">Hint</button>

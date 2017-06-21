@@ -8,7 +8,7 @@ const pgp = require('pg-promise')({
 });
 const bodyParser = require('body-parser');
 //dbConfig can be changed to whatever the database configuration file is named
-var db = pgp({database: 'highscores'});
+var db = pgp({database: 'highscores', user:'postgres'});
 
 // import handlebars
 app.set('view engine', 'hbs');
@@ -18,72 +18,102 @@ app.use('/public', express.static('public'));
 
 // global variables
 var username;
+// used to keep track of question number
+var q = 0;
 var score = 0;
 var lives = 1;
-var img_url;
-var title;
-
+var img_url = [];
+var title = [];
+var overviewHint;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 
+//Object contains the logic for randomly selecting unique films to lookup from the api.
 function Movies() {
   this.nextMovie;
+//array which stores composite numeric values for previous movie lookups
   this.movies = [];
+//method which pushed composite numeric values to this.movies. Called at the end of this.newMovie.
   this.addMovie = function () {
     this.movies.push(this.nextMovie);
   console.log('Played Movies are ' + this.movies)
   };
-
+//this function creates two random integers which correspond to values within ranges
+//present in "themoviedb.org" database api. The values are checked to be unique,
+//-and then returned as a (2) element array.
   this.newMovie = function () {
-    this.nextMovie = Math.ceil(Math.random() * 1000);
+    var nextMoviePage = Math.ceil(Math.random() * 1000);
+    var nextMovieSelection = Math.ceil(Math.random() * 20);
+//numeric variable nextMovieselection is divided by 100 and added to integer nextMoviePage so
+//-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
+    this.nextMovie =  nextMoviePage + (nextMovieSelection/100);
+//for loop compares new movie against previous movies in session and calls another
+//-if a matching movie is found in the (used) movies array.
     for(var i = 0; i < this.movies.length;i++) {
       if (this.nextMovie === this.movies[i]) {
         console.log('Duplicate found ' + this.nextMovie)
         this.newMovie();
         return;
+//Game over logic can be added here if needed
       }else if (this.movies.length > 10){
         //G A M E   O V E R
         return;
       }
     }
-    this.nextMovie = this.nextMovie.toString();
+//Once lookup values are verified to be unique, they are pushed to an array to checked
+//-against in future calls.
     console.log('Added ' + this.nextMovie);
     this.addMovie();
-    return this.nextMovie;
+//numeric variables nextMoviePage and nextMovieSelection must be converted to
+//-strings before being returned for http interfacing portability.
+    return [String(nextMoviePage), String(nextMovieSelection)];
   }
 }
-
 var movies = new Movies();
+//movies.newMovie() must be called and a value returned before a new movie can be loaded.
 movies.newMovie();
 
-//set url parts as variables to be concatenated
-var base_url = 'https://api.themoviedb.org/3/movie/';
 
-var api_key = 'api_key=' + process.env.API_KEY;
-var film_id = movies.newMovie() + '?';
+// temp random generator
+var page, i;
+function random() {
+  page = Math.ceil(Math.random() * 1000);
+  i = Math.floor(Math.random() * 20);
+}
+
+//set url parts as variables to be concatenated
+var base_url = 'https://api.themoviedb.org/3/discover/';
+var api_key = 'movie?api_key=' + process.env.API_KEY;
+var options = '&language=en&region=US&page='
+// var page = movies.newMovie();
 
 //axios request
-axios.get(base_url + film_id + api_key)
+
+axios.get(base_url + api_key + options + page)
     .then(function (response) {
-        movieTitle = response.data.title;
-        console.log(response.data);
-        img_url = response.data.backdrop_path;
-        title = response.data.title;
+      for(let j=0; j<20; j++) {
+        random();
+        img_url.push(response.data.results[j].backdrop_path);
+        title.push(response.data.results[j].title);
+      }
     })
     .catch(function (error) {
         console.error(error);
     });
 
+
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
+
       var context = {
-          imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url,
-          title: title
-      };
-    response.render('index.hbs', context);
+          imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
+          title: title[i],
+          overviewHint: overviewHint
+  };
+  response.render('index.hbs', context);
 });
 
 //Login
@@ -118,20 +148,24 @@ app.get('/highscores', function(request, response, next) {
 
 app.post('/guess', function(request, response, next) {
   var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
-  var title2 = title.toLowerCase().replace(/\W/g, "");
+  var title2 = title[i].toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
-  if (answer == title2) {
+  if (answer == title2 && lives > 0) {
     console.log('they matched')
+    q += 1;
     score += 1;
+
+    random();
+    response.redirect('/?q=' + q);
+
   } else {
     console.log('no match')
     lives -= 1;
-    if (lives === 0) {
+    if (lives <= 0) {
       response.redirect('/game_over');
     }
   }
-
 });
 
 app.get('/game_over', function(request, response) {
