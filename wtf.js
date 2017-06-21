@@ -8,7 +8,7 @@ const pgp = require('pg-promise')({
 });
 const bodyParser = require('body-parser');
 //dbConfig can be changed to whatever the database configuration file is named
-var db = pgp({database: 'highscores'});
+var db = pgp({database: 'highscores', user:'postgres'});
 
 // import handlebars
 app.set('view engine', 'hbs');
@@ -21,8 +21,7 @@ var score = 0;
 var lives = 1;
 var img_url = [];
 var title = [];
-
-
+var overviewHint;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -72,6 +71,7 @@ var options = '&language=en&region=US&page='
 // var page = movies.newMovie();
 
 //axios request
+
 axios.get(base_url + api_key + options + page)
     .then(function (response) {
       for(let j=0; j<20; j++) {
@@ -84,14 +84,17 @@ axios.get(base_url + api_key + options + page)
         console.error(error);
     });
 
+
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
+
       var context = {
           imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
           title: title[i]
-      };
-    response.render('index.hbs', context);
+          overviewHint: overviewHint
+  };
+  response.render('index.hbs', context);
 });
 
 //Login
@@ -133,8 +136,7 @@ app.post('/guess', function(request, response, next) {
     console.log('they matched')
     q += 1;
     score += 1;
-    // gets new random number
-    // movies.newMovie();
+
     random();
     response.redirect('/?q=' + q);
 
@@ -145,7 +147,6 @@ app.post('/guess', function(request, response, next) {
       response.redirect('/game_over');
     }
   }
-
 });
 
 app.get('/game_over', function(request, response) {
