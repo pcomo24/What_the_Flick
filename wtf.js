@@ -131,14 +131,10 @@ app.get('/', function(request, response) {
       var context = {
           imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
           title: title[i],
-<<<<<<< HEAD
-          overviewHint: overviewHint[i]
-=======
           overviewHint: overviewHint[i],
           choice: choices
->>>>>>> master
-  };
-  response.render('index.hbs', context);
+      };
+      response.render('index.hbs', context);
 });
 
 //Login
