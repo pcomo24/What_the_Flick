@@ -82,6 +82,8 @@ function random() {
   page = Math.ceil(Math.random() * 1000);
   i = Math.floor(Math.random() * 20);
 }
+// run random for initial numbers
+random();
 
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/discover/';
@@ -89,52 +91,54 @@ var api_key = 'movie?api_key=' + process.env.API_KEY;
 var options = '&language=en&region=US&page='
 // var page = movies.newMovie();
 
-//axios request
+function apiCall(response) {
+  axios.get(base_url + api_key + options + page)
+      .then(function (api) {
+        for(let j=0; j<20; j++) {
+          img_url.push(api.data.results[j].backdrop_path);
+          title.push(api.data.results[j].title);
+          overviewHint.push(api.data.results[j].overview);
+        }
+        console.log('new call sucessfull');
+        console.log(title)
+        
+        // creates the multiple choices
+        var choices = [];
+        var tmpRnd;
+        function generateChoices () {
+          tmpRnd = Math.floor(Math.random() * 20);
+          if (choices.includes(title[tmpRnd]))
+            generateChoices();
+          else
+            choices.push(title[tmpRnd]);
+        }
+        for(let j=0; j<5; j++) {
+          generateChoices();
+        }
 
-axios.get(base_url + api_key + options + page)
-    .then(function (response) {
-      for(let j=0; j<20; j++) {
-        random();
-        img_url.push(response.data.results[j].backdrop_path);
-        title.push(response.data.results[j].title);
-        overviewHint.push(response.data.results[j].overview);
-      }
-    })
-    .catch(function (error) {
-        console.error(error);
-    });
+        // replace random answer with correct answer if not present in choices
+        if (!choices.includes(title[i])) {
+          let replace = Math.floor(Math.random() * 5);
+          choices[replace] = title[i];
+        }
 
+        var context = {
+            imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
+            title: title[i],
+            overviewHint: overviewHint[i],
+            choice: choices
+        };
+        response.render('index.hbs', context);
+      })
+      .catch(function (error) {
+          console.error(error);
+      });
+}
 
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
-      // creates the multiple choices
-      var choices = [];
-      var tmpRnd;
-      function generateChoices () {
-        tmpRnd = Math.floor(Math.random() * 20);
-        if (choices.includes(title[tmpRnd]))
-          generateChoices();
-        else
-          choices.push(title[tmpRnd]);
-      }
-      for(let j=0; j<5; j++) {
-        generateChoices();
-      }
-
-      // replace random answer with correct answer if not present in choices
-      if (!choices.includes(title[i])) {
-        let replace = Math.floor(Math.random() * 5);
-        choices[replace] = title[i];
-      }
-
-      var context = {
-          imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
-          title: title[i],
-          overviewHint: overviewHint[i],
-          choice: choices
-  };
-  response.render('index.hbs', context);
+  apiCall(response);
 });
 
 //Login
@@ -177,7 +181,9 @@ app.post('/guess', function(request, response, next) {
     console.log('they matched')
     q += 1;
     score += 1;
-
+    // reset arrays and make new api call
+    title=[];
+    img_url=[];
     random();
     response.redirect('/?q=' + q);
 
