@@ -19,6 +19,7 @@ var score = 0;
 var lives = 1;
 var img_url;
 var title;
+var overviewHint;
 
 
 app.use(morgan('dev'));
@@ -63,24 +64,27 @@ var film_id = movies.newMovie() + '?';
 
 //axios request
 axios.get(base_url + film_id + api_key)
-    .then(function (response) {
-        movieTitle = response.data.title;
-        console.log(response.data);
-        img_url = response.data.backdrop_path;
-        title = response.data.title;
-    })
-    .catch(function (error) {
-        console.error(error);
-    });
+  .then(function (response) {
+    movieTitle = response.data.title;
+    console.log(response.data);
+    img_url = response.data.backdrop_path;
+    title = response.data.title;
+    overviewHint = response.data.overview;
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
 
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/', function(request, response) {
-      var context = {
-          imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url,
-          title: title
-      };
-    response.render('index.hbs', context);
+  console.log(overviewHint);
+  var context = {
+    imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url,
+    title: title,
+    overviewHint: overviewHint
+  };
+  response.render('index.hbs', context);
 });
 
 //Login
@@ -121,6 +125,7 @@ app.post('/guess', function(request, response, next) {
   if (answer == title2) {
     console.log('they matched')
     score += 1;
+    response.redirect('/');
   } else {
     console.log('no match')
     lives -= 1;
@@ -128,7 +133,6 @@ app.post('/guess', function(request, response, next) {
       response.redirect('/game_over');
     }
   }
-
 });
 
 app.get('/game_over', function(request, response) {
