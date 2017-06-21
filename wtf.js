@@ -91,7 +91,7 @@ app.get('/', function(request, response) {
 
       var context = {
           imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
-          title: title[i]
+          title: title[i],
           overviewHint: overviewHint
   };
   response.render('index.hbs', context);
