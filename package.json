@@ -23,10 +23,13 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "hbs": "^4.0.1",
+    "imperavi-kube": "^6.5.2",
+    "less": "^2.7.2",
     "morgan": "^1.8.2",
     "node-pg-migrate": "^2.2.1",
     "nodemon": "^1.11.0",
     "pg": "^6.2.4",
-    "pg-promise": "^5.9.3"
+    "pg-promise": "^5.9.3",
+    "watch-run": "^1.2.5"
   }
 }

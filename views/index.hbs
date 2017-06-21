@@ -1,20 +1,42 @@
-<!-- Movie title -->
-<h2>{{title}}</h2>
+<div class="row">
+    <div class="col col-4"></div>
+    <div class="col col-4">
+        <h2>What the Flick? {{title}}</h2>
+    </div>
+    <div class="col col-4"></div>
+</div>
 
-<!-- Movie picture -->
-<img src={{imgUrl}}>
+<div class="row">
+    <div class="col col-4"></div>
+    <div class="col col-4"><img src={{imgUrl}}></div>
+    <div class="col col-4"></div>
+</div>
 
-<!-- Hint displays when button pressed -->
-<p id="hint"></p>
+<div class="row">
+  <div class="col col-12">
+    <p id="hint"></p>
+  </div>
+</div>
 
-<!-- Guessing the movie -->
-<form method="POST" action="/guess">
-  <label>Type in movie here: </label>
-  <input name="answer" type="text">
-  <button type="submit">Submit</button>
-</form>
+<div class="row">
+    <div class="col col-4"></div>
+    <div class="col col-4"><h3>"Tagline Here, if there ever was a tagline here"</h3></div>
+    <div class="col col-4"></div>
+</div>
 
-<!-- Hint button -->
+<div class="row">
+    <div class="col col-4"></div>
+    <div class="col col-4">
+        <form method="POST" action="/guess">
+            {{#each choice}}
+                <input name="answer" type="radio" value='{{this}}'> {{this}}<br>
+            {{/each}}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="col col-4"></div>
+</div>
+
 <script>
   var hint = "{{overviewHint}}";
   var replaceWord = /{{title}}/gi;
