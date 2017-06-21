@@ -8,7 +8,7 @@ const pgp = require('pg-promise')({
 });
 const bodyParser = require('body-parser');
 //dbConfig can be changed to whatever the database configuration file is named
-var db = pgp({database: 'highscores'});
+var db = pgp({database: 'highscores', user:'postgres'});
 
 // import handlebars
 app.set('view engine', 'hbs');
