@@ -8,6 +8,7 @@ const pgp = require('pg-promise')({
 });
 const bodyParser = require('body-parser');
 const sessions = require('./sessions.js');
+const session = require('express-session');
 //dbConfig can be changed to whatever the database configuration file is named
 var db = pgp({database: 'highscores', user:'postgres'});
 
@@ -16,6 +17,14 @@ app.set('view engine', 'hbs');
 //kube for CSS
 app.use('/kube', express.static('node_modules/imperavi-kube/dist/css'));
 app.use('/public', express.static('public'));
+
+app.use(session({
+  key: 'wtf.sess',
+  secret: '53|<1237',
+  saveUninitialized: true,
+  resave: true,
+  cookie: {maxAge: 1000 * 60 * 60 * 24}
+}));
 
 // global variables
 var username;
