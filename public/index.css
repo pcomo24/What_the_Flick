@@ -2,20 +2,31 @@ body {
   background: url("/public/images/08-02-02.png");
   background-size: cover;
 }
+h1,
 h2 {
   color: #FFFF47;
-  font: 'Belgrano', serif;
+  font-family: 'Belgrano', serif;
 }
-a,
-button,
-li,
 h3,
 h4 {
-  color: white;
-  font: 'Amatic SC', cursive;
+  color: #FFFF47;
+  font-family: 'Belgrano', serif;
 }
-.button {
+ol li {
+  color: #241E4E;
+  font-size: 2rem;
+  font-family: 'Amatic SC', cursive;
+  margin-bottom: .75rem;
+}
+label {
+  font-family: 'Amatic SC', cursive;
+  color: #241E4E;
+  font-size: 2rem;
+}
+#fix-button {
   background-color: #FFFF47;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3rem;
   color: #241E4E;
 }
 .buttonDiv {
@@ -24,11 +35,21 @@ h4 {
 .top-margin {
   margin-top: 4em;
 }
-input[type="radio"] {
-  display: none;
+
+#ansr-choice {
+  color: #241E4E;
+  font-size: 2rem;
+  font-family: 'Amatic SC', cursive;
+  display: inline-block;
 }
+
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+p#hint {
+  color: #241E4E;
+  font-family: 'Amatic SC', cursive;
+  font-size: 2rem;
 }

@@ -3,17 +3,29 @@ body {
   background-size: cover;
 }
 
-h2 {
+h1, h2 {
   color: @ryellow;
-  font: @font1;
+  font-family: @font1;
 }
-a, button, li, h3, h4 {
-  color: white;
-  font: @font2;
+h3, h4 {
+  color: @ryellow;
+  font-family: @font1;
 }
-
-.button {
+ol li {
+  color: @rblue;
+  font-size: 2rem;
+  font-family: @font2;
+  margin-bottom: .75rem;
+}
+label {
+  font-family: @font2;
+  color: @rblue;
+  font-size: 2rem;
+}
+#fix-button {
   background-color: @ryellow;
+  font-family: @font3;
+  font-size: 1.3rem;
   color: @rblue;
 }
 
@@ -25,8 +37,11 @@ a, button, li, h3, h4 {
   margin-top: 4em;
 }
 
-input[type="radio"] {
-
+#ansr-choice {
+  color: @rblue;
+  font-size: 2rem;
+  font-family: @font2;
+  display: inline-block;
 }
 
 img {
@@ -35,3 +50,10 @@ img {
   margin-right: auto;
 }
 
+p {
+  #hint {
+    color: @rblue;
+    font-family: @font2;
+    font-size: 2rem;
+  }
+}

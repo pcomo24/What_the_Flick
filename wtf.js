@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
 const Promise = require('bluebird');
 const morgan = require('morgan');
 const axios = require('axios');
@@ -15,6 +16,12 @@ app.set('view engine', 'hbs');
 //kube for CSS
 app.use('/kube', express.static('node_modules/imperavi-kube/dist/css'));
 app.use('/public', express.static('public'));
+app.use(session({
+  secret: process.env.SECRET_KEY || 'dev',
+  resave: true,
+  saveUninitialized: false,
+  cookie: {maxAge: 3600000}
+}));
 
 // global variables
 var username;
@@ -94,11 +101,25 @@ var options = '&language=en&region=US&page='
 
 function apiCall(response) {
   axios.get(base_url + api_key + options + page)
+// index.hbs should be renamed if different per paul or alston
+//in response.render add context dictionary to pass img data to front end through hbs
+app.get('/game', function(request, response) {
+  // call new randoms before new api request
+  page = movies.newMovie();
+  console.log(page);
+  let url = base_url + api_key + options + page[0];
+  console.log(url);
+  axios.get(url)
       .then(function (api) {
         for(let j=0; j<20; j++) {
-          img_url.push(api.data.results[j].backdrop_path);
-          title.push(api.data.results[j].title);
-          overviewHint.push(api.data.results[j].overview);
+          if (api.data.results[j].backdrop_path) {
+            img_url.push(api.data.results[j].backdrop_path);
+            title.push(api.data.results[j].title);
+            overviewHint.push(api.data.results[j].overview);
+          }
+          // replace page[1] choice if arrays less that 20
+          if (title.length < 20)
+            page[1] = (Math.floor(Math.random()*title.length));
         }
         console.log('new call sucessfull');
         console.log(title)
@@ -108,6 +129,7 @@ function apiCall(response) {
         var tmpRnd;
         function generateChoices () {
           tmpRnd = Math.floor(Math.random() * 20);
+          tmpRnd = Math.floor(Math.random() * title.length)
           if (choices.includes(title[tmpRnd]))
             generateChoices();
           else
@@ -187,6 +209,9 @@ app.post('/guess', function(request, response, next) {
     img_url=[];
     random();
     response.redirect('/?q=' + q);
+    q += 1;
+    score += 1;
+    response.redirect('/game?q=' + q);
 
   } else {
     console.log('no match')
