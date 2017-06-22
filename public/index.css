@@ -35,12 +35,14 @@ label {
 .top-margin {
   margin-top: 4em;
 }
+
 #ansr-choice {
   color: #241E4E;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
 }
+
 img {
   display: block;
   margin-left: auto;
