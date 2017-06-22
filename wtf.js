@@ -25,6 +25,7 @@ var lives = 1;
 var img_url = [];
 var title = [];
 var overviewHint = [];
+var tagline = [];
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -90,7 +91,6 @@ var base_url = 'https://api.themoviedb.org/3/discover/';
 var api_key = 'movie?api_key=' + process.env.API_KEY;
 var options = '&language=en&region=US&page='
 // var page = movies.newMovie();
-
 
 function apiCall(response) {
   axios.get(base_url + api_key + options + page)
