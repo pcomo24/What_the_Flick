@@ -26,6 +26,7 @@ var img_url = [];
 var title = [];
 var overviewHint = [];
 var page;
+var tagline = [];
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
