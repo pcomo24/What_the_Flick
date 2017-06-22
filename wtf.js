@@ -51,7 +51,8 @@ var options = '&language=en&region=US&include_adult=false&page='
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
   // call new randoms before new api request
-  page = movies.newMovie();
+  sessions.Movies(request);
+  page = request.newMovie();
   console.log(page);
   let url = base_url + api_key + options + page[0];
   console.log(url);
@@ -160,9 +161,10 @@ app.get('/game_over', function(request, response) {
     response.render('game_over.hbs', {score:score})
 });
 
-app.get('/', function (request) {
-  var m = new sessions.Movies(request);
-  m.newMovie();
+app.get('/', function (request, response) {
+  sessions.Movies(request);
+  request.newMovie();
+  response.redirect('/game');
 });
 
 //Port 3000 is optional
