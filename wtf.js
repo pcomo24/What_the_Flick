@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const session = require('express-session');
 const Promise = require('bluebird');
 const morgan = require('morgan');
 const axios = require('axios');
@@ -8,6 +7,8 @@ const pgp = require('pg-promise')({
   promiseLib: Promise
 });
 const bodyParser = require('body-parser');
+const sessions = require('./sessions.js');
+const session = require('express-session');
 //dbConfig can be changed to whatever the database configuration file is named
 var db = pgp({database: 'highscores', user:'postgres'});
 
@@ -16,11 +17,13 @@ app.set('view engine', 'hbs');
 //kube for CSS
 app.use('/kube', express.static('node_modules/imperavi-kube/dist/css'));
 app.use('/public', express.static('public'));
+
 app.use(session({
-  secret: process.env.SECRET_KEY || 'dev',
+  key: 'wtf.sess',
+  secret: '53|<1237',
+  saveUninitialized: true,
   resave: true,
-  saveUninitialized: false,
-  cookie: {maxAge: 3600000}
+  cookie: {maxAge: 1000 * 60 * 60 * 24}
 }));
 
 // global variables
@@ -39,52 +42,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 
-//Object contains the logic for randomly selecting unique films to lookup from the api.
-function Movies() {
-  this.nextMovie;
-//array which stores composite numeric values for previous movie lookups
-  this.movies = [];
-//method which pushed composite numeric values to this.movies. Called at the end of this.newMovie.
-  this.addMovie = function () {
-    this.movies.push(this.nextMovie);
-  console.log('Played Movies are ' + this.movies)
-  };
-//this function creates two random integers which correspond to values within ranges
-//present in "themoviedb.org" database api. The values are checked to be unique,
-//-and then returned as a (2) element array.
-  this.newMovie = function () {
-    var nextMoviePage = Math.ceil(Math.random() * 1000);
-    var nextMovieSelection = Math.ceil(Math.random() * 20);
-//numeric variable nextMovieselection is divided by 100 and added to integer nextMoviePage so
-//-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
-    this.nextMovie =  nextMoviePage + (nextMovieSelection/100);
-//for loop compares new movie against previous movies in session and calls another
-//-if a matching movie is found in the (used) movies array.
-    for(var i = 0; i < this.movies.length;i++) {
-      if (this.nextMovie === this.movies[i]) {
-        console.log('Duplicate found ' + this.nextMovie)
-        this.newMovie();
-        return;
-//Game over logic can be added here if needed
-      }
-      // else if (this.movies.length > 10){
-      //   //G A M E   O V E R
-      //   return;
-      // }
-    }
-//Once lookup values are verified to be unique, they are pushed to an array to checked
-//-against in future calls.
-    console.log('Added ' + this.nextMovie);
-    this.addMovie();
-//numeric variables nextMoviePage and nextMovieSelection must be converted to
-//-strings before being returned for http interfacing portability.
-    return [nextMoviePage, nextMovieSelection];
-  }
-}
-var movies = new Movies();
-//movies.newMovie() must be called and a value returned before a new movie can be loaded.
-movies.newMovie();
-
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/discover/';
 var api_key = 'movie?api_key=' + process.env.API_KEY;
@@ -94,7 +51,8 @@ var options = '&language=en&region=US&include_adult=false&page='
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
   // call new randoms before new api request
-  page = movies.newMovie();
+  sessions.Movies(request);
+  page = request.newMovie();
   console.log(page);
   let url = base_url + api_key + options + page[0];
   console.log(url);
@@ -201,6 +159,12 @@ app.post('/guess', function(request, response, next) {
 
 app.get('/game_over', function(request, response) {
     response.render('game_over.hbs', {score:score})
+});
+
+app.get('/', function (request, response) {
+  sessions.Movies(request);
+  request.newMovie();
+  response.redirect('/game');
 });
 
 //Port 3000 is optional
