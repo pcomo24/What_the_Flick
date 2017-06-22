@@ -19,7 +19,7 @@
 
 <div class="row">
     <div class="col col-4"></div>
-    <div class="col col-4"><h3>"A SUPER McDOPE TAGLINE WILL GO HERE SOON"</h3></div>
+    <div class="col col-4"><h3>"A SUPR FECKN McDOPE TAGLINE WILL GO HERE SOON"</h3></div>
     <div class="col col-4"></div>
 </div>
 
@@ -28,15 +28,15 @@
     <div class="col col-4 text-left">
         <form method="POST" action="/guess">
             {{#each choice}}
-                    <input name="answer" type="radio" value='{{this}}'> {{this}}<br>
+                    <input name="answer" type="radio" value='{{this}}'> <div id="ansr-choice">{{this}}</div><br>
             {{/each}}
-            <button type="submit">Submit</button>
-            <button type="button" onclick="getHint(HINT)">Hint</button>
-        </form>
+            <button id="fix-button" type="submit" id="fix-button">Submit</button>
+            <button id="fix-button" type="button" onclick="getHint(hint)">Hint</button>
     </div>
     <div class="col col-4"></div>
 </div>
 
+</form>
 <script>
   var hint = "{{overviewHint}}";
   var replaceWord = /{{title}}/gi;
