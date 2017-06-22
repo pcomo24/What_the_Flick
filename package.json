@@ -22,6 +22,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "express-session": "^1.15.3",
     "hbs": "^4.0.1",
     "imperavi-kube": "^6.5.2",
     "less": "^2.7.2",
