@@ -25,10 +25,6 @@ var lives = 1;
 var img_url = [];
 var title = [];
 var overviewHint = [];
-<<<<<<< HEAD
-=======
-var page;
->>>>>>> master
 var tagline = [];
 
 app.use(morgan('dev'));
@@ -62,11 +58,10 @@ function Movies() {
         this.newMovie();
         return;
 //Game over logic can be added here if needed
+      }else if (this.movies.length > 10){
+        //G A M E   O V E R
+        return;
       }
-      // else if (this.movies.length > 10){
-      //   //G A M E   O V E R
-      //   return;
-      // }
     }
 //Once lookup values are verified to be unique, they are pushed to an array to checked
 //-against in future calls.
@@ -74,55 +69,45 @@ function Movies() {
     this.addMovie();
 //numeric variables nextMoviePage and nextMovieSelection must be converted to
 //-strings before being returned for http interfacing portability.
-    return [nextMoviePage, nextMovieSelection];
+    return [String(nextMoviePage), String(nextMovieSelection)];
   }
 }
 var movies = new Movies();
 //movies.newMovie() must be called and a value returned before a new movie can be loaded.
 movies.newMovie();
 
+
+// temp random generator
+var page, i;
+function random() {
+  page = Math.ceil(Math.random() * 1000);
+  i = Math.floor(Math.random() * 20);
+}
+// run random for initial numbers
+random();
+
 //set url parts as variables to be concatenated
 var base_url = 'https://api.themoviedb.org/3/discover/';
 var api_key = 'movie?api_key=' + process.env.API_KEY;
-<<<<<<< HEAD
 var options = '&language=en&region=US&page='
 // var page = movies.newMovie();
 
 function apiCall(response) {
   axios.get(base_url + api_key + options + page)
-=======
-var options = '&language=en&region=US&include_adult=false&page='
-
-// index.hbs should be renamed if different per paul or alston
-//in response.render add context dictionary to pass img data to front end through hbs
-app.get('/', function(request, response) {
-  // call new randoms before new api request
-  page = movies.newMovie();
-  console.log(page);
-  let url = base_url + api_key + options + page[0];
-  console.log(url);
-  axios.get(url)
->>>>>>> master
       .then(function (api) {
         for(let j=0; j<20; j++) {
           img_url.push(api.data.results[j].backdrop_path);
           title.push(api.data.results[j].title);
           overviewHint.push(api.data.results[j].overview);
         }
-
         console.log('new call sucessfull');
-<<<<<<< HEAD
         console.log(title)
-=======
-        console.log(title);
->>>>>>> master
 
         // creates the multiple choices
         var choices = [];
         var tmpRnd;
-        console.log(title[page[1]]);
         function generateChoices () {
-          tmpRnd = Math.floor(Math.random() * 20)
+          tmpRnd = Math.floor(Math.random() * 20);
           if (choices.includes(title[tmpRnd]))
             generateChoices();
           else
@@ -133,15 +118,15 @@ app.get('/', function(request, response) {
         }
 
         // replace random answer with correct answer if not present in choices
-        if (!choices.includes(title[page[1]])) {
+        if (!choices.includes(title[i])) {
           let replace = Math.floor(Math.random() * 5);
-          choices[replace] = title[page[1]];
+          choices[replace] = title[i];
         }
 
         var context = {
-            imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
-            title: title[page[1]],
-            overviewHint: overviewHint[page[1]],
+            imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[i],
+            title: title[i],
+            overviewHint: overviewHint[i],
             choice: choices
         };
         response.render('index.hbs', context);
@@ -149,6 +134,12 @@ app.get('/', function(request, response) {
       .catch(function (error) {
           console.error(error);
       });
+}
+
+// index.hbs should be renamed if different per paul or alston
+//in response.render add context dictionary to pass img data to front end through hbs
+app.get('/', function(request, response) {
+  apiCall(response);
 });
 
 //Login
@@ -184,16 +175,17 @@ app.get('/highscores', function(request, response, next) {
 app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
   var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
-  var title2 = title[page[1]].toLowerCase().replace(/\W/g, "");
+  var title2 = title[i].toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
   if (answer == title2 && lives > 0) {
     console.log('they matched')
+    q += 1;
+    score += 1;
     // reset arrays and make new api call
     title=[];
     img_url=[];
-    q += 1;
-    score += 1;
+    random();
     response.redirect('/?q=' + q);
 
   } else {
