@@ -38,6 +38,7 @@
 </div>
 
 <script>
-  var HINT = "{{overviewHint}}";
+  var hint = "{{overviewHint}}";
+  var replaceWord = /{{title}}/gi;
+  hint = hint.replace(replaceWord, "___");
 </script>
-
