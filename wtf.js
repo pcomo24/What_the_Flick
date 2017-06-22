@@ -21,7 +21,7 @@ var username;
 // used to keep track of question number
 var q = 0;
 var score = 0;
-var lives = 1;
+var lives = 10;
 var img_url = [];
 var title = [];
 var overviewHint = [];
