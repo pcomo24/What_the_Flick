@@ -28,8 +28,6 @@ app.use(session({
 
 // global variables
 var username, genre;
-var score = 0;
-var lives = 1;
 var img_url = [];
 var title = [];
 var overviewHint = [];
@@ -166,20 +164,23 @@ app.post('/guess', function(request, response, next) {
     // reset arrays and make new api call
     title=[];
     img_url=[];
-    score += 1;
+    sessions.Movies(request);
+    request.correct();
     response.redirect('/game/');
+
 
   } else {
     console.log('no match')
-    lives -= 1;
-    if (lives <= 0) {
+    sessions.Movies(request);
+    request.incorrect();
+    if (request.session.lives <= 0) {
       response.redirect('/game_over');
     }
   }
 });
 
 app.get('/game_over', function(request, response) {
-    response.render('game_over.hbs', {score:score})
+    response.render('game_over.hbs', {score:request.session.score})
 });
 
 app.get('/genres', function(request, response) {
@@ -195,7 +196,7 @@ app.get('/', function (request, response) {
     .then(axios.spread(function(api) {
       genre = request.body.genreChoice;
       response.render('home.hbs', {layout: 'layout2', genres: api.data.genres});
-    }))
+   }))
 });
 
 //Port 3000 is optional
