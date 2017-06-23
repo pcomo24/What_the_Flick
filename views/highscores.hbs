@@ -1,17 +1,37 @@
 <div class="row">
     <div class="col col-4"></div>
-    <div class="col col-4 text-center"><h2 class="top-margin">High Scores</h2></div>
-    <div class="col col-4"></div>
+    <div class="col col-4 text-center" id="movdiv">
+        <h2 onclick="scrollCreds()" class="top-margin">High Scores</h2>
+    </div>
+    <div class="col col-4"> </div>
 </div>
 <div class="row">
     <div class="col col-4"></div>
     <div class="col col-4 text-center">
+        <div class="row"><div class="col col-12"></div></div>
         <ol>
             {{#each results}}
                 <li>{{username}} : {{score}}</li>
             {{/each}}
         </ol>
+        <h2>Thanks for Playing</h2>
     </div>
     <div class="col col-4"></div>
 </div>
 
+<script>
+    function scrollCreds() {
+        var movDiv = document.getElementById('movdiv');
+        var pos = 999;
+        var id = setInterval(credit, 1);
+        function credit() {
+            if (pos == 200) {
+                clearInterval(id)
+            } else {
+                pos--;
+                movDiv.style.height = pos + 'px';
+            }
+        }
+    }
+
+</script>

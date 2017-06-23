@@ -1,33 +1,37 @@
 body {
   background: url("/public/images/08-02-02.png");
   background-size: cover;
+  background-attachment: fixed;
 }
 h1,
 h2 {
-  color: #FFFF47;
+  color: #AE8913;
   font-family: 'Belgrano', serif;
 }
 h3,
 h4 {
-  color: #FFFF47;
+  color: #AE8913;
   font-family: 'Belgrano', serif;
 }
 ol li {
-  color: #241E4E;
+  color: #dccd9e;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   margin-bottom: .75rem;
 }
 label {
   font-family: 'Amatic SC', cursive;
-  color: #241E4E;
+  color: #dccd9e;
   font-size: 2rem;
 }
 #fix-button {
-  background-color: #FFFF47;
+  background-color: #AE8913;
   font-family: 'Oswald', sans-serif;
   font-size: 1.3rem;
-  color: #241E4E;
+  color: #dccd9e;
+}
+#movdiv {
+  height: 1000px;
 }
 .buttonDiv {
   bottom: 10%;
@@ -35,21 +39,19 @@ label {
 .top-margin {
   margin-top: 4em;
 }
-
 #ansr-choice {
-  color: #241E4E;
+  color: #dccd9e;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
 }
-
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 p#hint {
-  color: #241E4E;
+  color: #dccd9e;
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
 }
