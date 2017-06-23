@@ -32,7 +32,7 @@ var img_url = [];
 var title = [];
 var overviewHint = [];
 var page, pageLimit;
-var tagline = [];
+var tagline = 0;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -52,11 +52,10 @@ app.post('/getGenre', function(request, response) {
     var api_key = 'movie?api_key=' + process.env.API_KEY;
     var options = '&language=en&region=US&include_adult=false' + genre +'&page=1';
     let url = base_url + api_key + options;
-    // url = 'https://api.themoviedb.org/3/discover/movie?api_key=7e1972182eb6105c196b67794648a379&language=en&region=US&include_adult=false&with_genres=36&page=1'
     axios.get(url)
       .then(function (api) {
         console.log(api.data.total_pages);
-        pageLimit = api.data.total_pages
+        pageLimit = api.data.total_pages - 1;
         if (pageLimit > 1000) {
           pageLimit = 1000;
         } else {
@@ -74,26 +73,33 @@ app.get('/game', function(request, response) {
   console.log('pageLmt: '+pageLimit);
   sessions.Movies(request, pageLimit);
   page = request.newMovie();
-  console.log(page);
 
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
   var api_key = 'movie?api_key=' + process.env.API_KEY;
-  var options = '&language=en&region=US&include_adult=false&' + genre + 'page='
+  var options = '&language=en&region=US&include_adult=false' + genre + '&page='
   let url = base_url + api_key + options + page[0];
   console.log(url);
 axios.get(url)
     .then(function (api) {
+      //// fix this in sessions
         for(let j=0; j<20; j++) {
           if (api.data.results[j].backdrop_path) {
             img_url.push(api.data.results[j].backdrop_path);
-            title.push(api.data.results[j].title);
             overviewHint.push(api.data.results[j].overview);
+            title.push(api.data.results[j].title);
           }
-          // replace page[1] choice if arrays less that 20
-          if (title.length < 20)
-            page[1] = (Math.floor(Math.random()*title.length));
         }
+        // checks to make sure img_url isn't empty if so gets new api call
+        console.log(img_url);
+        if(img_url.length < 5) {
+            response.redirect('/game');
+        }
+        // replace page[1] choice if arrays less that 20
+        if (img_url.length < 20) {
+            page[1] = (Math.floor(Math.random()*img_url.length));
+        }
+
         console.log('new call sucessfull');
 
         // creates the multiple choices
@@ -106,7 +112,7 @@ axios.get(url)
           else
             choices.push(title[tmpRnd]);
         }
-        for(let j=0; j<5; j++) {
+        for(let j=0; j<4; j++) {
           generateChoices();
         }
 

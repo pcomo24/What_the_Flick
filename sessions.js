@@ -26,7 +26,7 @@ function Movies(request, pageLimit) {
     request.session.nextMovieSelection = Math.floor(Math.random() * 20);
 //numeric variable request.session.nextMovieSelection is divided by 100 and added to integer request.session.nextMoviePage so
 //-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
-    request.session.nextMovie =  request.session.nextMoviePage + (request.session.nextMovieSelection/100);
+    request.session.nextMovie =  request.session.nextMoviePage;
 //for loop compares new movie against previous movies in session and calls another
 //-if a matching movie is found in the (used) movies array.
     for(var i = 0; i < request.session.movies.length;i++) {
@@ -35,9 +35,6 @@ function Movies(request, pageLimit) {
         request.newMovie();
         return;
 //Game over logic can be added here if needed
-      }else if (request.session.movies.length > 10){
-        //G A M E   O V E R
-        return;
       }
     }
 //Once lookup values are verified to be unique, they are pushed to an array to checked
