@@ -64,7 +64,6 @@ app.post('/getGenre', function(request, response) {
         }
         response.redirect('/game');
       })
-
 });
 
 // index.hbs should be renamed if different per paul or alston
@@ -75,6 +74,15 @@ app.get('/game', function(request, response) {
   sessions.Movies(request, pageLimit);
   page = request.newMovie();
   console.log(page);
+
+  // gets proper genre from url
+
+  if (genre == 'All') {
+    genre = '';
+  } else {
+    genre = 'with_genres=' + genre + '&';
+    console.log(genre);
+  }
 
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
