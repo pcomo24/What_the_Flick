@@ -56,8 +56,9 @@ app.get('/game', function(request, response) {
   console.log(page);
   let url = base_url + api_key + options + page[0];
   console.log(url);
-  axios.get(url)
-      .then(function (api) {
+
+  axios.all([axios.get(url), getGenres()])
+    .then(axios.spread(function (api, apiGenres) {
         for(let j=0; j<20; j++) {
           if (api.data.results[j].backdrop_path) {
             img_url.push(api.data.results[j].backdrop_path);
@@ -94,13 +95,14 @@ app.get('/game', function(request, response) {
             imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
             title: title[page[1]],
             overviewHint: overviewHint[page[1]],
-            choice: choices
+            choice: choices,
+            genres: apiGenres.data.genres
         };
         response.render('index.hbs', context);
-      })
-      .catch(function (error) {
-          console.error(error);
-      });
+    }))
+    .catch(function (error) {
+        console.error(error);
+    });
 });
 
 //Login
@@ -161,6 +163,13 @@ app.get('/game_over', function(request, response) {
     response.render('game_over.hbs', {score:score})
 });
 
+app.get('/genres', function(request, response) {
+  getGenres()
+    .then(function(api) {
+      response.send(api.data.genres);
+    });
+});
+
 app.get('/', function (request, response) {
   sessions.Movies(request);
   request.newMovie();
@@ -171,3 +180,25 @@ app.get('/', function (request, response) {
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!')
 });
+
+//////////////////////////////
+
+/**
+ * @returns Promise that might have genres
+ *   success: Contains Axios result with genres
+ *   error: Contains error object
+ */
+function getGenres() {
+  let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`
+  console.log(url);
+
+  return axios.get(url)
+    .then(function(api) {
+      console.log('Retrieved genres');
+      return api;
+    })
+    .catch(function (error) {
+      console.error(error);
+      return Promise.reject(error);
+    });
+}
