@@ -11,10 +11,11 @@
         <div class="row"><div class="col col-12"></div></div>
         <ol>
             {{#each results}}
-                <li>{{username}} : {{score}}</li>
+                <li class="bottom-margin">{{username}} : {{score}}</li>
             {{/each}}
         </ol>
         <h2>Thanks for Playing</h2>
+        <a href="/" class="button" id="fix-button">Play Again</a>
     </div>
     <div class="col col-4"></div>
 </div>
@@ -33,5 +34,5 @@
             }
         }
     }
-
+    window.onload = scrollCreds()
 </script>

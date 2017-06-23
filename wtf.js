@@ -149,7 +149,7 @@ app.post('/something', function(request, response, next) {
 app.get('/highscores', function(request, response, next) {
   db.any("SELECT * FROM highscores ORDER BY score DESC LIMIT 10")
     .then(function(results) {
-      response.render('highscores.hbs', {results:results});
+      response.render('highscores.hbs', {layout: 'layout2', results:results});
     })
     .catch(next);
 });
