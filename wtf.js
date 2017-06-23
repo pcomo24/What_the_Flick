@@ -148,10 +148,9 @@ app.post('/login', function(request, response, next) {
 
 app.post('/something', function(request, response, next) {
 //maybe need a cookie from which to log the username for stretch goal
-//var username =
   username = request.body.playerName;
 //high_scores should be whatever the table name is per jj
-  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[username, score] )
+  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[username, request.session.score] )
     .then(function() {
 //highscores.hbs should be whatever frontend hbs has the highscores per paul or alston
       response.redirect('/highscores');

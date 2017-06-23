@@ -1,5 +1,5 @@
 body {
-  background: url("/public/images/08-02-02.png") repeat-y;
+  background: url("/public/images/08-02-02.png");
   background-size: cover;
   background-attachment: fixed;
   border-radius: 10%;
@@ -46,14 +46,25 @@ label {
 .top-margin {
   margin-top: 4em;
 }
+.score {
+  height: 10rem;
+}
+@-webkit-keyframes collapse {
+  0% {
+    height: 10rem;
+  }
+  100% {
+    height: 1rem;
+  }
+}
+.bottom-margin {
+  margin-bottom: 6rem;
+}
 #ansr-choice {
   color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
-}
-#poster {
-  border-radius: 2%;
 }
 img {
   display: block;
@@ -64,8 +75,4 @@ img {
   color: #EEE8AA;
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
-}
-
-#homePic {
-  border-radius: 2%;
 }
