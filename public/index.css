@@ -2,7 +2,6 @@ body {
   background: url("/public/images/08-02-02.png") repeat-y;
   background-size: cover;
   background-attachment: fixed;
-  border-radius: 10%;
 }
 h1,
 h2 {
@@ -31,11 +30,39 @@ label {
   color: #EEE8AA;
   font-size: 2rem;
 }
-#fix-button {
+#submit-button {
   background-color: #D4AF37;
   font-family: 'Oswald', sans-serif;
   font-size: 1.3rem;
   color: black;
+  margin-top: 50px;
+  margin-right: 10px;
+  float: left;
+}
+#hint-button {
+  background-color: #D4AF37;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3rem;
+  color: black;
+  margin-top: 50px;
+  margin-right: 10px;
+  float: right;
+}
+#newGame-button {
+  background-color: #D4AF37;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3rem;
+  color: black;
+  margin-right: 10px;
+  margin-bottom: 75px;
+}
+#hiScores-button {
+  background-color: #D4AF37;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3rem;
+  color: black;
+  margin-right: 10px;
+  margin-bottom: 75px;
 }
 #movdiv {
   height: 1000px;
@@ -51,6 +78,7 @@ label {
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
+  margin-bottom: 15px;
 }
 #poster {
   border-radius: 2%;
@@ -68,4 +96,8 @@ img {
 
 #homePic {
   border-radius: 2%;
+}
+
+#tagline {
+  margin-bottom: 50px;
 }

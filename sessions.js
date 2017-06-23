@@ -18,7 +18,7 @@ function Movies(request, pageLimit) {
       if (api.data.results[j].backdrop_path) {
         request.session.img_url.push(api.data.results[j].backdrop_path);
         request.session.title.push(api.data.results[j].backdrop_path);
-        request.session.hint..push(api.data.results[j].backdrop_path);
+        request.session.hint.push(api.data.results[j].backdrop_path);
       }
       // replace page[1] choice if arrays less that 20
       if (request.session.title.length < 20)
