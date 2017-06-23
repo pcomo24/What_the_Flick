@@ -159,7 +159,7 @@ app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
   var answer = request.body.answer;
   var title2 = title[page[1]];
-  if (answer == title2 && lives > 0) {
+  if (answer == title2 && request.session.lives > 0) {
     console.log('they matched')
     // reset arrays and make new api call
     title=[];
