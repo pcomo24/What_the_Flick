@@ -52,7 +52,6 @@ app.post('/getGenre', function(request, response) {
         pageLimit = api.data.total_pages;
         response.redirect('/game');
       })
-
 });
 
 // index.hbs should be renamed if different per paul or alston
@@ -65,6 +64,7 @@ app.get('/game', function(request, response) {
   console.log(page);
 
   // gets proper genre from url
+
   if (genre == 'All') {
     genre = '';
   } else {
