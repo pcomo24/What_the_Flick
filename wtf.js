@@ -40,16 +40,28 @@ app.use('/static', express.static('public'));
 
 //get genre selection from form and set to variable 'genre'
 app.post('/getGenre', function(request, response) {
-    genre = request.body.genreChoice;
+
+    // gets proper genre from url
+    if (request.body.genreChoice == 'All') {
+      genre = '';
+    } else {
+      genre = '&with_genres=' + request.body.genreChoice;
+    }
     console.log('genre: ' + genre);
     var base_url = 'https://api.themoviedb.org/3/discover/';
     var api_key = 'movie?api_key=' + process.env.API_KEY;
-    var options = '&language=en&region=US&include_adult=false&with_genres=' + genre +'&page=1';
+    var options = '&language=en&region=US&include_adult=false' + genre +'&page=1';
     let url = base_url + api_key + options;
     // url = 'https://api.themoviedb.org/3/discover/movie?api_key=7e1972182eb6105c196b67794648a379&language=en&region=US&include_adult=false&with_genres=36&page=1'
     axios.get(url)
       .then(function (api) {
-        pageLimit = api.data.total_pages;
+        console.log(api.data.total_pages);
+        pageLimit = api.data.total_pages
+        if (pageLimit > 1000) {
+          pageLimit = 1000;
+        } else {
+          pageLimit = api.data.total_pages;
+        }
         response.redirect('/game');
       })
 });
@@ -64,6 +76,7 @@ app.get('/game', function(request, response) {
   console.log(page);
 
   // gets proper genre from url
+
   if (genre == 'All') {
     genre = '';
   } else {
