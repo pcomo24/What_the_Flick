@@ -20,16 +20,14 @@ app.use('/public', express.static('public'));
 
 app.use(session({
   key: 'wtf.sess',
-  secret: '53|<1237',
+  secret: process.env.SESS_KEY,
   saveUninitialized: true,
   resave: true,
   cookie: {maxAge: 1000 * 60 * 60 * 24}
 }));
 
 // global variables
-var username;
-// used to keep track of question number
-var q = 0;
+var username, genre;
 var score = 0;
 var lives = 1;
 var img_url = [];
@@ -42,10 +40,12 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 
-//set url parts as variables to be concatenated
-var base_url = 'https://api.themoviedb.org/3/discover/';
-var api_key = 'movie?api_key=' + process.env.API_KEY;
-var options = '&language=en&region=US&include_adult=false&page='
+//get genre selection from form and set to variable 'genre'
+app.post('/getGenre', function(request, response) {
+    genre = request.body.genre
+    console.log(genre)
+    response.redirect('/game')
+});
 
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
@@ -54,10 +54,22 @@ app.get('/game', function(request, response) {
   sessions.Movies(request);
   page = request.newMovie();
   console.log(page);
+
+  // gets proper genre from url
+  if (genre == 'All') {
+    genre = '';
+  } else {
+    genre = 'with_genres=' + genre;
+  }
+
+  //set url parts as variables to be concatenated
+  var base_url = 'https://api.themoviedb.org/3/discover/';
+  var api_key = 'movie?api_key=' + process.env.API_KEY;
+  var options = '&language=en&region=US&include_adult=false&' + genre + 'page='
   let url = base_url + api_key + options + page[0];
-  console.log(url);
-  axios.get(url)
-      .then(function (api) {
+
+axios.get(url)
+    .then(function (api) {
         for(let j=0; j<20; j++) {
           if (api.data.results[j].backdrop_path) {
             img_url.push(api.data.results[j].backdrop_path);
@@ -94,13 +106,14 @@ app.get('/game', function(request, response) {
             imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
             title: title[page[1]],
             overviewHint: overviewHint[page[1]],
-            choice: choices
+            choice: choices,
+            // genres: apiGenres.data.genres
         };
         response.render('index.hbs', context);
-      })
-      .catch(function (error) {
-          console.error(error);
-      });
+    })
+    .catch(function (error) {
+        console.error(error);
+    });
 });
 
 //Login
@@ -132,21 +145,17 @@ app.get('/highscores', function(request, response, next) {
     .catch(next);
 });
 
-
 app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
-  var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
-  var title2 = title[page[1]].toLowerCase().replace(/\W/g, "");
-  console.log(answer);
-  console.log(title2);
+  var answer = request.body.answer;
+  var title2 = title[page[1]];
   if (answer == title2 && lives > 0) {
     console.log('they matched')
     // reset arrays and make new api call
     title=[];
     img_url=[];
-    q += 1;
     score += 1;
-    response.redirect('/game?q=' + q);
+    response.redirect('/game/');
 
   } else {
     console.log('no match')
@@ -161,13 +170,52 @@ app.get('/game_over', function(request, response) {
     response.render('game_over.hbs', {score:score})
 });
 
+app.get('/genres', function(request, response) {
+  getGenres()
+    .then(function(api) {
+      response.send(api.data.genres);
+    });
+});
+
 app.get('/', function (request, response) {
   sessions.Movies(request);
-  request.newMovie();
-  response.redirect('/game');
+  response.render('home.hbs', {layout: 'layout2'})
+  //response.redirect('/game');
+});
+
+app.get('/home', function (request, response) {
+  sessions.Movies(request);
+  axios.all([getGenres()])
+    .then(axios.spread(function(api) {
+      genre = request.body.genreChoice;
+      response.render('home.hbs', {genres: api.data.genres});
+      console.log(genre);
+    }))
 });
 
 //Port 3000 is optional
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!')
 });
+
+//////////////////////////////
+
+/**
+ * @returns Promise that might have genres
+ *   success: Contains Axios result with genres
+ *   error: Contains error object
+ */
+function getGenres() {
+  let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`
+  console.log(url);
+
+  return axios.get(url)
+    .then(function(api) {
+      console.log('Retrieved genres');
+      return api;
+    })
+    .catch(function (error) {
+      console.error(error);
+      return Promise.reject(error);
+    });
+}
