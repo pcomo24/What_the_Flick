@@ -30,8 +30,6 @@ app.use(session({
 var username;
 // used to keep track of question number
 var q = 0;
-var score = 0;
-var lives = 1;
 var img_url = [];
 var title = [];
 var overviewHint = [];
@@ -136,34 +134,36 @@ app.get('/highscores', function(request, response, next) {
 app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
   var answer = request.body.answer.toLowerCase().replace(/\W/g, "");
+  console.log(page[1] + '--' + title[page[1]]);
   var title2 = title[page[1]].toLowerCase().replace(/\W/g, "");
   console.log(answer);
   console.log(title2);
-  if (answer == title2 && lives > 0) {
+  if (answer === title2 && request.session.lives > 0) {
     console.log('they matched')
     // reset arrays and make new api call
     title=[];
     img_url=[];
     q += 1;
-    score += 1;
+    sessions.Movies(request);
+    request.correct();
     response.redirect('/game?q=' + q);
 
   } else {
     console.log('no match')
-    lives -= 1;
-    if (lives <= 0) {
+    sessions.Movies(request);
+    request.incorrect();
+    if (request.session.lives <= 0) {
       response.redirect('/game_over');
     }
   }
 });
 
 app.get('/game_over', function(request, response) {
-    response.render('game_over.hbs', {score:score})
+    response.render('game_over.hbs', {score:request.session.score})
 });
 
 app.get('/', function (request, response) {
   sessions.Movies(request);
-  request.newMovie();
   response.redirect('/game');
 });
 
