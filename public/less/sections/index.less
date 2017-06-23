@@ -1,6 +1,7 @@
 body {
   background: url("/public/images/08-02-02.png");
   background-size: cover;
+  background-attachment: fixed;
 }
 
 h1, h2 {
@@ -28,7 +29,9 @@ label {
   font-size: 1.3rem;
   color: @rblue;
 }
-
+#movdiv {
+  height: 1000px;
+}
 .buttonDiv {
   bottom: 10%;
 }
@@ -50,10 +53,8 @@ img {
   margin-right: auto;
 }
 
-p {
-  #hint {
+#hint {
     color: @rblue;
     font-family: @font2;
     font-size: 2rem;
-  }
 }

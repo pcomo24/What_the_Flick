@@ -40,6 +40,13 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 
+//get genre selection from form and set to variable 'genre'
+app.post('/getGenre', function(request, response) {
+    genre = request.body.genre
+    console.log(genre)
+    response.redirect('/game')
+});
+
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
@@ -60,7 +67,6 @@ app.get('/game', function(request, response) {
   var api_key = 'movie?api_key=' + process.env.API_KEY;
   var options = '&language=en&region=US&include_adult=false&' + genre + 'page='
   let url = base_url + api_key + options + page[0];
-
 
 axios.get(url)
     .then(function (api) {
@@ -139,7 +145,6 @@ app.get('/highscores', function(request, response, next) {
     .catch(next);
 });
 
-
 app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
   var answer = request.body.answer;
@@ -174,8 +179,8 @@ app.get('/genres', function(request, response) {
 
 app.get('/', function (request, response) {
   sessions.Movies(request);
-  genre = request.body.genreChoice;
-  response.redirect('/game');
+  response.render('home.hbs', {layout: 'layout2'})
+  //response.redirect('/game');
 });
 
 app.get('/home', function (request, response) {
