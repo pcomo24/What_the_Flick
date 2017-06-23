@@ -23,7 +23,7 @@ function Movies(request) {
 //-and then returned as a (2) element array.
   request.newMovie = function () {
     request.session.nextMoviePage = Math.ceil(Math.random() * 1000);
-    request.session.nextMovieSelection = Math.ceil(Math.random() * 20);
+    request.session.nextMovieSelection = Math.floor(Math.random() * 20);
 //numeric variable request.session.nextMovieSelection is divided by 100 and added to integer request.session.nextMoviePage so
 //-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
     request.session.nextMovie =  request.session.nextMoviePage + (request.session.nextMovieSelection/100);
