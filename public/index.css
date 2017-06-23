@@ -2,33 +2,40 @@ body {
   background: url("/public/images/08-02-02.png") repeat-y;
   background-size: cover;
   background-attachment: fixed;
+  border-radius: 10%;
 }
 h1,
 h2 {
-  color: #AE8913;
+  color: #D4AF37;
   font-family: 'Belgrano', serif;
+  padding-bottom: 15px;
+}
+h1.heading,
+h2.heading {
+  margin-bottom: 50px;
+  border-bottom: 1px solid #D4AF37;
 }
 h3,
 h4 {
-  color: #AE8913;
+  color: #D4AF37;
   font-family: 'Belgrano', serif;
 }
 ol li {
-  color: #dccd9e;
+  color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   margin-bottom: .75rem;
 }
 label {
   font-family: 'Amatic SC', cursive;
-  color: #dccd9e;
+  color: #EEE8AA;
   font-size: 2rem;
 }
 #fix-button {
-  background-color: #AE8913;
+  background-color: #D4AF37;
   font-family: 'Oswald', sans-serif;
   font-size: 1.3rem;
-  color: #dccd9e;
+  color: black;
 }
 #movdiv {
   height: 1000px;
@@ -40,18 +47,25 @@ label {
   margin-top: 4em;
 }
 #ansr-choice {
-  color: #dccd9e;
+  color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
+}
+#poster {
+  border-radius: 2%;
 }
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-p#hint {
-  color: #dccd9e;
+#hint {
+  color: #EEE8AA;
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
+}
+
+#homePic {
+  border-radius: 2%;
 }

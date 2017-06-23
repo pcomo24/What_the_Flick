@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build_css": "lessc public/less/main.less public/index.css",
+    "watch": "watch-run -p 'public/**/*.less' lessc public/less/main.less public/index.css"
   },
   "repository": {
     "type": "git",
