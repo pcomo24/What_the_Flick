@@ -192,29 +192,11 @@ app.get('/genres', function(request, response) {
 
 app.get('/', function (request, response) {
   sessions.Movies(request);
-
   axios.all([getGenres()])
     .then(axios.spread(function(api) {
       genre = request.body.genreChoice;
       response.render('home.hbs', {layout: 'layout2', genres: api.data.genres});
-    }))
-});
-
-app.get('/home', function (request, response) {
-  sessions.Movies(request);
-
-app.get('/genres', function(request, response) {
-  let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`
-  console.log(url);
-
-  axios.get(url)
-    .then(function(api) {
-      console.log('Retrieved genres');
-      response.send(api.data.genres);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+   }))
 });
 
 //Port 3000 is optional
