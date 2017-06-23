@@ -1,5 +1,5 @@
 body {
-  background: url("/public/images/08-02-02.png");
+  background: url("/public/images/08-02-02.png") repeat-y;
   background-size: cover;
   background-attachment: fixed;
   border-radius: 10%;
