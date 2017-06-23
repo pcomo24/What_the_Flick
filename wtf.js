@@ -176,6 +176,20 @@ app.get('/', function (request, response) {
   response.redirect('/game');
 });
 
+app.get('/genres', function(request, response) {
+  let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`
+  console.log(url);
+
+  axios.get(url)
+    .then(function(api) {
+      console.log('Retrieved genres');
+      response.send(api.data.genres);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+});
+
 //Port 3000 is optional
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!')
