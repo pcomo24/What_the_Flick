@@ -1,0 +1,28 @@
+<div class="row top-margin">
+    <div class="col col-4 black"></div>
+    <div class="col col-4 text-left">
+        <img src="/public/images/cinema-2093264.jpg">
+    </div>
+    <div class="col col-4"></div>
+</div>
+
+<div class="row top-margin">
+    <div class="col col-4"></div>
+    <div class="col col-4">
+        <form action="/getGenre" method="post">
+            <select name="genre">
+                <option>Choose a different genre</option>
+                {{#each genres}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <div class="col col-12 text-center top-margin">
+                <button type="submit">New Game</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="col col-4"></div>
+</div>
+
+
