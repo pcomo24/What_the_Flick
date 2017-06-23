@@ -58,7 +58,7 @@ app.get('/game', function(request, response) {
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
   var api_key = 'movie?api_key=' + process.env.API_KEY;
-  var options = '&language=en&region=US&include_adult=false& '+genre+' page='
+  var options = '&language=en&region=US&include_adult=false&' + genre + 'page='
   let url = base_url + api_key + options + page[0];
 
 
