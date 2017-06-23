@@ -10,7 +10,7 @@
     <div class="col col-4"></div>
     <div class="col col-4">
         <form action="/getGenre" method="post">
-            <select name="genre">
+            <select name="genreChoice">
                 <option>Choose a different genre</option>
                 {{#each genres}}
                     <option value="{{this.id}}">{{this.name}}</option>
@@ -24,5 +24,4 @@
     </div>
     <div class="col col-4"></div>
 </div>
-
 
