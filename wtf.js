@@ -83,6 +83,7 @@ app.get('/game', function(request, response) {
 axios.get(url)
     .then(function (api) {
       //// fix this in sessions
+        // gets all the needed data from page
         for(let j=0; j<20; j++) {
           if (api.data.results[j].backdrop_path) {
             img_url.push(api.data.results[j].backdrop_path);
@@ -91,7 +92,6 @@ axios.get(url)
           }
         }
         // checks to make sure img_url isn't empty if so gets new api call
-        console.log(img_url);
         if(img_url.length < 5) {
             response.redirect('/game');
         }
@@ -122,15 +122,16 @@ axios.get(url)
           choices[replace] = title[page[1]];
         }
 
-        var context = {
-            imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
-            title: title[page[1]],
-            overviewHint: overviewHint[page[1]],
-            choice: choices,
-            // genres: apiGenres.data.genres
-        };
-        response.render('index.hbs', context);
+        return api.data.results[page[1]].id
     })
+    // gets the tagline
+    .then(function(id) {
+      axios.get(`https://api.themoviedb.org/3/movie/${id}&api_key=${process.env.API_KEY}`)
+        .then(function(tag) {
+          
+        })
+    })
+
     .catch(function (error) {
         console.error(error);
     });
@@ -149,7 +150,7 @@ app.post('/something', function(request, response, next) {
 //var username =
   username = request.body.playerName;
 //high_scores should be whatever the table name is per jj
-  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[username, score] )
+  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[username, request.session.score] )
     .then(function() {
 //highscores.hbs should be whatever frontend hbs has the highscores per paul or alston
       response.redirect('/highscores');
@@ -170,7 +171,6 @@ app.post('/guess', function(request, response, next) {
   var answer = request.body.answer;
   var title2 = title[page[1]];
   if (answer == title2 && request.session.lives > 0) {
-    console.log('they matched')
     // reset arrays and make new api call
     title=[];
     img_url=[];
@@ -180,7 +180,6 @@ app.post('/guess', function(request, response, next) {
 
 
   } else {
-    console.log('no match')
     sessions.Movies(request);
     request.incorrect();
     if (request.session.lives <= 0) {

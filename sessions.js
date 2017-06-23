@@ -1,5 +1,5 @@
 function Movies(request, pageLimit) {
-  request.session.score = request.session.score || 1-1
+  request.session.score = request.session.score || 0
   request.session.lives = request.session.lives || 1
   request.correct = function () {
   request.session.score += 1;
