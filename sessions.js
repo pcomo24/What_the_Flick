@@ -1,7 +1,17 @@
 function Movies(request) {
+  request.session.score = request.session.score || 1-1
+  request.session.lives = request.session.lives || 1
+  request.correct = function () {
+  request.session.score += 1;
+  }
+
+  request.incorrect = function () {
+  request.session.lives -= 1;
+  }
+
   request.session.nextMovie;
 //array which stores composite numeric values for previous movie lookups
-  request.session.movies = [];
+  request.session.movies = request.session.movies || [];
 //method which pushed composite numeric values to request.session.movies. Called at the end of request.newMovie.
   request.addMovie = function () {
     //request.session.movies.push(request.session.nextMovie)
