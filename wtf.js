@@ -47,6 +47,12 @@ var base_url = 'https://api.themoviedb.org/3/discover/';
 var api_key = 'movie?api_key=' + process.env.API_KEY;
 var options = '&language=en&region=US&include_adult=false&page='
 
+//get genre selection from form and set to variable 'genre'
+app.post('/getGenre', function(request, response) {
+    genre = request.body.genre
+    console.log(genre)
+    response.redirect('/game')
+});
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
@@ -98,7 +104,7 @@ app.get('/game', function(request, response) {
             choice: choices,
             genres: apiGenres.data.genres
         };
-        response.render('index.hbs', context);
+        response.render('index.hbs',context);
     }))
     .catch(function (error) {
         console.error(error);
@@ -173,7 +179,8 @@ app.get('/genres', function(request, response) {
 app.get('/', function (request, response) {
   sessions.Movies(request);
   request.newMovie();
-  response.redirect('/game');
+  response.render('home.hbs', {layout: 'layout2'})
+  //response.redirect('/game');
 });
 
 //Port 3000 is optional
