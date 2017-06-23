@@ -179,8 +179,11 @@ app.get('/genres', function(request, response) {
 
 app.get('/', function (request, response) {
   sessions.Movies(request);
-  response.render('home.hbs', {layout: 'layout2'})
-  //response.redirect('/game');
+  axios.all([getGenres()])
+    .then(axios.spread(function(api) {
+      genre = request.body.genreChoice;
+      response.render('home.hbs', {layout: 'layout2', genres: api.data.genres});
+    }))
 });
 
 app.get('/home', function (request, response) {
