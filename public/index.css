@@ -4,30 +4,30 @@ body {
 }
 h1,
 h2 {
-  color: #FFFF47;
+  color: #AE8913;
   font-family: 'Belgrano', serif;
 }
 h3,
 h4 {
-  color: #FFFF47;
+  color: #AE8913;
   font-family: 'Belgrano', serif;
 }
 ol li {
-  color: #241E4E;
+  color: #dccd9e;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   margin-bottom: .75rem;
 }
 label {
   font-family: 'Amatic SC', cursive;
-  color: #241E4E;
+  color: #dccd9e;
   font-size: 2rem;
 }
 #fix-button {
-  background-color: #FFFF47;
+  background-color: #AE8913;
   font-family: 'Oswald', sans-serif;
   font-size: 1.3rem;
-  color: #241E4E;
+  color: #dccd9e;
 }
 .buttonDiv {
   bottom: 10%;
@@ -37,7 +37,7 @@ label {
 }
 
 #ansr-choice {
-  color: #241E4E;
+  color: #dccd9e;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
@@ -49,7 +49,7 @@ img {
   margin-right: auto;
 }
 p#hint {
-  color: #241E4E;
+  color: #dccd9e;
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
 }
