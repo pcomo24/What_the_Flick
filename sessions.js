@@ -1,7 +1,17 @@
-function Movies(request) {
+function Movies(request, pageLimit) {
+  request.session.score = request.session.score || 1-1
+  request.session.lives = request.session.lives || 1
+  request.correct = function () {
+  request.session.score += 1;
+  }
+
+  request.incorrect = function () {
+  request.session.lives -= 1;
+  }
+
   request.session.nextMovie;
 //array which stores composite numeric values for previous movie lookups
-  request.session.movies = [];
+  request.session.movies = request.session.movies || [];
 //method which pushed composite numeric values to request.session.movies. Called at the end of request.newMovie.
   request.addMovie = function () {
     //request.session.movies.push(request.session.nextMovie)
@@ -12,7 +22,7 @@ function Movies(request) {
 //present in "themoviedb.org" database api. The values are checked to be unique,
 //-and then returned as a (2) element array.
   request.newMovie = function () {
-    request.session.nextMoviePage = Math.ceil(Math.random() * 1000);
+    request.session.nextMoviePage = Math.ceil(Math.random() * pageLimit);
     request.session.nextMovieSelection = Math.floor(Math.random() * 20);
 //numeric variable request.session.nextMovieSelection is divided by 100 and added to integer request.session.nextMoviePage so
 //-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.

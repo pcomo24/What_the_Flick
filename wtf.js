@@ -28,12 +28,10 @@ app.use(session({
 
 // global variables
 var username, genre;
-var score = 0;
-var lives = 1;
 var img_url = [];
 var title = [];
 var overviewHint = [];
-var page;
+var page, pageLimit;
 var tagline = [];
 
 app.use(morgan('dev'));
@@ -42,16 +40,27 @@ app.use('/static', express.static('public'));
 
 //get genre selection from form and set to variable 'genre'
 app.post('/getGenre', function(request, response) {
-    genre = request.body.genre
-    console.log(genre)
-    response.redirect('/game')
+    genre = request.body.genreChoice;
+    console.log('genre: ' + genre);
+    var base_url = 'https://api.themoviedb.org/3/discover/';
+    var api_key = 'movie?api_key=' + process.env.API_KEY;
+    var options = '&language=en&region=US&include_adult=false&with_genres=' + genre +'&page=1';
+    let url = base_url + api_key + options;
+    // url = 'https://api.themoviedb.org/3/discover/movie?api_key=7e1972182eb6105c196b67794648a379&language=en&region=US&include_adult=false&with_genres=36&page=1'
+    axios.get(url)
+      .then(function (api) {
+        pageLimit = api.data.total_pages;
+        response.redirect('/game');
+      })
+
 });
 
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
   // call new randoms before new api request
-  sessions.Movies(request);
+  console.log('pageLmt: '+pageLimit);
+  sessions.Movies(request, pageLimit);
   page = request.newMovie();
   console.log(page);
 
@@ -59,7 +68,8 @@ app.get('/game', function(request, response) {
   if (genre == 'All') {
     genre = '';
   } else {
-    genre = 'with_genres=' + genre;
+    genre = 'with_genres=' + genre + '&';
+    console.log(genre);
   }
 
   //set url parts as variables to be concatenated
@@ -67,7 +77,7 @@ app.get('/game', function(request, response) {
   var api_key = 'movie?api_key=' + process.env.API_KEY;
   var options = '&language=en&region=US&include_adult=false&' + genre + 'page='
   let url = base_url + api_key + options + page[0];
-
+  console.log(url);
 axios.get(url)
     .then(function (api) {
         for(let j=0; j<20; j++) {
@@ -154,20 +164,23 @@ app.post('/guess', function(request, response, next) {
     // reset arrays and make new api call
     title=[];
     img_url=[];
-    score += 1;
+    sessions.Movies(request);
+    request.correct();
     response.redirect('/game/');
+
 
   } else {
     console.log('no match')
-    lives -= 1;
-    if (lives <= 0) {
+    sessions.Movies(request);
+    request.incorrect();
+    if (request.session.lives <= 0) {
       response.redirect('/game_over');
     }
   }
 });
 
 app.get('/game_over', function(request, response) {
-    response.render('game_over.hbs', {score:score})
+    response.render('game_over.hbs', {score:request.session.score})
 });
 
 app.get('/genres', function(request, response) {
@@ -179,18 +192,11 @@ app.get('/genres', function(request, response) {
 
 app.get('/', function (request, response) {
   sessions.Movies(request);
-  response.render('home.hbs', {layout: 'layout2'})
-  //response.redirect('/game');
-});
-
-app.get('/home', function (request, response) {
-  sessions.Movies(request);
   axios.all([getGenres()])
     .then(axios.spread(function(api) {
       genre = request.body.genreChoice;
-      response.render('home.hbs', {genres: api.data.genres});
-      console.log(genre);
-    }))
+      response.render('home.hbs', {layout: 'layout2', genres: api.data.genres});
+   }))
 });
 
 //Port 3000 is optional
