@@ -32,7 +32,7 @@ var img_url = [];
 var title = [];
 var overviewHint = [];
 var page, pageLimit;
-var tagline = 0;
+var choices = [];
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -70,7 +70,7 @@ app.post('/getGenre', function(request, response) {
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
   // call new randoms before new api request
-  console.log('pageLmt: '+pageLimit);
+  console.log('pageLmt: '+ pageLimit);
   sessions.Movies(request, pageLimit);
   page = request.newMovie();
 
@@ -103,7 +103,6 @@ axios.get(url)
         console.log('new call sucessfull');
 
         // creates the multiple choices
-        var choices = [];
         var tmpRnd;
         function generateChoices () {
           tmpRnd = Math.floor(Math.random() * title.length)
@@ -121,15 +120,26 @@ axios.get(url)
           let replace = Math.floor(Math.random() * 5);
           choices[replace] = title[page[1]];
         }
-
+        console.log("id: " + api.data.results[page[1]].id)
         return api.data.results[page[1]].id
     })
     // gets the tagline
     .then(function(id) {
-      axios.get(`https://api.themoviedb.org/3/movie/${id}&api_key=${process.env.API_KEY}`)
+      axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`)
         .then(function(tag) {
-          
+          console.log('tag: '+ tag.data.tagline);
+          var context = {
+              imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
+              title: title[page[1]],
+              overviewHint: overviewHint[page[1]],
+              choice: choices,
+              tag: tag.data.tagline || 'No Tagline'
+          };
+          response.render('index.hbs', context);
         })
+        .catch(function(err) {
+          console.error(err);
+        });
     })
 
     .catch(function (error) {
@@ -174,6 +184,7 @@ app.post('/guess', function(request, response, next) {
     // reset arrays and make new api call
     title=[];
     img_url=[];
+    choices = [];
     sessions.Movies(request);
     request.correct();
     response.redirect('/game/');
