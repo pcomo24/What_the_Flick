@@ -1,10 +1,10 @@
 function Movies(request, pageLimit) {
-  request.session.score = request.session.score || 1-1
-  request.session.lives = request.session.lives || 1
-  request.session.img_url = request.session.img_url || []
-  request.session.title = request.session.title || []
-  request.session.hint = request.session.hint || []
-
+  request.session.score = request.session.score || 1-1;
+  request.session.lives = request.session.lives || 1;
+  request.session.img_url = request.session.img_url || [];
+  request.session.title = request.session.title || [];
+  request.session.hint = request.session.hint || [];
+  request.session.page = request.session.page;
   request.correct = function () {
     request.session.score += 1;
   }
@@ -23,10 +23,20 @@ function Movies(request, pageLimit) {
       // replace page[1] choice if arrays less that 20
       if (request.session.title.length < 20)
       ////need to refactor page from wtf.js
-        page[1] = (Math.floor(Math.random()*request.session.title.length));
+        request.session.page[1] = (Math.floor(Math.random()*request.session.title.length));
     }
-    console.log('new call sucessfull');
   }
+
+  request.clear_Movie_data = function () {
+    request.session.img_url = []
+    request.session.title = []
+  }
+
+  request.load_Page = function () {
+    request.session.page = request.newMovie();
+    console.log(request.session.page);
+  }
+
   request.session.nextMovie;
 //array which stores composite numeric values for previous movie lookups
   request.session.movies = request.session.movies || [];
@@ -40,7 +50,8 @@ function Movies(request, pageLimit) {
 //present in "themoviedb.org" database api. The values are checked to be unique,
 //-and then returned as a (2) element array.
   request.newMovie = function () {
-    request.session.nextMoviePage = Math.ceil(Math.random() * pageLimit);
+//// Replaced pagelimit with 10 because pagelimit is NaN. Need to fix.
+    request.session.nextMoviePage = Math.ceil(Math.random() * 10);
     request.session.nextMovieSelection = Math.floor(Math.random() * 20);
 //numeric variable request.session.nextMovieSelection is divided by 100 and added to integer request.session.nextMoviePage so
 //-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
