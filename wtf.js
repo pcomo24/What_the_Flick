@@ -28,11 +28,7 @@ app.use(session({
 
 // global variables
 var username, genre;
-var img_url = [];
-var title = [];
-var overviewHint = [];
 var page, pageLimit;
-var choices = [];
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -80,69 +76,41 @@ app.get('/game', function(request, response) {
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
   var api_key = 'movie?api_key=' + process.env.API_KEY;
-  var options = '&language=en&region=US&include_adult=false' + genre + '&page='
-  let url = base_url + api_key + options + page[0];
+  var options = '&language=en&region=US&include_adult=false&' + genre + 'page='
+  let url = base_url + api_key + options + request.session.page[0];
   console.log(url);
 axios.get(url)
-    .then(function (api) {
-      //// fix this in sessions
-        // gets all the needed data from page
-        for(let j=0; j<20; j++) {
-          if (api.data.results[j].backdrop_path) {
-            img_url.push(api.data.results[j].backdrop_path);
-            overviewHint.push(api.data.results[j].overview);
-            title.push(api.data.results[j].title);
-          }
-        }
-        // checks to make sure img_url isn't empty if so gets new api call
-        if(img_url.length < 5) {
-            response.redirect('/game');
-        }
-        // replace page[1] choice if arrays less that 20
-        if (img_url.length < 20) {
-            page[1] = (Math.floor(Math.random()*img_url.length));
-        }
-
+    .then( function (api) {
+        request.set_Movie_data(api);
         console.log('new call sucessfull');
 
         // creates the multiple choices
         var tmpRnd;
         function generateChoices () {
-          tmpRnd = Math.floor(Math.random() * title.length)
-          if (choices.includes(title[tmpRnd]))
+          tmpRnd = Math.floor(Math.random() * request.session.title.length)
+          if (choices.includes(request.session.title[tmpRnd]))
             generateChoices();
           else
-            choices.push(title[tmpRnd]);
+            choices.push(request.session.title[tmpRnd]);
         }
         for(let j=0; j<4; j++) {
           generateChoices();
         }
 
         // replace random answer with correct answer if not present in choices
-        if (!choices.includes(title[page[1]])) {
-          let replace = Math.floor(Math.random() * 4);
-          choices[replace] = title[page[1]];
+        if (!choices.includes(request.session.title[request.session.page[1]])) {
+          let replace = Math.floor(Math.random() * 5);
+          choices[replace] = request.session.title[request.session.page[1]];
         }
-        console.log("id: " + api.data.results[page[1]].id)
-        return api.data.results[page[1]].id
-    })
-    // gets the tagline
-    .then(function(id) {
-      axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`)
-        .then(function(tag) {
-          console.log('tag: '+ tag.data.tagline);
-          var context = {
-              imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
-              title: title[page[1]],
-              overviewHint: overviewHint[page[1]],
-              choice: choices,
-              tag: tag.data.tagline || 'No Tagline'
-          };
-          response.render('index.hbs', context);
-        })
-        .catch(function(err) {
-          console.error(err);
-        });
+
+        var context = {
+            imgUrl: 'https://image.tmdb.org/t/p/w500/' + request.session.img_url[request.session.page[1]],
+            title: request.session.title[request.session.page[1]],
+            overviewHint: request.session.hint[request.session.page[1]],
+            choice: choices,
+            // genres: apiGenres.data.genres
+        };
+        response.render('index.hbs', context);
     })
 
     .catch(function (error) {
@@ -181,9 +149,12 @@ app.get('/highscores', function(request, response, next) {
 app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
   var answer = request.body.answer;
-  var title2 = title[page[1]];
+  var title2 = request.session.title[request.session.page[1]];
   if (answer == title2 && request.session.lives > 0) {
+    console.log('they matched')
+    // reset arrays and make new api call
     sessions.Movies(request);
+    request.clear_Movie_data();
     request.correct();
     response.redirect('/game/');
   } else {
