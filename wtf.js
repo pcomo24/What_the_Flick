@@ -121,7 +121,7 @@ app.get('/highscores', function(request, response, next) {
 app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
   var answer = request.body.answer;
-  var title2 = title[page[1]];
+  var title2 = request.session.title[page[1]];
   if (answer == title2 && request.session.lives > 0) {
     sessions.Movies(request);
     request.correct();

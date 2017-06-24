@@ -1,10 +1,10 @@
 function Movies(request, pageLimit, response) {
   request.session.score = request.session.score || 0
   request.session.lives = request.session.lives || 1
-  request.session.img_url = request.session.img_url || []
-  request.session.title = request.session.title || []
-  request.session.hint = request.session.hint || []
-  request.session.choices = request.session.choices || []
+  request.session.img_url = []
+  request.session.title = []
+  request.session.hint = []
+  request.session.choices = [];
 
   request.correct = function () {
     request.session.score += 1;
@@ -25,6 +25,7 @@ function Movies(request, pageLimit, response) {
       }
     }
       console.log('pushed to arrays');
+      console.log('array length = ' + request.session.title.length);
       // checks to make sure img_url isn't empty if so gets new api call
       if(request.session.img_url.length < 5) {
           console.log('check 1 failed');
