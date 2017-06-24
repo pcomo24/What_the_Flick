@@ -120,7 +120,7 @@ axios.get(url)
 
         // replace random answer with correct answer if not present in choices
         if (!choices.includes(title[page[1]])) {
-          let replace = Math.floor(Math.random() * 5);
+          let replace = Math.floor(Math.random() * 4);
           choices[replace] = title[page[1]];
         }
         console.log("id: " + api.data.results[page[1]].id)
@@ -183,15 +183,9 @@ app.post('/guess', function(request, response, next) {
   var answer = request.body.answer;
   var title2 = title[page[1]];
   if (answer == title2 && request.session.lives > 0) {
-    // reset arrays and make new api call
-    title=[];
-    img_url=[];
-    choices = [];
     sessions.Movies(request);
     request.correct();
     response.redirect('/game/');
-
-
   } else {
     sessions.Movies(request);
     request.incorrect();

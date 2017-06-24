@@ -51,6 +51,7 @@ function Movies(request, pageLimit) {
       if (request.session.nextMovie === request.session.movies[i]) {
         console.log('Duplicate found ' + request.session.nextMovie);
         request.newMovie();
+        //Alston getting infinite recursion error here maybe because of no return?
 //Game over logic can be added here if needed
       }
     }
