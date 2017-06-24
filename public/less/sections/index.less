@@ -2,32 +2,39 @@ body {
   background: url("/public/images/08-02-02.png");
   background-size: cover;
   background-attachment: fixed;
+  border-radius: 10%;
 }
 
 h1, h2 {
-  color: @ryellow;
+  color: @rgold;
   font-family: @font1;
+  padding-bottom: 15px;
+
+  &.heading {
+    margin-bottom: 50px;
+    border-bottom: 1px solid @rgold;
+  }
 }
 h3, h4 {
-  color: @ryellow;
+  color: @rgold;
   font-family: @font1;
 }
 ol li {
-  color: @rblue;
+  color: @roffWhite;
   font-size: 2rem;
   font-family: @font2;
   margin-bottom: .75rem;
 }
 label {
   font-family: @font2;
-  color: @rblue;
+  color: @roffWhite;
   font-size: 2rem;
 }
 #fix-button {
-  background-color: @ryellow;
+  background-color: @rgold;
   font-family: @font3;
   font-size: 1.3rem;
-  color: @rblue;
+  color: @rblack;
 }
 #movdiv {
   height: 1000px;
@@ -39,9 +46,18 @@ label {
 .top-margin {
   margin-top: 4em;
 }
-
+.score {
+  height: 10rem;
+}
+@-webkit-keyframes collapse {
+  0% {height: 10rem;}
+  100%{height: 1rem;}
+}
+.bottom-margin {
+  margin-bottom: 6rem;
+}
 #ansr-choice {
-  color: @rblue;
+  color: @roffWhite;
   font-size: 2rem;
   font-family: @font2;
   display: inline-block;
@@ -54,7 +70,7 @@ img {
 }
 
 #hint {
-    color: @rblue;
+    color: @roffWhite;
     font-family: @font2;
     font-size: 2rem;
 }

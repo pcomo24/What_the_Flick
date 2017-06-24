@@ -63,12 +63,15 @@ app.post('/getGenre', function(request, response) {
         }
         response.redirect('/game');
       })
-
 });
 
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
+  // reset arrays and make new api call
+  title=[];
+  img_url=[];
+  choices = [];
   // call new randoms before new api request
   console.log('pageLmt: '+ pageLimit);
   sessions.Movies(request, pageLimit);
@@ -157,7 +160,6 @@ app.post('/login', function(request, response, next) {
 
 app.post('/something', function(request, response, next) {
 //maybe need a cookie from which to log the username for stretch goal
-//var username =
   username = request.body.playerName;
 //high_scores should be whatever the table name is per jj
   db.query('INSERT INTO highscores VALUES (default, $1, $2)',[username, request.session.score] )
@@ -171,7 +173,7 @@ app.post('/something', function(request, response, next) {
 app.get('/highscores', function(request, response, next) {
   db.any("SELECT * FROM highscores ORDER BY score DESC LIMIT 10")
     .then(function(results) {
-      response.render('highscores.hbs', {results:results});
+      response.render('highscores.hbs', {layout: 'layout2', results:results});
     })
     .catch(next);
 });
