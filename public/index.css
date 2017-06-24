@@ -2,6 +2,7 @@ body {
   background: url("/public/images/08-02-02.png");
   background-size: cover;
   background-attachment: fixed;
+  border-radius: 10%;
 }
 h1,
 h2 {
@@ -30,39 +31,36 @@ label {
   color: #EEE8AA;
   font-size: 2rem;
 }
-#submit-button {
+/* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
+.fix-button {
   background-color: #D4AF37;
   font-family: 'Oswald', sans-serif;
   font-size: 1.3rem;
   color: black;
-  margin-top: 50px;
-  margin-right: 10px;
-  float: left;
-}
-#hint-button {
-  background-color: #D4AF37;
-  font-family: 'Oswald', sans-serif;
-  font-size: 1.3rem;
-  color: black;
-  margin-top: 50px;
-  margin-right: 10px;
-  float: right;
 }
 #newGame-button {
   background-color: #D4AF37;
   font-family: 'Oswald', sans-serif;
   font-size: 1.3rem;
   color: black;
-  margin-right: 10px;
-  margin-bottom: 75px;
 }
 #hiScores-button {
   background-color: #D4AF37;
   font-family: 'Oswald', sans-serif;
   font-size: 1.3rem;
   color: black;
-  margin-right: 10px;
-  margin-bottom: 75px;
+}
+#submit-button {
+  background-color: #D4AF37;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3rem;
+  color: black;
+}
+#hint-button {
+  background-color: #D4AF37;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3rem;
+  color: black;
 }
 #movdiv {
   height: 1000px;
@@ -76,6 +74,7 @@ label {
 .score {
   height: 10rem;
 }
+/* a transition I created for the highscores page animation */
 @-webkit-keyframes collapse {
   0% {
     height: 10rem;
@@ -92,7 +91,6 @@ label {
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
-  margin-bottom: 15px;
 }
 img {
   display: block;
@@ -104,12 +102,16 @@ img {
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
 }
-
+/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
+.rounded-img {
+  border-radius: 2%;
+}
 #homePic {
   border-radius: 2%;
 }
-
+#poster {
+  border-radius: 2%;
+}
 #tagline {
   margin-bottom: 50px;
 }
-
