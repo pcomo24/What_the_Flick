@@ -7,7 +7,7 @@ const pgp = require('pg-promise')({
   promiseLib: Promise
 });
 const bodyParser = require('body-parser');
-const sessions = require('./sessions.js');
+const sessions = require('./session_alt.js');
 const session = require('express-session');
 //dbConfig can be changed to whatever the database configuration file is named
 var db = pgp({database: 'highscores', user:'postgres'});
@@ -68,10 +68,6 @@ app.post('/getGenre', function(request, response) {
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
-  // reset arrays and make new api call
-  title=[];
-  img_url=[];
-  choices = [];
   // call new randoms before new api request
   console.log('pageLmt: '+ pageLimit);
   sessions.Movies(request, pageLimit);
@@ -85,56 +81,12 @@ app.get('/game', function(request, response) {
   console.log(url);
 axios.get(url)
     .then(function (api) {
-      //// fix this in sessions
-        // gets all the needed data from page
-        for(let j=0; j<20; j++) {
-          if (api.data.results[j].backdrop_path) {
-            img_url.push(api.data.results[j].backdrop_path);
-            overviewHint.push(api.data.results[j].overview);
-            title.push(api.data.results[j].title);
-          }
-        }
-        // checks to make sure img_url isn't empty if so gets new api call
-        if(img_url.length < 5) {
-            response.redirect('/game');
-        }
-        // replace page[1] choice if arrays less that 20
-        if (img_url.length < 20) {
-            page[1] = (Math.floor(Math.random()*img_url.length));
-        }
-
-        console.log('new call sucessfull');
-
-        // creates the multiple choices
-        var tmpRnd;
-        function generateChoices () {
-          tmpRnd = Math.floor(Math.random() * title.length)
-          if (choices.includes(title[tmpRnd]))
-            generateChoices();
-          else
-            choices.push(title[tmpRnd]);
-        }
-        for(let j=0; j<4; j++) {
-          generateChoices();
-        }
-
-        // replace random answer with correct answer if not present in choices
-        if (!choices.includes(title[page[1]])) {
-          let replace = Math.floor(Math.random() * 4);
-          choices[replace] = title[page[1]];
-        }
-        var context = {
-            imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
-            title: title[page[1]],
-            overviewHint: overviewHint[page[1]],
-            choice: choices,
-            tag: tag.data.tagline || 'No Tagline'
-        };
-        response.render('index.hbs', context);
+      context = request.set_Movie_data(api, page);
+      response.render('index.hbs', context);
     })
 
     .catch(function (error) {
-        console.error(error);
+        // console.error(error);
     });
 });
 
@@ -173,7 +125,7 @@ app.post('/guess', function(request, response, next) {
   if (answer == title2 && request.session.lives > 0) {
     sessions.Movies(request);
     request.correct();
-    response.redirect('/game/');
+    response.redirect('/game');
   } else {
     sessions.Movies(request);
     request.incorrect();
