@@ -30,11 +30,24 @@ label {
   color: @roffWhite;
   font-size: 2rem;
 }
-#fix-button {
+/* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
+.fix-button {
   background-color: @rgold;
   font-family: @font3;
   font-size: 1.3rem;
   color: @rblack;
+}
+#newGame-button {
+  .fix-button;
+}
+#hiScores-button {
+  .fix-button;
+}
+#submit-button {
+  .fix-button;
+}
+#hint-button {
+  .fix-button;
 }
 #movdiv {
   height: 1000px;
@@ -49,6 +62,7 @@ label {
 .score {
   height: 10rem;
 }
+/* a transition I created for the highscores page animation */
 @-webkit-keyframes collapse {
   0% {height: 10rem;}
   100%{height: 1rem;}
@@ -73,4 +87,18 @@ img {
     color: @roffWhite;
     font-family: @font2;
     font-size: 2rem;
+}
+/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
+.rounded-img {
+  border-radius: 2%;
+}
+#homePic {
+  .rounded-img;
+}
+#poster {
+  .rounded-img;
+}
+
+#tagline {
+  margin-bottom: 50px;
 }
