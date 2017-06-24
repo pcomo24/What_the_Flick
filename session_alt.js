@@ -5,10 +5,10 @@ function Movies(request, response) {
   request.session.choices = [];
   request.session.username;
   request.session.pageLimit;
+  request.session.page;
 
 ////need to set parameter j as passed in within the function call in wtf.js
-  request.set_Movie_data = function (api, page) {
-    var page = page;
+  request.set_Movie_data = function (api) {
     console.log('function started');
     for(var j=0; j<20; j++) {
       if (api.data.results[j].backdrop_path) {
@@ -28,7 +28,7 @@ function Movies(request, response) {
       if (request.session.title.length < 20) {
       ////need to refactor page from wtf.js
         console.log('check 2 failed');
-        page[1] = (Math.floor(Math.random()*request.session.title.length));
+        request.session.page[1] = (Math.floor(Math.random()*request.session.title.length));
       }
     console.log('new call sucessfull');
 
@@ -46,14 +46,14 @@ function Movies(request, response) {
     }
 
     // replace random answer with correct answer if not present in choices
-    if (!request.session.choices.includes(request.session.title[page[1]])) {
+    if (!request.session.choices.includes(request.session.title[request.session.page[1]])) {
       let replace = Math.floor(Math.random() * 4);
-      request.session.choices[replace] = request.session.title[page[1]];
+      request.session.choices[replace] = request.session.title[request.session.page[1]];
     }
     var context = {
-        imgUrl: 'https://image.tmdb.org/t/p/w500/' + request.session.img_url[page[1]],
-        title: request.session.title[page[1]],
-        overviewHint: request.session.hint[page[1]],
+        imgUrl: 'https://image.tmdb.org/t/p/w500/' + request.session.img_url[request.session.page[1]],
+        title: request.session.title[request.session.page[1]],
+        overviewHint: request.session.hint[request.session.page[1]],
         choice: request.session.choices,
     };
     return context;

@@ -27,11 +27,6 @@ app.use(session({
   cookie: {maxAge: 1000 * 60 * 60 * 24}
 }));
 
-// global variables
-var genre;
-var page;
-
-
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
@@ -41,14 +36,14 @@ app.post('/getGenre', function(request, response) {
 
     // gets proper genre from url
     if (request.body.genreChoice == 'All') {
-      genre = '';
+      request.session.genre = '';
     } else {
-      genre = '&with_genres=' + request.body.genreChoice;
+      request.session.genre = '&with_genres=' + request.body.genreChoice;
     }
-    console.log('genre: ' + genre);
+    console.log('genre: ' + request.session.genre);
     var base_url = 'https://api.themoviedb.org/3/discover/';
     var api_key = 'movie?api_key=' + process.env.API_KEY;
-    var options = '&language=en&region=US&include_adult=false' + genre +'&page=1';
+    var options = '&language=en&region=US&include_adult=false' + request.session.genre +'&page=1';
     let url = base_url + api_key + options;
     axios.get(url)
       .then(function (api) {
@@ -69,17 +64,17 @@ app.get('/game', function(request, response) {
   // call new randoms before new api request
   console.log('pageLmt: '+ request.session.pageLimit);
   movie.Movies(request);
-  page = request.newMovie();
+  request.session.page = request.newMovie();
 
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
   var api_key = 'movie?api_key=' + process.env.API_KEY;
-  var options = '&language=en&region=US&include_adult=false' + genre + '&page='
-  let url = base_url + api_key + options + page[0];
+  var options = '&language=en&region=US&include_adult=false' + request.session.genre + '&page='
+  let url = base_url + api_key + options + request.session.page[0];
   console.log(url);
 axios.get(url)
     .then(function (api) {
-      context = request.set_Movie_data(api, page);
+      context = request.set_Movie_data(api);
       response.render('index.hbs', context);
     })
 
@@ -111,7 +106,7 @@ app.get('/highscores', function(request, response, next) {
 app.post('/guess', function(request, response, next) {
   console.log(request.body.answer);
   var answer = request.body.answer;
-  var title2 = request.session.title[page[1]];
+  var title2 = request.session.title[request.session.page[1]];
   if (answer == title2 && request.session.lives > 0) {
     sessions.updateSNL(request);
     request.correct();
@@ -140,7 +135,7 @@ app.get('/', function (request, response) {
   sessions.initialSNL(request);
   axios.all([getGenres()])
     .then(axios.spread(function(api) {
-      genre = request.body.genreChoice;
+      request.session.genre = request.body.genreChoice;
       response.render('home.hbs', {layout: 'layout2', genres: api.data.genres});
    }))
 });
