@@ -123,26 +123,14 @@ axios.get(url)
           let replace = Math.floor(Math.random() * 4);
           choices[replace] = title[page[1]];
         }
-        console.log("id: " + api.data.results[page[1]].id)
-        return api.data.results[page[1]].id
-    })
-    // gets the tagline
-    .then(function(id) {
-      axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`)
-        .then(function(tag) {
-          console.log('tag: '+ tag.data.tagline);
-          var context = {
-              imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
-              title: title[page[1]],
-              overviewHint: overviewHint[page[1]],
-              choice: choices,
-              tag: tag.data.tagline || 'No Tagline'
-          };
-          response.render('index.hbs', context);
-        })
-        .catch(function(err) {
-          console.error(err);
-        });
+        var context = {
+            imgUrl: 'https://image.tmdb.org/t/p/w500/' + img_url[page[1]],
+            title: title[page[1]],
+            overviewHint: overviewHint[page[1]],
+            choice: choices,
+            tag: tag.data.tagline || 'No Tagline'
+        };
+        response.render('index.hbs', context);
     })
 
     .catch(function (error) {
