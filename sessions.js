@@ -14,11 +14,16 @@ function Movies(request, pageLimit) {
   }
 ////need to set parameter j as passed in within the function call in wtf.js
   request.set_Movie_data = function (api) {
+    console.log('function starts');
     for(let j=0; j<20; j++) {
       if (api.data.results[j].backdrop_path) {
         request.session.img_url.push(api.data.results[j].backdrop_path);
         request.session.title.push(api.data.results[j].backdrop_path);
         request.session.hint.push(api.data.results[j].backdrop_path);
+      }
+      // checks to make sure img_url isn't empty if so gets new api call
+      if(img_url.length < 5) {
+          response.redirect('/game');
       }
       // replace page[1] choice if arrays less that 20
       if (request.session.title.length < 20)
@@ -58,14 +63,14 @@ function Movies(request, pageLimit) {
     request.session.nextMovie =  request.session.nextMoviePage;
 //for loop compares new movie against previous movies in session and calls another
 //-if a matching movie is found in the (used) movies array.
-    for(var i = 0; i < request.session.movies.length;i++) {
-      if (request.session.nextMovie === request.session.movies[i]) {
-        console.log('Duplicate found ' + request.session.nextMovie);
-        request.newMovie();
-        //Alston getting infinite recursion error here maybe because of no return?
-//Game over logic can be added here if needed
-      }
+  for(var i = 0; i < request.session.movies.length;i++) {
+    if (request.session.nextMovie === request.session.movies[i]) {
+      console.log('Duplicate found ' + request.session.nextMovie);
+      request.newMovie();
+      break;
     }
+  }
+//Game over logic can be added here if needed
 //Once lookup values are verified to be unique, they are pushed to an array to checked
 //-against in future calls.
     console.log('Added ' + request.session.nextMovie);
@@ -73,6 +78,7 @@ function Movies(request, pageLimit) {
 //numeric variables request.session.nextMoviePage and request.session.nextMovieSelection must be converted to
 //-strings before being returned for http interfacing portability.
     return [request.session.nextMoviePage, request.session.nextMovieSelection];
+
   //  clearSession () {
   //  request.session = {};
   }
