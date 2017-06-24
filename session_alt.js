@@ -1,4 +1,4 @@
-function Movies(request, pageLimit, response) {
+function Movies(request, response) {
   request.session.img_url = []
   request.session.title = []
   request.session.hint = []
@@ -59,7 +59,7 @@ function Movies(request, pageLimit, response) {
     return context;
   }
   request.newMovie = function () {
-    request.session.nextMoviePage = Math.ceil(Math.random() * pageLimit);
+    request.session.nextMoviePage = Math.ceil(Math.random() * request.session.pageLimit);
     request.session.nextMovieSelection = Math.floor(Math.random() * 20);
 
     return [request.session.nextMoviePage, request.session.nextMovieSelection];

@@ -29,7 +29,7 @@ app.use(session({
 
 // global variables
 var genre;
-var page, pageLimit;
+var page;
 
 
 app.use(morgan('dev'));
@@ -53,11 +53,11 @@ app.post('/getGenre', function(request, response) {
     axios.get(url)
       .then(function (api) {
         console.log(api.data.total_pages);
-        pageLimit = api.data.total_pages - 1;
-        if (pageLimit > 1000) {
-          pageLimit = 1000;
+        request.session.pageLimit = api.data.total_pages - 1;
+        if (request.session.pageLimit > 1000) {
+          request.session.pageLimit = 1000;
         } else {
-          pageLimit = api.data.total_pages;
+          request.session.pageLimit = api.data.total_pages;
         }
         response.redirect('/game');
       })
@@ -67,8 +67,8 @@ app.post('/getGenre', function(request, response) {
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response) {
   // call new randoms before new api request
-  console.log('pageLmt: '+ pageLimit);
-  movie.Movies(request, pageLimit);
+  console.log('pageLmt: '+ request.session.pageLimit);
+  movie.Movies(request);
   page = request.newMovie();
 
   //set url parts as variables to be concatenated
