@@ -1,18 +1,11 @@
 function Movies(request, pageLimit, response) {
-  request.session.score = request.session.score || 0
-  request.session.lives = request.session.lives || 1
   request.session.img_url = []
   request.session.title = []
   request.session.hint = []
   request.session.choices = [];
+  request.session.username;
+  request.session.pageLimit;
 
-  request.correct = function () {
-    request.session.score += 1;
-  }
-
-  request.incorrect = function () {
-    request.session.lives -= 1;
-  }
 ////need to set parameter j as passed in within the function call in wtf.js
   request.set_Movie_data = function (api, page) {
     var page = page;

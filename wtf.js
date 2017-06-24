@@ -7,7 +7,8 @@ const pgp = require('pg-promise')({
   promiseLib: Promise
 });
 const bodyParser = require('body-parser');
-const sessions = require('./session_alt.js');
+const sessions = require('./scoreAndLives.js');
+const movie = require('./session_alt.js');
 const session = require('express-session');
 //dbConfig can be changed to whatever the database configuration file is named
 var db = pgp({database: 'highscores', user:'postgres'});
@@ -27,12 +28,9 @@ app.use(session({
 }));
 
 // global variables
-var username, genre;
-var img_url = [];
-var title = [];
-var overviewHint = [];
+var genre;
 var page, pageLimit;
-var choices = [];
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -70,7 +68,7 @@ app.post('/getGenre', function(request, response) {
 app.get('/game', function(request, response) {
   // call new randoms before new api request
   console.log('pageLmt: '+ pageLimit);
-  sessions.Movies(request, pageLimit);
+  movie.Movies(request, pageLimit);
   page = request.newMovie();
 
   //set url parts as variables to be concatenated
@@ -90,19 +88,11 @@ axios.get(url)
     });
 });
 
-//Login
-//redirect is equal to the path of the page that redirected to the login screen
-app.post('/login', function(request, response, next) {
-  var redirect = request.query.redirect;
-  username = request.query.username;
-  response.redirect('index.hbs')
-});
-
 app.post('/something', function(request, response, next) {
 //maybe need a cookie from which to log the username for stretch goal
-  username = request.body.playerName;
+  request.session.username = request.body.playerName;
 //high_scores should be whatever the table name is per jj
-  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[username, request.session.score] )
+  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[request.session.username, request.session.score] )
     .then(function() {
 //highscores.hbs should be whatever frontend hbs has the highscores per paul or alston
       response.redirect('/highscores');
@@ -123,11 +113,11 @@ app.post('/guess', function(request, response, next) {
   var answer = request.body.answer;
   var title2 = request.session.title[page[1]];
   if (answer == title2 && request.session.lives > 0) {
-    sessions.Movies(request);
+    sessions.updateSNL(request);
     request.correct();
     response.redirect('/game');
   } else {
-    sessions.Movies(request);
+    sessions.updateSNL(request);
     request.incorrect();
     if (request.session.lives <= 0) {
       response.redirect('/game_over');
@@ -147,7 +137,7 @@ app.get('/genres', function(request, response) {
 });
 
 app.get('/', function (request, response) {
-  sessions.Movies(request);
+  sessions.initialSNL(request);
   axios.all([getGenres()])
     .then(axios.spread(function(api) {
       genre = request.body.genreChoice;
