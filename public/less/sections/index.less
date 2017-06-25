@@ -8,10 +8,10 @@ body {
 h1, h2 {
   color: @rgold;
   font-family: @font1;
-  padding-bottom: 15px;
+  padding-bottom: 0.25em;
 
   &.heading {
-    margin-bottom: 50px;
+    margin-bottom: 1em;
     border-bottom: 1px solid @rgold;
   }
 }
@@ -30,47 +30,134 @@ label {
   color: @roffWhite;
   font-size: 2rem;
 }
-#fix-button {
-  background-color: @rgold;
-  font-family: @font3;
-  font-size: 1.3rem;
-  color: @rblack;
-}
-#movdiv {
-  height: 1000px;
-}
-.buttonDiv {
-  bottom: 10%;
-}
-
-.top-margin {
-  margin-top: 4em;
-}
-.score {
-  height: 10rem;
-}
-@-webkit-keyframes collapse {
-  0% {height: 10rem;}
-  100%{height: 1rem;}
-}
-.bottom-margin {
-  margin-bottom: 6rem;
-}
-#ansr-choice {
-  color: @roffWhite;
-  font-size: 2rem;
-  font-family: @font2;
-  display: inline-block;
-}
-
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
+.fix-button {
+  background-color: @rcrimson;
+  font-family: @font1;
+  font-size: 1.2rem;
+  color: @rgold;
+}
+
+/* for buttons in home page */
+#homeNewGame-button {
+  .fix-button;
+}
+#homeNewGame-button:hover {
+  background-color: @rgold;
+  color: @rcrimson;
+}
+
+/* for buttons in index page */
+#submit-button {
+  float: left;
+  margin-top: 4em;
+  .fix-button;
+}
+#submit-button:hover {
+  background-color: @rgold;
+  color: @rcrimson;
+}
+#hint-button {
+  float: right;
+  margin-top: 4em;
+  .fix-button;
+}
+#hint-button:hover {
+  background-color: @rgold;
+  color: @rcrimson;
+}
+#newGame-button {
+  margin-bottom: 4em;
+  float: left;
+  .fix-button;
+}
+#newGame-button:hover {
+  background-color: @rgold;
+  color: @rcrimson;
+}
+#highScores-button {
+  margin-bottom: 4em;
+  float: right;
+  .fix-button;
+}
+#highScores-button:hover {
+  background-color: @rgold;
+  color: @rcrimson;
+}
+
+/* high scores page */
+#playAgain-button {
+  margin-top: 0.5em;
+  .fix-button;
+}
+#playAgain-button:hover {
+  background-color: @rgold;
+  color: @rcrimson;
+}
+
+/* game over page */
+#submit-button2 {
+  margin-top: 2.5em;
+  .fix-button;
+}
+#submit-button2:hover {
+  background-color: @rgold;
+  color: @rcrimson;
+}
+
+/* margin/spacing */
+.top-margin {
+  margin-top: 5em;
+}
+.top-inside-margin {
+  margin-top: 2.5em;
+}
+.bottom-margin {
+  margin-bottom: 5em;
+}
+
+/* a transition I created for the highscores page animation */
+@-webkit-keyframes collapse {
+  0% {height: 10rem;}
+  100%{height: 1rem;}
+}
+.score {
+  height: 10rem;
+  margin-bottom: 30px;
+}
+#movdiv {
+  height: 16.66em;
+}
+
+/* index page stuff */
+#ansr-choice {
+  color: @roffWhite;
+  font-size: 2rem;
+  font-family: @font2;
+  display: inline-block;
+  margin-top: 30px;
+}
 #hint {
     color: @roffWhite;
     font-family: @font2;
     font-size: 2rem;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+}
+
+/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
+.rounded-img {
+  border-radius: 2%;
+}
+#homePic {
+  .rounded-img;
+}
+#poster {
+  .rounded-img;
 }

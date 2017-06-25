@@ -8,11 +8,11 @@ h1,
 h2 {
   color: #D4AF37;
   font-family: 'Belgrano', serif;
-  padding-bottom: 15px;
+  padding-bottom: 0.25em;
 }
 h1.heading,
 h2.heading {
-  margin-bottom: 50px;
+  margin-bottom: 1em;
   border-bottom: 1px solid #D4AF37;
 }
 h3,
@@ -31,24 +31,113 @@ label {
   color: #EEE8AA;
   font-size: 2rem;
 }
-#fix-button {
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
+.fix-button {
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+/* for buttons in home page */
+#homeNewGame-button {
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#homeNewGame-button:hover {
   background-color: #D4AF37;
-  font-family: 'Oswald', sans-serif;
-  font-size: 1.3rem;
-  color: black;
+  color: #4d0000;
 }
-#movdiv {
-  height: 1000px;
-}
-.buttonDiv {
-  bottom: 10%;
-}
-.top-margin {
+/* for buttons in index page */
+#submit-button {
+  float: left;
   margin-top: 4em;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
 }
-.score {
-  height: 10rem;
+#submit-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
 }
+#hint-button {
+  float: right;
+  margin-top: 4em;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#hint-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+#newGame-button {
+  margin-bottom: 4em;
+  float: left;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#newGame-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+#highScores-button {
+  margin-bottom: 4em;
+  float: right;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#highScores-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+/* high scores page */
+#playAgain-button {
+  margin-top: 0.5em;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#playAgain-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+/* game over page */
+#submit-button2 {
+  margin-top: 2.5em;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#submit-button2:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+/* margin/spacing */
+.top-margin {
+  margin-top: 5em;
+}
+.top-inside-margin {
+  margin-top: 2.5em;
+}
+.bottom-margin {
+  margin-bottom: 5em;
+}
+/* a transition I created for the highscores page animation */
 @-webkit-keyframes collapse {
   0% {
     height: 10rem;
@@ -57,22 +146,35 @@ label {
     height: 1rem;
   }
 }
-.bottom-margin {
-  margin-bottom: 6rem;
+.score {
+  height: 10rem;
+  margin-bottom: 30px;
 }
+#movdiv {
+  height: 16.66em;
+}
+/* index page stuff */
 #ansr-choice {
   color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
-}
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 30px;
 }
 #hint {
   color: #EEE8AA;
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
+.rounded-img {
+  border-radius: 2%;
+}
+#homePic {
+  border-radius: 2%;
+}
+#poster {
+  border-radius: 2%;
 }

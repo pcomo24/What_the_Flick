@@ -1,4 +1,8 @@
 function getHint(overviewHint) {
   var hint = document.getElementById('hint');
-  hint.innerHTML = overviewHint;
+  if (hint.innerHTML == '') {
+    hint.innerHTML = overviewHint;
+  } else {
+    hint.innerHTML = '';
+  }
 }
