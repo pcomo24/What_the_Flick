@@ -16,9 +16,9 @@ h2 {
   font-family: 'Belgrano', serif;
   padding-bottom: 0.25em;
 }
-h1 .heading,
-h2 .heading {
-  margin-bottom: 1em;
+h1.heading,
+h2.heading {
+  margin-bottom: 0.2em;
   border-bottom: 1px solid #D4AF37;
 }
 h3,
@@ -39,8 +39,7 @@ label {
 }
 img {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 /* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
 .fix-button {
