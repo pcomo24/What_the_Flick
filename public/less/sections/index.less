@@ -10,7 +10,7 @@ h1, h2 {
   font-family: @font1;
   padding-bottom: 0.25em;
 
-  &.heading {
+  .heading {
     margin-bottom: 1em;
     border-bottom: 1px solid @rgold;
   }
@@ -42,15 +42,16 @@ img {
   font-family: @font1;
   font-size: 1.2rem;
   color: @rgold;
+
+  &:hover {
+    background-color: @rgold;
+    color: @rcrimson;
+  }
 }
 
 /* for buttons in home page */
 #homeNewGame-button {
   .fix-button;
-}
-#homeNewGame-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
 }
 
 /* for buttons in index page */
@@ -59,46 +60,25 @@ img {
   margin-top: 4em;
   .fix-button;
 }
-#submit-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
 #hint-button {
   float: right;
   margin-top: 4em;
   .fix-button;
-}
-#hint-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
 }
 #newGame-button {
   margin-bottom: 4em;
   float: left;
   .fix-button;
 }
-#newGame-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
 #highScores-button {
   margin-bottom: 4em;
   float: right;
   .fix-button;
 }
-#highScores-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
-
 /* high scores page */
 #playAgain-button {
   margin-top: 0.5em;
   .fix-button;
-}
-#playAgain-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
 }
 
 /* game over page */
@@ -106,10 +86,7 @@ img {
   margin-top: 2.5em;
   .fix-button;
 }
-#submit-button2:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
+
 
 /* margin/spacing */
 .top-margin {

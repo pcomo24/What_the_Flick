@@ -10,8 +10,8 @@ h2 {
   font-family: 'Belgrano', serif;
   padding-bottom: 0.25em;
 }
-h1.heading,
-h2.heading {
+h1 .heading,
+h2 .heading {
   margin-bottom: 1em;
   border-bottom: 1px solid #D4AF37;
 }
@@ -42,6 +42,10 @@ img {
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
   color: #D4AF37;
+}
+.fix-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
 }
 /* for buttons in home page */
 #homeNewGame-button {
