@@ -1,4 +1,12 @@
 <div class="row top-margin">
+    <div class="col col-4"></div>
+    <div class="col col-4 text-center">
+        <h2 class="heading">What the Flick?</h2>
+    </div>
+    <div class="col col-4"></div>
+</div>
+
+<div class="row top-inside-margin">
     <div class="col col-4 black"></div>
     <div class="col col-4 text-left">
         <img id="homePic" src="/public/images/cinema-2093264.jpg">
@@ -6,14 +14,14 @@
     <div class="col col-4"></div>
 </div>
 
-<div class="row top-margin">
+<div class="row top-inside-margin">
     <div class="col col-4"></div>
     <div class="col col-4">
         <form action="/getGenre" method="post">
             <div class="col col-12 text-center">
              <label>Select a Genre</label>
             </div>
-            <div class="col col-12 text-center top-margin">
+            <div class="col col-12 text-center top-inside-margin">
                 <select name="genreChoice">
                     <option selected="All" value="All">All</option>
                     {{#each genres}}
@@ -21,8 +29,8 @@
                     {{/each}}
                 </select>
             </div>
-            <div class="col col-12 text-center top-margin">
-                <button class="fix-button" type="submit">New Game</button>
+            <div class="col col-12 text-center top-inside-margin bottom-margin">
+                <button id="homeNewGame-button" type="submit">New Game</button>
             </div>
         </form>
     </div>
