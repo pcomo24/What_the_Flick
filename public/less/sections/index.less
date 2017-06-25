@@ -3,6 +3,11 @@ body {
   background-size: cover;
   background-attachment: fixed;
   border-radius: 10%;
+
+  @media (max-width: 800px) {
+    background: black;
+    margin: 5%;
+  }
 }
 
 h1, h2 {
@@ -42,6 +47,7 @@ img {
   font-family: @font1;
   font-size: 1.2rem;
   color: @rgold;
+  margin: 1em 0;
 
   &:hover {
     background-color: @rgold;
@@ -57,40 +63,34 @@ img {
 /* for buttons in index page */
 #submit-button {
   float: left;
-  margin-top: 4em;
   .fix-button;
 }
 #hint-button {
   float: right;
-  margin-top: 4em;
   .fix-button;
 }
 #newGame-button {
-  margin-bottom: 4em;
   float: left;
   .fix-button;
 }
 #highScores-button {
-  margin-bottom: 4em;
   float: right;
   .fix-button;
 }
 /* high scores page */
 #playAgain-button {
-  margin-top: 0.5em;
   .fix-button;
 }
 
 /* game over page */
 #submit-button2 {
-  margin-top: 2.5em;
   .fix-button;
 }
 
 
 /* margin/spacing */
 .top-margin {
-  margin-top: 5em;
+  margin-top: 1em;
 }
 .top-inside-margin {
   margin-top: 2.5em;
@@ -118,7 +118,12 @@ img {
   font-size: 2rem;
   font-family: @font2;
   display: inline-block;
-  margin-top: 30px;
+  margin-top: 10px;
+  text-overflow: ellipsis;
+
+  @media (max-width: 800px) {
+    margin-left: 5%;
+  }
 }
 #hint {
     color: @roffWhite;
@@ -126,6 +131,10 @@ img {
     font-size: 2rem;
     margin-top: 1.25em;
     margin-bottom: 1.25em;
+
+    @media (max-width: 800px) {
+      margin-left: 5%;
+    }
 }
 
 /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
