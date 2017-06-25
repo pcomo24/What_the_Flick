@@ -31,6 +31,11 @@ label {
   color: #EEE8AA;
   font-size: 2rem;
 }
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 /* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
 .fix-button {
   background-color: #4d0000;
@@ -38,16 +43,8 @@ label {
   font-size: 1.2rem;
   color: #D4AF37;
 }
-/* for home page */
-.forHomeButton {
-  margin-bottom: 2.5em;
-  background-color: #4d0000;
-  font-family: 'Belgrano', serif;
-  font-size: 1.2rem;
-  color: #D4AF37;
-}
+/* for buttons in home page */
 #homeNewGame-button {
-  margin-bottom: 4em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -57,30 +54,7 @@ label {
   background-color: #D4AF37;
   color: #4d0000;
 }
-#newGame-button {
-  margin-bottom: 4em;
-  float: left;
-  background-color: #4d0000;
-  font-family: 'Belgrano', serif;
-  font-size: 1.2rem;
-  color: #D4AF37;
-}
-#newGame-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
-#hiScores-button {
-  margin-bottom: 4em;
-  float: right;
-  background-color: #4d0000;
-  font-family: 'Belgrano', serif;
-  font-size: 1.2rem;
-  color: #D4AF37;
-}
-#hiScores-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
+/* for buttons in index page */
 #submit-button {
   float: left;
   margin-top: 4em;
@@ -105,7 +79,33 @@ label {
   background-color: #D4AF37;
   color: #4d0000;
 }
+#newGame-button {
+  margin-bottom: 4em;
+  float: left;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#newGame-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+#highScores-button {
+  margin-bottom: 4em;
+  float: right;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+}
+#highScores-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+/* high scores page */
 #playAgain-button {
+  margin-top: 0.5em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -115,9 +115,19 @@ label {
   background-color: #D4AF37;
   color: #4d0000;
 }
-#movdiv {
-  height: 16.66em;
+/* game over page */
+#submit-button2 {
+  margin-top: 2.5em;
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
 }
+#submit-button2:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+/* margin/spacing */
 .top-margin {
   margin-top: 5em;
 }
@@ -126,9 +136,6 @@ label {
 }
 .bottom-margin {
   margin-bottom: 5em;
-}
-.score {
-  height: 10rem;
 }
 /* a transition I created for the highscores page animation */
 @-webkit-keyframes collapse {
@@ -139,17 +146,20 @@ label {
     height: 1rem;
   }
 }
+.score {
+  height: 10rem;
+  margin-bottom: 30px;
+}
+#movdiv {
+  height: 16.66em;
+}
+/* index page stuff */
 #ansr-choice {
   color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
-  margin-top: 20px;
-}
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 30px;
 }
 #hint {
   color: #EEE8AA;

@@ -5,19 +5,30 @@
     </div>
     <div class="col col-4"> </div>
 </div>
+
+<br>
+
 <div class="row margin-bottom">
     <div class="col col-4"></div>
     <div class="col col-4 text-center">
-        <div class="row"><div class="col col-12"></div></div>
         <ol>
-            {{#each results}}
-                <li class="score" class="bottom-margin">{{username}} : {{score}}</li>
-            {{/each}}
+          {{#each results}}
+            <li class="score text-center" class="bottom-margin">{{username}} : {{score}}</li>
+          {{/each}}
         </ol>
-        <h2 class="margin-top">Thanks for Playing</h2>
-        <a href="/" class="button" id="playAgain-button">Play Again</a>
     </div>
     <div class="col col-4"></div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="row margin-top text-center">
+  <div class="col col-12 text-center">
+    <h2 class="text-center">Thanks for Playing</h2>
+        <a href="/" class="button" id="playAgain-button">Play Again</a>
+    </div>
 </div>
 
 <script>
