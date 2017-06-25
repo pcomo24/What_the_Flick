@@ -6,20 +6,15 @@
     <div class="col col-4"></div>
 </div>
 
-<div class="row">
+<div class="row top-inside-margin">
     <div class="col col-4"></div>
     <div class="col col-4"><img id="poster" src={{imgUrl}}></div>
-    <div class="col col-4"></div>
-</div>
-<div class="row top-margin">
-    <div class="col col-4"></div>
-    <div class="col col-4"><p id="hint"></p></div>
     <div class="col col-4"></div>
 </div>
 
 <div class="row">
     <div class="col col-4"></div>
-    <div class="col col-4"><h3>{{tag}}</h3></div>
+    <div class="col col-4"><p id="hint"></p></div>
     <div class="col col-4"></div>
 </div>
 
@@ -28,7 +23,7 @@
     <div class="col col-4 text-left" id="multipleChoices">
         <form method="POST" action="/guess">
             {{#each choice}}
-                    <input name="answer" type="radio" value='{{this}}'> <div id="ansr-choice">{{this}}</div><br>
+                <div id="ansr-choice"><input name="answer" type="radio" value='{{this}}'> {{this}}</div><br>
             {{/each}}
             <button id="submit-button" type="submit">Submit</button>
             <button id="hint-button" type="button" onclick="getHint(hint)">Hint</button>
