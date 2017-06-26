@@ -165,7 +165,7 @@ form {
   margin-bottom: 30px;
 }
 #movdiv {
-  height: 16.66em;
+  margin-top: 1000px;
 }
 /* index page stuff */
 .ansr-choice {
@@ -191,6 +191,13 @@ form {
   .ansr-choice {
     margin-left: 5%;
   }
+}
+#ansr-choice:hover {
+  background-color: #4d0000;
+}
+input:checked {
+  background-color: #4d0000;
+  border: 1px solid #EEE8AA;
 }
 #hint {
   color: #EEE8AA;

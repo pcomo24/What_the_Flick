@@ -28,6 +28,7 @@
     </div>
 </div>
 
+
 <script>
     function scrollCreds() {
         var movDiv = document.getElementById('movdiv');
@@ -35,7 +36,7 @@
         var pos = 999;
         var id = setInterval(credit, 1);
         function credit() {
-            if (pos == 200) {
+            if (pos == 50) {
                 var hiScores = document.querySelectorAll('.score');
                 hiScores.forEach(function (hiScore) {
                    hiScore.style.height = 1 + 'rem';
@@ -46,7 +47,7 @@
                 clearInterval(id)
             } else {
                 pos--;
-                movDiv.style.height = pos + 'px';
+                movDiv.style.marginTop = pos + 'px';
             }
         }
     }
