@@ -8,7 +8,7 @@ knowledge.
 HTML, LESS, JavaScript, Postgres, Node.js, Express, HBS Framework, and Kube Framework
 
 
-![Our Website](pic url goes here)
+![Our Website](/webapp.png)
 
 Live @ [www.whattheflick.info](http://www.whattheflick.info)
 
