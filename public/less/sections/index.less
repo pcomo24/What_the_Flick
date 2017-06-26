@@ -25,7 +25,10 @@ body {
         width: 100%;
       }
       h2 {
-        font-size: 4rem;
+        font-size: 350%;
+      }
+      label, li {
+        font-size: 250%;
       }
     }
   }
@@ -77,6 +80,13 @@ label {
   &:hover {
     background-color: @rgold;
     color: @rcrimson;
+  }
+
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    font-size: 3rem;
+    padding: 25px;
   }
 }
 

@@ -25,6 +25,13 @@ body {
   body .col-6 img {
     width: 100%;
   }
+  body .col-6 h2 {
+    font-size: 350%;
+  }
+  body .col-6 label,
+  body .col-6 li {
+    font-size: 250%;
+  }
 }
 h1,
 h2 {
@@ -75,6 +82,12 @@ label {
   background-color: #D4AF37;
   color: #4d0000;
 }
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .fix-button {
+    font-size: 3rem;
+    padding: 25px;
+  }
+}
 /* for buttons in home page */
 #homeNewGame-button {
   background-color: #4d0000;
@@ -86,6 +99,12 @@ label {
 #homeNewGame-button:hover {
   background-color: #D4AF37;
   color: #4d0000;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #homeNewGame-button {
+    font-size: 3rem;
+    padding: 25px;
+  }
 }
 /* for buttons in index page */
 #submit-button {
@@ -100,6 +119,12 @@ label {
   background-color: #D4AF37;
   color: #4d0000;
 }
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #submit-button {
+    font-size: 3rem;
+    padding: 25px;
+  }
+}
 #hint-button {
   float: right;
   background-color: #4d0000;
@@ -111,6 +136,12 @@ label {
 #hint-button:hover {
   background-color: #D4AF37;
   color: #4d0000;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #hint-button {
+    font-size: 3rem;
+    padding: 25px;
+  }
 }
 #newGame-button {
   float: left;
@@ -124,6 +155,12 @@ label {
   background-color: #D4AF37;
   color: #4d0000;
 }
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #newGame-button {
+    font-size: 3rem;
+    padding: 25px;
+  }
+}
 #highScores-button {
   float: right;
   background-color: #4d0000;
@@ -135,6 +172,12 @@ label {
 #highScores-button:hover {
   background-color: #D4AF37;
   color: #4d0000;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #highScores-button {
+    font-size: 3rem;
+    padding: 25px;
+  }
 }
 /* high scores page */
 #playAgain-button {
@@ -148,6 +191,12 @@ label {
   background-color: #D4AF37;
   color: #4d0000;
 }
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #playAgain-button {
+    font-size: 3rem;
+    padding: 25px;
+  }
+}
 /* game over page */
 #submit-button2 {
   background-color: #4d0000;
@@ -159,6 +208,12 @@ label {
 #submit-button2:hover {
   background-color: #D4AF37;
   color: #4d0000;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #submit-button2 {
+    font-size: 3rem;
+    padding: 25px;
+  }
 }
 /* margin/spacing */
 .top-margin {
