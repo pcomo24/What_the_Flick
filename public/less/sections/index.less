@@ -122,7 +122,20 @@ form {
   display: block;
   margin-top: 10px;
   margin-left: 12%;
-  
+
+  &:hover {
+    font-size: 4rem;
+    color: @rcrimson;
+  }
+  &:focus {
+    font-size: 4rem;
+    color: @rcrimson;
+  }
+
+  input {
+    display: none;
+  }
+
   @media (max-width: 800px) {
     margin-left: 5%;
   }
