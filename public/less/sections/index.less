@@ -25,6 +25,12 @@ body {
       img {
         width: 100%;
       }
+      h2 {
+        font-size: 350%;
+      }
+      label, li {
+        font-size: 250%;
+      }
     }
   }
 }
@@ -72,6 +78,13 @@ form {
   &:hover {
     background-color: @rgold;
     color: @rcrimson;
+  }
+
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    font-size: 3rem;
+    padding: 25px;
   }
 }
 
