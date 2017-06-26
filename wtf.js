@@ -7,18 +7,17 @@ const pgp = require('pg-promise')({
   promiseLib: Promise
 });
 const bodyParser = require('body-parser');
-const sessions = require('./scoreAndLives.js');
-const movie = require('./session_alt.js');
+const Status = require('./scoreAndLives.js');
+const Selector = require('./session_alt.js');
 const session = require('express-session');
 //dbConfig can be changed to whatever the database configuration file is named
 var db = pgp({database: 'highscores', user:'postgres'});
-
 // import handlebars
 app.set('view engine', 'hbs');
 //kube for CSS
 app.use('/kube', express.static('node_modules/imperavi-kube/dist/css'));
 app.use('/public', express.static('public'));
-
+//initializes session
 app.use(session({
   key: 'wtf.sess',
   secret: process.env.SESS_KEY,
@@ -33,26 +32,27 @@ app.use('/static', express.static('public'));
 
 //get genre selection from form and set to variable 'genre'
 app.post('/getGenre', function(request, response) {
-
+    var select = new Selector(request.session);
+    var status = new Status(request.session);
     // gets proper genre from url
     if (request.body.genreChoice == 'All') {
-      request.session.genre = '';
+      status.session.genre = '';
     } else {
-      request.session.genre = '&with_genres=' + request.body.genreChoice;
+      status.session.genre = '&with_genres=' + request.body.genreChoice;
     }
-    console.log('genre: ' + request.session.genre);
+    console.log('genre: ' + status.session.genre);
     var base_url = 'https://api.themoviedb.org/3/discover/';
     var api_key = 'movie?api_key=' + process.env.API_KEY;
-    var options = '&language=en&region=US&include_adult=false' + request.session.genre +'&page=1';
+    var options = '&language=en&region=US&include_adult=false' + status.session.genre +'&page=1';
     let url = base_url + api_key + options;
     axios.get(url)
       .then(function (api) {
         console.log(api.data.total_pages);
-        request.session.pageLimit = api.data.total_pages - 1;
-        if (request.session.pageLimit > 1000) {
-          request.session.pageLimit = 1000;
+        select.lastPage = api.data.total_pages - 1;
+        if (select.lastPage > 1000) {
+          select.lastPage = 1000;
         } else {
-          request.session.pageLimit = api.data.total_pages;
+          select.lastPage = api.data.total_pages;
         }
         response.redirect('/game');
       })
@@ -60,34 +60,37 @@ app.post('/getGenre', function(request, response) {
 
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
-app.get('/game', function(request, response) {
+app.get('/game', function(request, response, next) {
+  var select = new Selector(request.session, true);
+  var status = new Status(request.session);
   // call new randoms before new api request
-  console.log('pageLmt: '+ request.session.pageLimit);
-  movie.Movies(request);
-  request.session.page = request.newMovie();
+  console.log('pageLmt: '+ select.lastPage);
+  select.Movie();
+
+  //select.page[0] = select.Movie();
 
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
   var api_key = 'movie?api_key=' + process.env.API_KEY;
-  var options = '&language=en&region=US&include_adult=false' + request.session.genre + '&page='
-  let url = base_url + api_key + options + request.session.page[0];
+  var options = '&language=en&region=US&include_adult=false' + status.session.genre + '&page='
+  let url = base_url + api_key + options + select.page;
   console.log(url);
 axios.get(url)
     .then(function (api) {
-      context = request.set_Movie_data(api);
+      context = select.MovieData(api);
+      console.log(context);
       response.render('index.hbs', context);
     })
-
-    .catch(function (error) {
-        // console.error(error);
-    });
+    .catch(next);
 });
 
 app.post('/something', function(request, response, next) {
+  var select = new Selector(request.session);
+  var status = new Status(request.session);
 //maybe need a cookie from which to log the username for stretch goal
-  request.session.username = request.body.playerName;
+  select.user = request.body.playerName;
 //high_scores should be whatever the table name is per jj
-  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[request.session.username, request.session.score] )
+  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[select.user, status.score] )
     .then(function() {
 //highscores.hbs should be whatever frontend hbs has the highscores per paul or alston
       response.redirect('/highscores');
@@ -104,24 +107,26 @@ app.get('/highscores', function(request, response, next) {
 });
 
 app.post('/guess', function(request, response, next) {
+  var select = new Selector(request.session)
+  var status = new Status(request.session);
   console.log(request.body.answer);
   var answer = request.body.answer;
-  var title2 = request.session.title[request.session.page[1]];
-  if (answer == title2 && request.session.lives > 0) {
-    sessions.updateSNL(request);
-    request.correct();
+  var correctAnswer = select.title[select.index];
+  console.log(correctAnswer);
+  if (answer == correctAnswer && status.session.lives > 0) {
+    status.Correct();
     response.redirect('/game');
   } else {
-    sessions.updateSNL(request);
-    request.incorrect();
-    if (request.session.lives <= 0) {
+    status.Incorrect();
+    if (status.session.lives <= 0) {
       response.redirect('/game_over');
     }
   }
 });
 
 app.get('/game_over', function(request, response) {
-    response.render('game_over.hbs', {score:request.session.score})
+    var status = new Status(request.session);
+    response.render('game_over.hbs', {score:status.session.score})
 });
 
 app.get('/genres', function(request, response) {
@@ -132,10 +137,12 @@ app.get('/genres', function(request, response) {
 });
 
 app.get('/', function (request, response) {
-  sessions.initialSNL(request);
+  var status = new Status(request);
+  status.Initialize();
+
   axios.all([getGenres()])
     .then(axios.spread(function(api) {
-      request.session.genre = request.body.genreChoice;
+      status.session.genre = request.body.genreChoice;
       response.render('home.hbs', {layout: 'layout2', genres: api.data.genres});
    }))
 });
