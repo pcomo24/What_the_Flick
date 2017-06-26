@@ -60,6 +60,9 @@ img {
 form {
   margin-bottom: 0em;
 }
+label {
+  font-size: ;
+}
 /* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
 .fix-button {
   background-color: #4d0000;
