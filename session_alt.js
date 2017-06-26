@@ -1,3 +1,36 @@
+class Select {
+  constructor(cartouche){
+    this.name = cartouche;
+    this.savedMovies = request.session.savedMovies
+  }
+  request.session.savedMovies = []
+  saveMovie() {
+    this.savedMovies.push(request.session.nextMovie);
+  };
+
+  selectMovie() {
+    console.log('movie selected')
+    request.session.nextMoviePage = Math.ceil(Math.random() * 3);
+    request.session.nextMovieSelection = Math.floor(Math.random() * 20);
+    request.session.nextMovie =  request.session.nextMoviePage;
+  for(var i = 0; i < request.session.savedMovies.length;i++) {
+    if (request.session.nextMovie === request.session.savedMovies[i]) {
+      console.log('Duplicate found ' + request.session.nextMovie);
+      request.newMovie();
+      break;
+    }
+  }
+//Game over logic can be added here if needed
+//Once lookup values are verified to be unique, they are pushed to an array to checked
+//-against in future calls.
+    console.log('Added ' + request.session.nextMovie);
+    request.addMovie();
+//numeric variables request.session.nextMoviePage and request.session.nextMovieSelection must be converted to
+//-strings before being returned for http interfacing portability.
+    return [request.session.nextMoviePage, request.session.nextMovieSelection];
+  }
+}
+
 function Movies(request, response) {
   request.session.img_url = []
   request.session.title = []
