@@ -46,12 +46,20 @@ form {
   font-size: 1.2rem;
   color: #D4AF37;
 }
+.fix-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
 /* for buttons in home page */
 #homeNewGame-button {
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
   color: #D4AF37;
+}
+#homeNewGame-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
 }
 #homeNewGame-button:hover {
   background-color: #D4AF37;
@@ -70,6 +78,10 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
+#submit-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
 #hint-button {
   float: right;
   margin-top: 1em;
@@ -77,6 +89,10 @@ form {
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
   color: #D4AF37;
+}
+#hint-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
 }
 #hint-button:hover {
   background-color: #D4AF37;
@@ -94,6 +110,10 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
+#newGame-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
 #highScores-button {
   margin-top: 1em;
   float: right;
@@ -101,6 +121,10 @@ form {
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
   color: #D4AF37;
+}
+#highScores-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
 }
 #highScores-button:hover {
   background-color: #D4AF37;
@@ -117,12 +141,20 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
+#playAgain-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
 /* game over page */
 #submit-button2 {
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
   color: #D4AF37;
+}
+#submit-button2:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
 }
 #submit-button2:hover {
   background-color: #D4AF37;
