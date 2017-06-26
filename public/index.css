@@ -4,6 +4,12 @@ body {
   background-attachment: fixed;
   border-radius: 10%;
 }
+@media (max-width: 800px) {
+  body {
+    background: black;
+    margin: 5%;
+  }
+}
 h1,
 h2 {
   color: #D4AF37;
@@ -12,7 +18,7 @@ h2 {
 }
 h1.heading,
 h2.heading {
-  margin-bottom: 1em;
+  margin-bottom: 0.2em;
   border-bottom: 1px solid #D4AF37;
 }
 h3,
@@ -33,8 +39,7 @@ label {
 }
 img {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 form {
   margin-bottom: 0em;
@@ -61,22 +66,13 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
-#homeNewGame-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
 /* for buttons in index page */
 #submit-button {
   float: left;
-  margin-top: 1em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
   color: #D4AF37;
-}
-#submit-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
 }
 #submit-button:hover {
   background-color: #D4AF37;
@@ -84,7 +80,6 @@ form {
 }
 #hint-button {
   float: right;
-  margin-top: 1em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -94,12 +89,7 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
-#hint-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
 #newGame-button {
-  margin-top: 1em;
   float: left;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
@@ -110,21 +100,12 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
-#newGame-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
 #highScores-button {
-  margin-top: 1em;
   float: right;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
   color: #D4AF37;
-}
-#highScores-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
 }
 #highScores-button:hover {
   background-color: #D4AF37;
@@ -141,10 +122,6 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
-#playAgain-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
 /* game over page */
 #submit-button2 {
   background-color: #4d0000;
@@ -156,13 +133,9 @@ form {
   background-color: #D4AF37;
   color: #4d0000;
 }
-#submit-button2:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
 /* margin/spacing */
 .top-margin {
-  margin-top: 5em;
+  margin-top: 1em;
 }
 .top-inside-margin {
   margin-top: 2em;
@@ -192,7 +165,13 @@ form {
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-left: 12%;
+}
+@media (max-width: 800px) {
+  #ansr-choice {
+    margin-left: 5%;
+  }
 }
 #hint {
   color: #EEE8AA;
@@ -200,6 +179,11 @@ form {
   font-size: 2rem;
   margin-top: 1.25em;
   margin-bottom: 1.25em;
+}
+@media (max-width: 800px) {
+  #hint {
+    margin-left: 5%;
+  }
 }
 /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
 .rounded-img {

@@ -3,3 +3,4 @@ __pycache__
 temp logic
 SECRETS.ENV
 .idea/
+fabfile.py
