@@ -37,4 +37,8 @@
 
 <script>
   var hint = "{{overviewHint}}";
+  var choice = document.querySelectAll('input');
+  choice[0].addEventListener("click", function() {
+    choice[0].style.color = 'white';
+  })
 </script>

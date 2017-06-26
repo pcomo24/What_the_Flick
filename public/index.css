@@ -180,12 +180,36 @@ form {
   font-size: 4rem;
   color: #4d0000;
 }
+.ansr-choice:active {
+  font-size: 4rem;
+  color: #4d0000;
+}
 .ansr-choice:focus {
+  font-size: 4rem;
+  color: #4d0000;
+}
+.ansr-choice:checked {
   font-size: 4rem;
   color: #4d0000;
 }
 .ansr-choice input {
   display: none;
+}
+.ansr-choice input:hover {
+  font-size: 4rem;
+  color: #4d0000;
+}
+.ansr-choice input:active {
+  font-size: 4rem;
+  color: #4d0000;
+}
+.ansr-choice input:focus {
+  font-size: 4rem;
+  color: #4d0000;
+}
+.ansr-choice input:checked {
+  font-size: 4rem;
+  color: #4d0000;
 }
 @media (max-width: 800px) {
   .ansr-choice {
