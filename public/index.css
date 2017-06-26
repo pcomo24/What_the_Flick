@@ -71,7 +71,18 @@ form {
 /* for buttons in index page */
 #submit-button {
   float: left;
-
+  background-color: #4d0000;
+  font-family: 'Belgrano', serif;
+  font-size: 1.2rem;
+  color: #D4AF37;
+  margin: 1em 10px;
+}
+#submit-button:hover {
+  background-color: #D4AF37;
+  color: #4d0000;
+}
+#hint-button {
+  float: right;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -83,7 +94,6 @@ form {
   color: #4d0000;
 }
 #newGame-button {
-
   float: left;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
@@ -96,7 +106,6 @@ form {
   color: #4d0000;
 }
 #highScores-button {
-
   float: right;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
@@ -164,7 +173,13 @@ form {
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
-
+  margin-top: 10px;
+  margin-left: 12%;
+}
+@media (max-width: 800px) {
+  #ansr-choice {
+    margin-left: 5%;
+  }
 }
 #hint {
   color: #EEE8AA;
