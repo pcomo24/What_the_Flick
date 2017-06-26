@@ -50,6 +50,7 @@ function Movies(request, response) {
       let replace = Math.floor(Math.random() * 4);
       request.session.choices[replace] = request.session.title[request.session.page[1]];
     }
+
     var context = {
         imgUrl: 'https://image.tmdb.org/t/p/w500/' + request.session.img_url[request.session.page[1]],
         title: request.session.title[request.session.page[1]],

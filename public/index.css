@@ -135,13 +135,13 @@ form {
 }
 /* margin/spacing */
 .top-margin {
-  margin-top: 1em;
+  margin-top: 4em;
 }
 .top-inside-margin {
   margin-top: 2em;
 }
 .bottom-margin {
-  margin-bottom: 5em;
+  margin-bottom: 4em;
 }
 /* a transition I created for the highscores page animation */
 @-webkit-keyframes collapse {
@@ -157,19 +157,30 @@ form {
   margin-bottom: 30px;
 }
 #movdiv {
-  height: 16.66em;
+  margin-top: 1000px;
 }
 /* index page stuff */
-#ansr-choice {
+.ansr-choice {
   color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
-  display: inline-block;
+  display: block;
   margin-top: 10px;
   margin-left: 12%;
 }
+.ansr-choice:hover {
+  font-size: 4rem;
+  color: #4d0000;
+}
+.ansr-choice:focus {
+  font-size: 4rem;
+  color: #4d0000;
+}
+.ansr-choice input {
+  display: none;
+}
 @media (max-width: 800px) {
-  #ansr-choice {
+  .ansr-choice {
     margin-left: 5%;
   }
 }
