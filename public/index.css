@@ -151,7 +151,7 @@ img {
   margin-bottom: 30px;
 }
 #movdiv {
-  height: 16.66em;
+  margin-top: 1000px;
 }
 /* index page stuff */
 #ansr-choice {
@@ -160,6 +160,13 @@ img {
   font-family: 'Amatic SC', cursive;
   display: inline-block;
   margin-top: 30px;
+}
+#ansr-choice:hover {
+  background-color: #4d0000;
+}
+input:checked {
+  background-color: #4d0000;
+  border: 1px solid #EEE8AA;
 }
 #hint {
   color: #EEE8AA;

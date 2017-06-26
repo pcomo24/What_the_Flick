@@ -23,7 +23,7 @@
     <div class="col col-4 text-left" id="multipleChoices">
         <form method="POST" action="/guess">
             {{#each choice}}
-                    <input name="answer" type="radio" value='{{this}}'> <div id="ansr-choice">{{this}}</div><br>
+                <div id="ansr-choice"><input name="answer" type="radio" value='{{this}}'>{{this}}</div><br>
             {{/each}}
             <button id="submit-button" type="submit">Submit</button>
             <button id="hint-button" type="button" onclick="getHint(hint)">Hint</button>
