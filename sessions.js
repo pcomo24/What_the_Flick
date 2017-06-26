@@ -40,7 +40,7 @@ function Movies(request, pageLimit, response) {
     request.session.nextMovieSelection = Math.floor(Math.random() * 20);
 //numeric variable request.session.nextMovieSelection is divided by 100 and added to integer request.session.nextMoviePage so
 //-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
-    request.session.nextMovie =  request.session.nextMoviePage;
+    request.session.nextMovie = request.session.nextMoviePage;
 //for loop compares new movie against previous movies in session and calls another
 //-if a matching movie is found in the (used) movies array.
   for(var i = 0; i < request.session.movies.length;i++) {

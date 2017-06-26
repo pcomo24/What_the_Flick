@@ -3,6 +3,11 @@ body {
   background-size: cover;
   background-attachment: fixed;
   border-radius: 10%;
+
+  @media (max-width: 800px) {
+    background: black;
+    margin: 5%;
+  }
 }
 
 h1, h2 {
@@ -11,7 +16,7 @@ h1, h2 {
   padding-bottom: 0.25em;
 
   &.heading {
-    margin-bottom: 1em;
+    margin-bottom: 0.2em;
     border-bottom: 1px solid @rgold;
   }
 }
@@ -32,8 +37,10 @@ label {
 }
 img {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
+}
+form {
+  margin-bottom: 0em;
 }
 
 /* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
@@ -42,81 +49,53 @@ img {
   font-family: @font1;
   font-size: 1.2rem;
   color: @rgold;
+  margin: 1em 10px;
+
+  &:hover {
+    background-color: @rgold;
+    color: @rcrimson;
+  }
 }
 
 /* for buttons in home page */
 #homeNewGame-button {
   .fix-button;
 }
-#homeNewGame-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
 
 /* for buttons in index page */
 #submit-button {
   float: left;
-  margin-top: 4em;
   .fix-button;
-}
-#submit-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
 }
 #hint-button {
   float: right;
-  margin-top: 4em;
   .fix-button;
 }
-#hint-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
 #newGame-button {
-  margin-bottom: 4em;
   float: left;
   .fix-button;
 }
-#newGame-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
 #highScores-button {
-  margin-bottom: 4em;
   float: right;
   .fix-button;
 }
-#highScores-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
-
 /* high scores page */
 #playAgain-button {
-  margin-top: 0.5em;
   .fix-button;
-}
-#playAgain-button:hover {
-  background-color: @rgold;
-  color: @rcrimson;
 }
 
 /* game over page */
 #submit-button2 {
-  margin-top: 2.5em;
   .fix-button;
 }
-#submit-button2:hover {
-  background-color: @rgold;
-  color: @rcrimson;
-}
+
 
 /* margin/spacing */
 .top-margin {
-  margin-top: 5em;
+  margin-top: 1em;
 }
 .top-inside-margin {
-  margin-top: 2.5em;
+  margin-top: 2em;
 }
 .bottom-margin {
   margin-bottom: 5em;
@@ -136,19 +115,30 @@ img {
 }
 
 /* index page stuff */
-#ansr-choice {
+.ansr-choice {
   color: @roffWhite;
   font-size: 2rem;
   font-family: @font2;
-  display: inline-block;
-  margin-top: 30px;
+  display: block;
+  margin-top: 10px;
+  margin-left: 12%;
+
   &:hover {
-    background-color: @rcrimson;
+    font-size: 4rem;
+    color: @rcrimson;
   }
-}
-  input:checked {
-    background-color: @rcrimson;
-    border: 1px solid @roffWhite;
+  &:focus {
+    font-size: 4rem;
+    color: @rcrimson;
+  }
+
+  input {
+    display: none;
+  }
+
+  @media (max-width: 800px) {
+    margin-left: 5%;
+  }
 }
 #hint {
     color: @roffWhite;
@@ -156,6 +146,10 @@ img {
     font-size: 2rem;
     margin-top: 1.25em;
     margin-bottom: 1.25em;
+
+    @media (max-width: 800px) {
+      margin-left: 5%;
+    }
 }
 
 /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
