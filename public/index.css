@@ -165,17 +165,16 @@ img {
   height: 16.66em;
 }
 /* index page stuff */
-#ansr-choice {
+.ansr-choice {
   color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
-  display: inline-block;
+  display: block;
   margin-top: 10px;
-  text-overflow: ellipsis;
   margin-left: 12%;
 }
 @media (max-width: 800px) {
-  #ansr-choice {
+  .ansr-choice {
     margin-left: 5%;
   }
 }
