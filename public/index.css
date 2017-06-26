@@ -143,13 +143,13 @@ form {
 }
 /* margin/spacing */
 .top-margin {
-  margin-top: 1em;
+  margin-top: 4em;
 }
 .top-inside-margin {
   margin-top: 2em;
 }
 .bottom-margin {
-  margin-bottom: 5em;
+  margin-bottom: 4em;
 }
 /* a transition I created for the highscores page animation */
 @-webkit-keyframes collapse {
@@ -191,13 +191,6 @@ form {
   .ansr-choice {
     margin-left: 5%;
   }
-}
-#ansr-choice:hover {
-  background-color: #4d0000;
-}
-input:checked {
-  background-color: #4d0000;
-  border: 1px solid #EEE8AA;
 }
 #hint {
   color: #EEE8AA;
