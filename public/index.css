@@ -177,20 +177,15 @@ form {
   margin-left: 12%;
 }
 .ansr-choice:hover {
-  font-size: 4rem;
-  color: #4d0000;
+  font-size: 3rem;
+  color: #D4AF37;
 }
-.ansr-choice:focus {
-  font-size: 4rem;
-  color: #4d0000;
-}
-.ansr-choice input {
+input[type="radio"] {
   display: none;
 }
-@media (max-width: 800px) {
-  .ansr-choice {
-    margin-left: 5%;
-  }
+input[type="radio"]:checked + label {
+  font-size: 3rem;
+  color: #D4AF37;
 }
 #hint {
   color: #EEE8AA;
