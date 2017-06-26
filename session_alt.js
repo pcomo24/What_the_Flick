@@ -14,7 +14,7 @@ class Selector {
     this.movie = [];
     this.page = 0;
     this.index = session.index || 0;
-    this.lastPage = 1;
+    this.lastPage = 50;
     this.title = session.title;
     this.image = [];
     this.hint = [];
@@ -28,7 +28,7 @@ class Selector {
     console.log('movie selected')
     this.page = Math.ceil(Math.random() * this.lastPage);
     this.index = Math.floor(Math.random() * 20);
-    this.movie = this.page + this.index;
+    this.movie = this.page + this.index/100;
   for(var i = 0; i < this.prevMovies.length;i++) {
     if (this.movie === this.prevMovies[i]) {
       console.log('Duplicate found ' + this.movie);
