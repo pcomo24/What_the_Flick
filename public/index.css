@@ -182,21 +182,12 @@ form {
 }
 input[type="radio"] {
   display: none;
-  /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
 }
 input[type="radio"]:checked + label {
   font-size: 3rem;
   color: #D4AF37;
 }
-input[type="radio"] input {
-  display: none;
-}
-@media (max-width: 800px) {
-  input[type="radio"] {
-    margin-left: 5%;
-  }
-}
-input[type="radio"] #hint {
+#hint {
   color: #EEE8AA;
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
@@ -204,16 +195,17 @@ input[type="radio"] #hint {
   margin-bottom: 1.25em;
 }
 @media (max-width: 800px) {
-  input[type="radio"] #hint {
+  #hint {
     margin-left: 5%;
   }
 }
-input[type="radio"] .rounded-img {
+/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
+.rounded-img {
   border-radius: 2%;
 }
-input[type="radio"] #homePic {
+#homePic {
   border-radius: 2%;
 }
-input[type="radio"] #poster {
+#poster {
   border-radius: 2%;
 }

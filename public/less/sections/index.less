@@ -128,32 +128,24 @@ form {
   }
 }
 
-input[type="radio"]{
+input[type="radio"] {
   display: none;
-  &:checked+label {
+  &:checked + label {
     font-size: 3rem;
     color: @rgold;
   }
-
-
-  input {
-    display: none;
-  }
+}
+#hint {
+  color: @roffWhite;
+  font-family: @font2;
+  font-size: 2rem;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
 
   @media (max-width: 800px) {
     margin-left: 5%;
   }
-  #hint {
-    color: @roffWhite;
-    font-family: @font2;
-    font-size: 2rem;
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-
-    @media (max-width: 800px) {
-      margin-left: 5%;
-    }
-  }
+}
 
   /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
   .rounded-img {
@@ -165,4 +157,4 @@ input[type="radio"]{
   #poster {
     .rounded-img;
   }
-}
+
