@@ -1,4 +1,5 @@
 # What The Flick?!
+
 This project is a group project made during DigitalCrafts Bootcamp, by Paul Como,
 Alston Hsu, JJ Spetseris, and George Danforth. It is a game that tests your movie
 knowledge.
