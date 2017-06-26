@@ -177,29 +177,26 @@ form {
   margin-left: 12%;
 }
 .ansr-choice:hover {
-  font-size: 4rem;
-  color: #4d0000;
+  font-size: 3rem;
+  color: #D4AF37;
 }
-.ansr-choice:focus {
-  font-size: 4rem;
-  color: #4d0000;
+input[type="radio"] {
+  display: none;
+  /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
 }
-.ansr-choice input {
+input[type="radio"]:checked + label {
+  font-size: 3rem;
+  color: #D4AF37;
+}
+input[type="radio"] input {
   display: none;
 }
 @media (max-width: 800px) {
-  .ansr-choice {
+  input[type="radio"] {
     margin-left: 5%;
   }
 }
-#ansr-choice:hover {
-  background-color: #4d0000;
-}
-input:checked {
-  background-color: #4d0000;
-  border: 1px solid #EEE8AA;
-}
-#hint {
+input[type="radio"] #hint {
   color: #EEE8AA;
   font-family: 'Amatic SC', cursive;
   font-size: 2rem;
@@ -207,17 +204,16 @@ input:checked {
   margin-bottom: 1.25em;
 }
 @media (max-width: 800px) {
-  #hint {
+  input[type="radio"] #hint {
     margin-left: 5%;
   }
 }
-/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
-.rounded-img {
+input[type="radio"] .rounded-img {
   border-radius: 2%;
 }
-#homePic {
+input[type="radio"] #homePic {
   border-radius: 2%;
 }
-#poster {
+input[type="radio"] #poster {
   border-radius: 2%;
 }
