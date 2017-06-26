@@ -5,6 +5,7 @@ function Movies(request, pageLimit) {
   request.session.title = request.session.title || [];
   request.session.hint = request.session.hint || [];
   request.session.page = request.session.page;
+  request.session.returnvalue = [];
   request.correct = function () {
     request.session.score += 1;
   }
@@ -51,8 +52,8 @@ function Movies(request, pageLimit) {
 //-and then returned as a (2) element array.
   request.newMovie = function () {
 //// Replaced pagelimit with 10 because pagelimit is NaN. Need to fix.
-    request.session.nextMoviePage = Math.ceil(Math.random() * 10);
-    request.session.nextMovieSelection = Math.floor(Math.random() * 20);
+    request.session.nextMoviePage = Math.ceil(Math.random() * 1);
+    request.session.nextMovieSelection = Math.floor(Math.random() * 5);
 //numeric variable request.session.nextMovieSelection is divided by 100 and added to integer request.session.nextMoviePage so
 //-that both variables can be stored as (1) floating point numeric value for crosss-checking efficiency.
     request.session.nextMovie =  request.session.nextMoviePage + (request.session.nextMovieSelection/100);
@@ -62,7 +63,7 @@ function Movies(request, pageLimit) {
       if (request.session.nextMovie === request.session.movies[i]) {
         console.log('Duplicate found ' + request.session.nextMovie);
         request.newMovie();
-        return;
+        break;
 //Game over logic can be added here if needed
       }else if (request.session.movies.length > 10){
         //G A M E   O V E R
@@ -75,7 +76,12 @@ function Movies(request, pageLimit) {
     request.addMovie();
 //numeric variables request.session.nextMoviePage and request.session.nextMovieSelection must be converted to
 //-strings before being returned for http interfacing portability.
-    return [request.session.nextMoviePage, request.session.nextMovieSelection];
+    console.log(request.session.returnvalue);
+    console.log(request.session.nextMoviePage);
+    console.log(request.session.nextMovieSelection);
+    request.session.returnvalue = [];
+    request.session.returnvalue = [request.session.nextMoviePage, request.session.nextMovieSelection];
+    return request.session.returnvalue;
   //  clearSession () {
   //  request.session = {};
   }
