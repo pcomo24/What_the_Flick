@@ -36,6 +36,9 @@ img {
   margin-left: auto;
   margin-right: auto;
 }
+form {
+  margin-bottom: 0em;
+}
 /* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
 .fix-button {
   background-color: #4d0000;
@@ -57,7 +60,7 @@ img {
 /* for buttons in index page */
 #submit-button {
   float: left;
-  margin-top: 4em;
+  margin-top: 1em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -69,7 +72,7 @@ img {
 }
 #hint-button {
   float: right;
-  margin-top: 4em;
+  margin-top: 1em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -80,7 +83,7 @@ img {
   color: #4d0000;
 }
 #newGame-button {
-  margin-bottom: 4em;
+  margin-top: 1em;
   float: left;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
@@ -92,7 +95,7 @@ img {
   color: #4d0000;
 }
 #highScores-button {
-  margin-bottom: 4em;
+  margin-top: 1em;
   float: right;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
@@ -105,7 +108,6 @@ img {
 }
 /* high scores page */
 #playAgain-button {
-  margin-top: 0.5em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -117,7 +119,6 @@ img {
 }
 /* game over page */
 #submit-button2 {
-  margin-top: 2.5em;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -132,7 +133,7 @@ img {
   margin-top: 5em;
 }
 .top-inside-margin {
-  margin-top: 2.5em;
+  margin-top: 2em;
 }
 .bottom-margin {
   margin-bottom: 5em;
@@ -159,7 +160,7 @@ img {
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
   display: inline-block;
-  margin-top: 30px;
+  margin-top: 5px;
 }
 #hint {
   color: #EEE8AA;

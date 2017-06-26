@@ -1,6 +1,9 @@
 <div class="row top-margin">
     <div class="col col-4"></div>
-    <div class="col col-4 text-center"><h2>Game Over...</h2></div>
+    <div class="col col-4 text-center">
+      <h2>Game Over...</h2>
+      <h2>Your score is {{score}}.</h2>
+    </div>
     <div class="col col-4"></div>
 </div>
 
@@ -10,14 +13,8 @@
         <form action="/something" method="POST">
             <label>Input Your Name</label>
             <input type="text" name="playerName" class="top-inside-margin">
-            <button type="submit" id="submit-button2">Submit</button>
+            <button type="submit" class="top-inside-margin" id="submit-button2">Submit</button>
         </form>
     </div>
-    <div class="col col-4"></div>
-</div>
-
-<div class="row top-margin">
-    <div class="col col-4"></div>
-    <div class="col col-4 text-center"><h2>score: {{score}}</h2></div>
     <div class="col col-4"></div>
 </div>

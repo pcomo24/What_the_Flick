@@ -1,12 +1,12 @@
 <div class="row top-margin">
     <div class="col col-4"></div>
     <div class="col col-4 text-center">
-        <h2 class="heading">What the Flick? {{title}}</h2>
+        <h2 class="heading">What the Flick?</h2>
     </div>
     <div class="col col-4"></div>
 </div>
 
-<div class="row top-inside-margin">
+<div class="row">
     <div class="col col-4"></div>
     <div class="col col-4"><img id="poster" src={{imgUrl}}></div>
     <div class="col col-4"></div>
@@ -23,15 +23,15 @@
     <div class="col col-4 text-left" id="multipleChoices">
         <form method="POST" action="/guess">
             {{#each choice}}
-                    <input name="answer" type="radio" value='{{this}}'> <div id="ansr-choice">{{this}}</div><br>
+              <input name="answer" type="radio" value='{{this}}'> <div id="ansr-choice">{{this}}</div><br>
             {{/each}}
             <button id="submit-button" type="submit">Submit</button>
             <button id="hint-button" type="button" onclick="getHint(hint)">Hint</button>
+        </form>
     </div>
     <div class="col col-4"></div>
 </div>
 
-</form>
 <script>
   var hint = "{{overviewHint}}";
   var replaceWord = /{{title}}/gi;
