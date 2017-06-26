@@ -6,3 +6,6 @@ function getHint(overviewHint) {
     hint.innerHTML = '';
   }
 }
+
+var gameButton = document.getElementById('newGame-button');
+gameButton.href = '/?ts=' + Date.now();

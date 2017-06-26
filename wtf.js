@@ -50,10 +50,11 @@ app.post('/getGenre', function(request, response) {
         console.log(api.data.total_pages);
         select.lastPage = api.data.total_pages - 1;
         if (select.lastPage > 1000) {
-          select.lastPage = 1000;
+          select.lastPage = Math.ceil(Math.random() * 1000);
         } else {
           select.lastPage = api.data.total_pages;
         }
+        console.log("API ***********" + select.lastPage)
         response.redirect('/game');
       })
 });
@@ -119,7 +120,7 @@ app.post('/guess', function(request, response, next) {
   } else {
     status.Incorrect();
     if (status.session.lives <= 0) {
-      response.redirect('/game_over');
+      response.redirect('/game_over?ts=' + Date.now());
     }
   }
 });
@@ -139,6 +140,7 @@ app.get('/genres', function(request, response) {
 app.get('/', function (request, response) {
   var status = new Status(request);
   status.Initialize();
+  console.log('SCORE', status.session.score);
 
   axios.all([getGenres()])
     .then(axios.spread(function(api) {

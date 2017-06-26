@@ -1,7 +1,8 @@
 class Selector {
   constructor(session, resetTitles){
     this.session = session;
-    session.prevMovies = session.prevMovies || [];
+    session.prevMovies = session.prevMovies || [0];
+
     if (session.prevMovies.length >= 50) {
       session.prevMovies = [];
     }
@@ -14,11 +15,19 @@ class Selector {
     this.movie = [];
     this.page = 0;
     this.index = session.index || 0;
-    this.lastPage = 1;
     this.title = session.title;
     this.image = [];
     this.hint = [];
     this.choices = [];
+  }
+
+  get lastPage() {
+    this.session.lastPage = this.session.lastPage || 1;
+    return this.session.lastPage;
+  }
+
+  set lastPage(value) {
+    this.session.lastPage = value;
   }
 
   SaveMovie() {
@@ -28,7 +37,7 @@ class Selector {
     console.log('movie selected')
     this.page = Math.ceil(Math.random() * this.lastPage);
     this.index = Math.floor(Math.random() * 20);
-    this.movie = this.page + this.index;
+    this.movie = this.page + (this.index/100);
   for(var i = 0; i < this.prevMovies.length;i++) {
     if (this.movie === this.prevMovies[i]) {
       console.log('Duplicate found ' + this.movie);
@@ -36,6 +45,8 @@ class Selector {
       break;
     }
   }
+    console.log(this.lastPage);
+    console.log( "PREVIOUS MOVIES*****************" + this.prevMovies);
     console.log('Added ' + this.movie);
     this.SaveMovie();
   }
