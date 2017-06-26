@@ -1,4 +1,5 @@
 # What The Flick?!
+
 This project is a group project made during DigitalCrafts Bootcamp, by Paul Como,
 Alston Hsu, JJ Spetseris, and George Danforth. It is a game that tests your movie
 knowledge.
@@ -7,7 +8,7 @@ knowledge.
 HTML, LESS, JavaScript, Postgres, Node.js, Express, HBS Framework, and Kube Framework
 
 
-![Our Website](pic url goes here)
+![Our Website](/webapp.png)
 
 Live @ [www.whattheflick.info](http://www.whattheflick.info)
 

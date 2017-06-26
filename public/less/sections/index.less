@@ -4,12 +4,41 @@ body {
   background-attachment: fixed;
   border-radius: 10%;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     background: black;
     margin: 5%;
   }
-}
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    background: black;
+    margin: 5%;
 
+    .col-3 {
+      width: 0%;
+    }
+    .col-6 {
+      width: 100%;
+      margin: 0 auto;
+
+      img {
+        width: 100%;
+      }
+      h2 {
+        font-size: 5rem;
+      }
+      label, li {
+        font-size: 4rem;
+      }
+      select, input {
+        height: 4rem;
+        font-size: 4rem;
+        text-align: center;
+        margin-top: 0.65em;
+      }
+    }
+  }
+}
 h1, h2 {
   color: @rgold;
   font-family: @font1;
@@ -24,11 +53,15 @@ h3, h4 {
   color: @rgold;
   font-family: @font1;
 }
+label {
+  display: block;
+  line-height: 1em;
+}
 ol li {
   color: @roffWhite;
   font-size: 2rem;
   font-family: @font2;
-  margin-bottom: .75rem;
+  margin-bottom: 5rem;
 }
 label {
   font-family: @font2;
@@ -42,7 +75,6 @@ img {
 form {
   margin-bottom: 0em;
 }
-
 /* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
 .fix-button {
   background-color: @rcrimson;
@@ -55,7 +87,20 @@ form {
     background-color: @rgold;
     color: @rcrimson;
   }
+
+
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    display: block;
+    font-size: 3rem;
+    padding: 25px;
+    margin: 20px 0 0 0;
+    width: 100%;
+    text-align:center;
+  }
 }
+
 
 /* for buttons in home page */
 #homeNewGame-button {
@@ -66,18 +111,38 @@ form {
 #submit-button {
   float: left;
   .fix-button;
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    float: none;
+  }
 }
 #hint-button {
   float: right;
   .fix-button;
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    float: none;
+  }
 }
 #newGame-button {
   float: left;
   .fix-button;
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    float: none;
+  }
 }
 #highScores-button {
   float: right;
   .fix-button;
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    float: none;
+  }
 }
 /* high scores page */
 #playAgain-button {
@@ -104,14 +169,14 @@ form {
 /* a transition I created for the highscores page animation */
 @-webkit-keyframes collapse {
   0% {height: 10rem;}
-  100%{height: 1rem;}
+  100%{height: 2rem;}
 }
 .score {
   height: 10rem;
   margin-bottom: 30px;
 }
 #movdiv {
-  margin-top: 1000px;
+  margin-top: 101vh;
 }
 
 /* index page stuff */
@@ -121,44 +186,34 @@ form {
   font-family: @font2;
   display: block;
   margin-top: 10px;
-  margin-left: 12%;
-
   &:hover {
-    font-size: 4rem;
-    color: @rcrimson;
+    font-size: 2.5rem;
+    color: @rgold;
   }
-  &:focus {
-    font-size: 4rem;
-    color: @rcrimson;
-  }
+}
 
-  input {
-    display: none;
-  }
-
-  @media (max-width: 800px) {
-    margin-left: 5%;
+input[type="radio"] {
+  display: none;
+  &:checked + label {
+    font-size: 2.5rem;
+    color: @rgold;
   }
 }
 #hint {
-    color: @roffWhite;
-    font-family: @font2;
-    font-size: 2rem;
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-
-    @media (max-width: 800px) {
-      margin-left: 5%;
-    }
+  color: @roffWhite;
+  font-family: @font2;
+  font-size: 2rem;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
 }
 
-/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
-.rounded-img {
-  border-radius: 2%;
-}
-#homePic {
-  .rounded-img;
-}
-#poster {
-  .rounded-img;
-}
+  /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
+  .rounded-img {
+    border-radius: 2%;
+  }
+  #homePic {
+    .rounded-img;
+  }
+  #poster {
+    .rounded-img;
+  }

@@ -8,23 +8,25 @@
 
 <br>
 
-<div class="row margin-bottom">
-    <div class="col col-3"></div>
-    <div class="col col-6 text-center">
+<div id="movdiv">
+    <div class="row margin-bottom">
+        <div class="col col-3"></div>
+        <div class="col col-6 text-center">
 
-        <ol>
-          {{#each results}}
-            <li class="score text-center">{{username}} : {{score}}</li>
-          {{/each}}
-        </ol>
+            <ol>
+              {{#each results}}
+                <li class="score text-center">{{username}} : {{score}}</li>
+              {{/each}}
+            </ol>
+        </div>
+        <div class="col col-3"></div>
     </div>
-    <div class="col col-3"></div>
-</div>
 
-<div class="row top-inside-margin text-center">
-  <div class="col col-12 text-center">
-    <h2 class="text-center">Thanks for Playing!</h2>
-        <a href="/" class="button bottom-margin" id="playAgain-button">Play Again</a>
+    <div class="row top-inside-margin text-center">
+      <div class="col col-12 text-center"><br>
+        <h2 class="text-center">Thanks for Playing!</h2><br>
+            <a href="/" class="button bottom-margin" id="playAgain-button">Play Again</a>
+      </div>
     </div>
 </div>
 
@@ -33,21 +35,21 @@
     function scrollCreds() {
         var movDiv = document.getElementById('movdiv');
 
-        var pos = 999;
-        var id = setInterval(credit, 1);
+        var pos = 100;
+        var id = setInterval(credit, 20);
         function credit() {
-            if (pos == 50) {
+            if (pos == 0) {
                 var hiScores = document.querySelectorAll('.score');
                 hiScores.forEach(function (hiScore) {
-                   hiScore.style.height = 1 + 'rem';
-                   hiScore.style.webkitAnimation = 'collapse 1s';
+                   hiScore.style.height = 2 + 'rem';
+                   hiScore.style.webkitAnimation = 'collapse 2s';
 
                 });
 
                 clearInterval(id)
             } else {
                 pos--;
-                movDiv.style.marginTop = pos + 'px';
+                movDiv.style.marginTop = pos + 'vh';
             }
         }
     }
