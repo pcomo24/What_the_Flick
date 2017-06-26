@@ -41,6 +41,9 @@ img {
   display: block;
   margin: 0 auto;
 }
+form {
+  margin-bottom: 0em;
+}
 /* class fix-button gives styling back to buttons and is applied to #'s newGame,hiScores,submit/hint-button */
 .fix-button {
   background-color: #4d0000;
@@ -68,18 +71,7 @@ img {
 /* for buttons in index page */
 #submit-button {
   float: left;
-  background-color: #4d0000;
-  font-family: 'Belgrano', serif;
-  font-size: 1.2rem;
-  color: #D4AF37;
-  margin: 1em 10px;
-}
-#submit-button:hover {
-  background-color: #D4AF37;
-  color: #4d0000;
-}
-#hint-button {
-  float: right;
+
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
   font-size: 1.2rem;
@@ -91,6 +83,7 @@ img {
   color: #4d0000;
 }
 #newGame-button {
+
   float: left;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
@@ -103,6 +96,7 @@ img {
   color: #4d0000;
 }
 #highScores-button {
+
   float: right;
   background-color: #4d0000;
   font-family: 'Belgrano', serif;
@@ -143,7 +137,7 @@ img {
   margin-top: 1em;
 }
 .top-inside-margin {
-  margin-top: 2.5em;
+  margin-top: 2em;
 }
 .bottom-margin {
   margin-bottom: 5em;
