@@ -4,7 +4,7 @@ body {
   background-attachment: fixed;
   border-radius: 10%;
 }
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   body {
     background: black;
     margin: 5%;
@@ -174,7 +174,6 @@ form {
   font-family: 'Amatic SC', cursive;
   display: block;
   margin-top: 10px;
-  margin-left: 12%;
 }
 .ansr-choice:hover {
   font-size: 3rem;
@@ -193,11 +192,6 @@ input[type="radio"]:checked + label {
   font-size: 2rem;
   margin-top: 1.25em;
   margin-bottom: 1.25em;
-}
-@media (max-width: 800px) {
-  #hint {
-    margin-left: 5%;
-  }
 }
 /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
 .rounded-img {
