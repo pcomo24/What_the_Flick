@@ -122,71 +122,38 @@ form {
   display: block;
   margin-top: 10px;
   margin-left: 12%;
-
-
   &:hover {
-    font-size: 4rem;
-    color: @rcrimson;
+    font-size: 3rem;
+    color: @rgold;
   }
+}
 
-  &:active {
-    font-size: 4rem;
-    color: @rcrimson;
+input[type="radio"] {
+  display: none;
+  &:checked + label {
+    font-size: 3rem;
+    color: @rgold;
   }
-  &:focus {
-    font-size: 4rem;
-    color: @rcrimson;
-  }
-  &:checked {
-    font-size: 4rem;
-    color: @rcrimson;
-  }
-
-  input {
-    display: none;
-
-    &:hover {
-      font-size: 4rem;
-      color: @rcrimson;
-    }
-
-    &:active {
-      font-size: 4rem;
-      color: @rcrimson;
-    }
-    &:focus {
-      font-size: 4rem;
-      color: @rcrimson;
-    }
-    &:checked {
-      font-size: 4rem;
-      color: @rcrimson;
-    }
-  }
+}
+#hint {
+  color: @roffWhite;
+  font-family: @font2;
+  font-size: 2rem;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
 
   @media (max-width: 800px) {
     margin-left: 5%;
   }
 }
-#hint {
-    color: @roffWhite;
-    font-family: @font2;
-    font-size: 2rem;
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
 
-    @media (max-width: 800px) {
-      margin-left: 5%;
-    }
-}
-
-/* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
-.rounded-img {
-  border-radius: 2%;
-}
-#homePic {
-  .rounded-img;
-}
-#poster {
-  .rounded-img;
-}
+  /* a class for border-radius so that all rounded edges are uniform, used in #home-pic and #poster */
+  .rounded-img {
+    border-radius: 2%;
+  }
+  #homePic {
+    .rounded-img;
+  }
+  #poster {
+    .rounded-img;
+  }
