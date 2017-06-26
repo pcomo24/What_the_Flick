@@ -61,13 +61,13 @@ app.post('/getGenre', function(request, response) {
 // index.hbs should be renamed if different per paul or alston
 //in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response, next) {
-  var select = new Selector(request.session);
+  var select = new Selector(request.session, true);
   var status = new Status(request.session);
   // call new randoms before new api request
   console.log('pageLmt: '+ select.lastPage);
   select.Movie();
 
-  //select.page = select.Movie();
+  //select.page[0] = select.Movie();
 
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
@@ -111,21 +111,22 @@ app.post('/guess', function(request, response, next) {
   var status = new Status(request.session);
   console.log(request.body.answer);
   var answer = request.body.answer;
-  var title2 = select.title[select.page[1]];
-  if (answer == title2 && status.lives > 0) {
+  var correctAnswer = select.title[select.index];
+  console.log(correctAnswer);
+  if (answer == correctAnswer && status.session.lives > 0) {
     status.Correct();
     response.redirect('/game');
   } else {
     status.Incorrect();
-    if (status.lives <= 0) {
+    if (status.session.lives <= 0) {
       response.redirect('/game_over');
     }
   }
 });
 
 app.get('/game_over', function(request, response) {
-    var status = new Status(request);
-    response.render('game_over.hbs', {score:status.score})
+    var status = new Status(request.session);
+    response.render('game_over.hbs', {score:status.session.score})
 });
 
 app.get('/genres', function(request, response) {
@@ -137,6 +138,8 @@ app.get('/genres', function(request, response) {
 
 app.get('/', function (request, response) {
   var status = new Status(request);
+  status.Initialize();
+
   axios.all([getGenres()])
     .then(axios.spread(function(api) {
       status.session.genre = request.body.genreChoice;

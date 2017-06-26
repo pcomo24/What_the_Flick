@@ -1,18 +1,20 @@
 class Status {
   constructor(session){
     this.session = session;
+    this.session.score = this.session.score || 0;
+    this.session.lives = this.session.lives || 1;
   }
 
-  Initialize(request) {
+  Initialize() {
   this.session.score = 0;
   this.session.lives = 1;
   //this.session.genre;
   }
-  Correct(request) {
+  Correct() {
     this.session.score += 1;
   }
 
-  Incorrect(request) {
+  Incorrect() {
     this.session.lives -= 1;
   }
 }

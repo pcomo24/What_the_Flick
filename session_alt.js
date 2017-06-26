@@ -1,13 +1,21 @@
 class Selector {
-  constructor(session){
+  constructor(session, resetTitles){
+    this.session = session;
     session.prevMovies = session.prevMovies || [];
+    if (session.prevMovies.length >= 50) {
+      session.prevMovies = [];
+    }
+
+    if (resetTitles) {
+      session.title = [];
+    }
 
     this.prevMovies = session.prevMovies;
     this.movie = [];
     this.page = 0;
-    this.index = 0;
+    this.index = session.index || 0;
     this.lastPage = 1;
-    this.title = [];
+    this.title = session.title;
     this.image = [];
     this.hint = [];
     this.choices = [];
@@ -24,13 +32,12 @@ class Selector {
   for(var i = 0; i < this.prevMovies.length;i++) {
     if (this.movie === this.prevMovies[i]) {
       console.log('Duplicate found ' + this.movie);
-      this.movie();
+      this.Movie();
       break;
     }
   }
     console.log('Added ' + this.movie);
     this.SaveMovie();
-    return [this.page, this.index];
   }
   MovieData(api) {
     console.log('function started');
@@ -64,15 +71,24 @@ class Selector {
         overviewHint: this.hint[this.index],
         choice: this.choices,
     };
+
+    this.session.index = this.index;
     return context;
   }
   // creates the multiple choices
   GenerateChoices () {
     var choices = [];
 
-    for (let j=0; j<4; j++) {
+    while (true) {
       let tmpRnd = Math.floor(Math.random() * this.title.length)
-      choices.push(this.title[tmpRnd]);
+      let t = this.title[tmpRnd]
+      if (choices.indexOf(t) == -1) {
+        choices.push(t);
+      }
+
+      if (choices.length == 4) {
+        break;
+      }
     }
 
     // replace random answer with correct answer if not present in choices
