@@ -4,7 +4,7 @@ body {
   background-attachment: fixed;
   border-radius: 10%;
 }
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   body {
     background: black;
     margin: 5%;
@@ -32,6 +32,13 @@ body {
   body .col-6 li {
     font-size: 4rem;
   }
+  body .col-6 select,
+  body .col-6 input {
+    height: 4rem;
+    font-size: 4rem;
+    text-align: center;
+    margin-top: 0.65em;
+  }
 }
 h1,
 h2 {
@@ -49,11 +56,15 @@ h4 {
   color: #D4AF37;
   font-family: 'Belgrano', serif;
 }
+label {
+  display: block;
+  line-height: 1em;
+}
 ol li {
   color: #EEE8AA;
   font-size: 2rem;
   font-family: 'Amatic SC', cursive;
-  margin-bottom: .75rem;
+  margin-bottom: 5rem;
 }
 label {
   font-family: 'Amatic SC', cursive;
@@ -84,7 +95,7 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
   }
@@ -106,7 +117,7 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
   }
@@ -129,9 +140,14 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #submit-button {
+    float: none;
   }
 }
 #hint-button {
@@ -151,9 +167,14 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #hint-button {
+    float: none;
   }
 }
 #newGame-button {
@@ -173,9 +194,14 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #newGame-button {
+    float: none;
   }
 }
 #highScores-button {
@@ -195,9 +221,14 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #highScores-button {
+    float: none;
   }
 }
 /* high scores page */
@@ -217,7 +248,7 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
   }
@@ -239,7 +270,7 @@ form {
     display: block;
     font-size: 3rem;
     padding: 25px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: center;
   }
@@ -260,7 +291,7 @@ form {
     height: 10rem;
   }
   100% {
-    height: 1rem;
+    height: 2rem;
   }
 }
 .score {
@@ -273,7 +304,7 @@ form {
 /* index page stuff */
 .ansr-choice {
   color: #EEE8AA;
-  font-size: 2rem;
+  font-size: 4rem;
   font-family: 'Amatic SC', cursive;
   display: block;
   margin-top: 10px;
@@ -282,12 +313,22 @@ form {
   font-size: 4rem;
   color: #D4AF37;
 }
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .ansr-choice:hover {
+    font-size: 4rem;
+  }
+}
 input[type="radio"] {
   display: none;
 }
 input[type="radio"]:checked + label {
   font-size: 4rem;
   color: #D4AF37;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  input[type="radio"]:checked + label {
+    font-size: 4rem;
+  }
 }
 #hint {
   color: #EEE8AA;
