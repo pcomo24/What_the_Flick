@@ -40,65 +40,53 @@ app.post('/getGenre', function(request, response) {
     } else {
       status.session.genre = '&with_genres=' + request.body.genreChoice;
     }
-    console.log('genre: ' + status.session.genre);
     var base_url = 'https://api.themoviedb.org/3/discover/';
     var api_key = 'movie?api_key=' + process.env.API_KEY;
     var options = '&language=en&region=US&include_adult=false' + status.session.genre +'&page=1';
     let url = base_url + api_key + options;
+
     axios.get(url)
       .then(function (api) {
-        console.log(api.data.total_pages);
         select.lastPage = api.data.total_pages - 1;
         if (select.lastPage > 1000) {
           select.lastPage = Math.ceil(Math.random() * 1000);
         } else {
           select.lastPage = api.data.total_pages;
         }
-        console.log("API ***********" + select.lastPage)
         response.redirect('/game');
       })
 });
 
-// index.hbs should be renamed if different per paul or alston
-//in response.render add context dictionary to pass img data to front end through hbs
 app.get('/game', function(request, response, next) {
   var select = new Selector(request.session, true);
   var status = new Status(request.session);
   // call new randoms before new api request
-  console.log('pageLmt: '+ select.lastPage);
   select.Movie();
-
-  //select.page[0] = select.Movie();
-
   //set url parts as variables to be concatenated
   var base_url = 'https://api.themoviedb.org/3/discover/';
   var api_key = 'movie?api_key=' + process.env.API_KEY;
   var options = '&language=en&region=US&include_adult=false' + status.session.genre + '&page='
   let url = base_url + api_key + options + select.page;
-  console.log(url);
+
 axios.get(url)
     .then(function (api) {
       context = select.MovieData(api);
-      console.log(context);
       response.render('index.hbs', context);
     })
     .catch(next);
 });
-
+//logs user highscore into postgreSQL database
 app.post('/something', function(request, response, next) {
   var select = new Selector(request.session);
   var status = new Status(request.session);
-//maybe need a cookie from which to log the username for stretch goal
   select.user = request.body.playerName;
-//high_scores should be whatever the table name is per jj
   db.query('INSERT INTO highscores VALUES (default, $1, $2)',[select.user, status.score] )
     .then(function() {
-//highscores.hbs should be whatever frontend hbs has the highscores per paul or alston
       response.redirect('/highscores');
     })
     .catch(next);
 });
-
+//lists high scores from postgreSQL
 app.get('/highscores', function(request, response, next) {
   db.any("SELECT * FROM highscores ORDER BY score DESC LIMIT 10")
     .then(function(results) {
@@ -110,10 +98,8 @@ app.get('/highscores', function(request, response, next) {
 app.post('/guess', function(request, response, next) {
   var select = new Selector(request.session)
   var status = new Status(request.session);
-  console.log(request.body.answer);
   var answer = request.body.answer;
   var correctAnswer = select.title[select.index];
-  console.log(correctAnswer);
   if (answer == correctAnswer && status.session.lives > 0) {
     status.Correct();
     response.redirect('/game');
@@ -140,7 +126,6 @@ app.get('/genres', function(request, response) {
 app.get('/', function (request, response) {
   var status = new Status(request);
   status.Initialize();
-  console.log('SCORE', status.session.score);
 
   axios.all([getGenres()])
     .then(axios.spread(function(api) {
@@ -148,14 +133,10 @@ app.get('/', function (request, response) {
       response.render('home.hbs', {layout: 'layout2', genres: api.data.genres});
    }))
 });
-
 //Port 3000 is optional
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!')
 });
-
-//////////////////////////////
-
 /**
  * @returns Promise that might have genres
  *   success: Contains Axios result with genres
@@ -163,11 +144,9 @@ app.listen(3000, function() {
  */
 function getGenres() {
   let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`
-  console.log(url);
 
   return axios.get(url)
     .then(function(api) {
-      console.log('Retrieved genres');
       return api;
     })
     .catch(function (error) {
