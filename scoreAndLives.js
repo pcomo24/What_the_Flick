@@ -1,6 +1,6 @@
 function initialSNL(request) {
 request.session.score = 0;
-request.session.lives =  1;
+request.session.lives = 1;
 request.session.genre;
 }
 function updateSNL(request) {
