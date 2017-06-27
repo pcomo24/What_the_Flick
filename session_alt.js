@@ -1,71 +1,99 @@
-function Movies(request, response) {
-  request.session.img_url = []
-  request.session.title = []
-  request.session.hint = []
-  request.session.choices = [];
-  request.session.username;
-  request.session.pageLimit;
-  request.session.page;
+class Selector {
+  constructor(session, resetTitles){
+    this.session = session;
+    session.prevMovies = session.prevMovies || [0];
 
-////need to set parameter j as passed in within the function call in wtf.js
-  request.set_Movie_data = function (api) {
-    console.log('function started');
+    if (session.prevMovies.length >= 50) {
+      session.prevMovies = [];
+    }
+
+    if (resetTitles) {
+      session.title = [];
+    }
+
+    this.prevMovies = session.prevMovies;
+    this.movie = [];
+    this.page = 0;
+    this.index = session.index || 0;
+    this.title = session.title;
+    this.image = [];
+    this.hint = [];
+    this.choices = [];
+  }
+
+  get lastPage() {
+    this.session.lastPage = this.session.lastPage || 1;
+    return this.session.lastPage;
+  }
+
+  set lastPage(value) {
+    this.session.lastPage = value;
+  }
+
+  SaveMovie() {
+    this.prevMovies.push(this.movie);
+  }
+  Movie() {
+    this.page = Math.ceil(Math.random() * this.lastPage);
+    this.index = Math.floor(Math.random() * 20);
+    this.movie = this.page + (this.index/100);
+    for(var i = 0; i < this.prevMovies.length;i++) {
+      if (this.movie === this.prevMovies[i]) {
+        this.Movie();
+        break;
+      }
+    }
+    this.SaveMovie();
+  }
+  MovieData(api) {
     for(var j=0; j<20; j++) {
       if (api.data.results[j].backdrop_path) {
-        request.session.img_url.push(api.data.results[j].backdrop_path);
-        request.session.title.push(api.data.results[j].title);
-        request.session.hint.push(api.data.results[j].overview);
+        this.image.push(api.data.results[j].backdrop_path);
+        this.title.push(api.data.results[j].title);
+        this.hint.push(api.data.results[j].overview);
       }
     }
-      console.log('pushed to arrays');
-      console.log('array length = ' + request.session.title.length);
-      // checks to make sure img_url isn't empty if so gets new api call
-      if(request.session.img_url.length < 5) {
-          console.log('check 1 failed');
-          response.redirect('/game');
-      }
-      // replace page[1] choice if arrays less that 20
-      if (request.session.title.length < 20) {
-      ////need to refactor page from wtf.js
-        console.log('check 2 failed');
-        request.session.page[1] = (Math.floor(Math.random()*request.session.title.length));
-      }
-    console.log('new call sucessfull');
-
-    // creates the multiple choices
-    var tmpRnd;
-    function generateChoices () {
-      tmpRnd = Math.floor(Math.random() * request.session.title.length)
-      if (request.session.choices.includes(request.session.title[tmpRnd]))
-        generateChoices();
-      else
-        request.session.choices.push(request.session.title[tmpRnd]);
+    // checks to make sure img_url isn't empty if so gets new api call
+    if(this.image.length < 5) {
+        response.redirect('/game');
     }
-    for(let j=0; j<4; j++) {
-      generateChoices();
+    // replace page[1] choice if arrays less that 20
+    if (this.title.length < 20) {
+    ////need to refactor page from wtf.js
+      this.index = (Math.floor(Math.random()*this.title.length));
     }
-
-    // replace random answer with correct answer if not present in choices
-    if (!request.session.choices.includes(request.session.title[request.session.page[1]])) {
-      let replace = Math.floor(Math.random() * 4);
-      request.session.choices[replace] = request.session.title[request.session.page[1]];
-    }
-
+    this.choices = this.GenerateChoices();
+    //packages movie data into context for the front-end.
     var context = {
-        imgUrl: 'https://image.tmdb.org/t/p/w500/' + request.session.img_url[request.session.page[1]],
-        title: request.session.title[request.session.page[1]],
-        overviewHint: request.session.hint[request.session.page[1]],
-        choice: request.session.choices,
-    };
+        imgUrl: 'https://image.tmdb.org/t/p/w500/' + this.image[this.index],
+        title: this.title[this.index],
+        overviewHint: this.hint[this.index],
+        choice: this.choices,
+    }
+    this.session.index = this.index;
     return context;
   }
-  request.newMovie = function () {
-    request.session.nextMoviePage = Math.ceil(Math.random() * request.session.pageLimit);
-    request.session.nextMovieSelection = Math.floor(Math.random() * 20);
+  // creates the multiple choices
+  GenerateChoices () {
+    var choices = [];
 
-    return [request.session.nextMoviePage, request.session.nextMovieSelection];
+    while (true) {
+      let tmpRnd = Math.floor(Math.random() * this.title.length)
+      let t = this.title[tmpRnd];
+      if (choices.indexOf(t) == -1) {
+        choices.push(t);
+      }
+      if (choices.length == 4) {
+        break;
+      }
+    }
+    // replace random answer with correct answer if not present in choices
+    if (!choices.includes(this.title[this.index])) {
+      let replace = Math.floor(Math.random() * choices.length);
+      choices[replace] = this.title[this.index];
+    }
+    return choices;
   }
-
 }
 
-exports.Movies = Movies;
+module.exports = Selector;
