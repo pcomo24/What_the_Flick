@@ -124,7 +124,7 @@ app.get('/genres', function(request, response) {
 });
 
 app.get('/', function (request, response) {
-  var status = new Status(request);
+  var status = new Status(request.session);
   status.Initialize();
 
   axios.all([getGenres()])
