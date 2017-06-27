@@ -26,11 +26,11 @@ body {
     width: 100%;
   }
   body .col-6 h2 {
-    font-size: 350%;
+    font-size: 5rem;
   }
   body .col-6 label,
   body .col-6 li {
-    font-size: 250%;
+    font-size: 4rem;
   }
 }
 h1,
@@ -81,8 +81,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .fix-button {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 /* for buttons in home page */
@@ -99,8 +103,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #homeNewGame-button {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 /* for buttons in index page */
@@ -118,8 +126,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #submit-button {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 #hint-button {
@@ -136,8 +148,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #hint-button {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 #newGame-button {
@@ -154,8 +170,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #newGame-button {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 #highScores-button {
@@ -172,8 +192,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #highScores-button {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 /* high scores page */
@@ -190,8 +214,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #playAgain-button {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 /* game over page */
@@ -208,8 +236,12 @@ form {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #submit-button2 {
+    display: block;
     font-size: 3rem;
     padding: 25px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
   }
 }
 /* margin/spacing */
@@ -247,14 +279,14 @@ form {
   margin-top: 10px;
 }
 .ansr-choice:hover {
-  font-size: 2.5rem;
+  font-size: 4rem;
   color: #D4AF37;
 }
 input[type="radio"] {
   display: none;
 }
 input[type="radio"]:checked + label {
-  font-size: 2.5rem;
+  font-size: 4rem;
   color: #D4AF37;
 }
 #hint {
