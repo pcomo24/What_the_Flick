@@ -80,7 +80,7 @@ app.post('/something', function(request, response, next) {
   var select = new Selector(request.session);
   var status = new Status(request.session);
   select.user = request.body.playerName;
-  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[select.user, status.score] )
+  db.query('INSERT INTO highscores VALUES (default, $1, $2)',[select.user, status.session.score] )
     .then(function() {
       response.redirect('/highscores');
     })
