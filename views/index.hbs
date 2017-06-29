@@ -14,7 +14,6 @@
       <ul class='display'>
         <li>score: {{score}}</li>
         <li>lives: {{lives}}</li>
-        <li id="hintDisplay"></li>
       </ul>
     </div>
 </div>
@@ -42,8 +41,4 @@
 
 <script>
   var hint = "{{overviewHint}}";
-  // displays hint count
-  window.onload = function() {
-    document.getElementById('hintDisplay').innerHTML = "hint: " + hintCount;
-  }
 </script>
