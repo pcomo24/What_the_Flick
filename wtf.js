@@ -61,6 +61,8 @@ app.get('/game', function(request, response, next) {
 axios.get(url)
     .then(function (api) {
       context = select.MovieData(api);
+      context.score = status.session.score;
+      context.lives = status.session.lives;
       response.render('index.hbs', context);
     })
     .catch(next);
