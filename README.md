@@ -7,18 +7,14 @@ knowledge.
 ### Built-with
 HTML, LESS, JavaScript, Postgres, Node.js, Express, HBS Framework, and Kube Framework
 
-
 ![Our Website](/webapp.png)
 
 Live @ [www.whattheflick.info](http://www.whattheflick.info)
 
 ### Overview
-This web app is a game that pulls movie posters from themoviedb.org. The user must
-choose the correct title of the movie, from 4 multiple options. They are allowed 3
-hint clicks and gain a point for each correct answer. The game continues until the
-user gets a movie incorrect. The game is mobile responsive as well.
 
-### Challenges Solved
+
+### Team Challenges
 **Understanding Sessions:** We originally wrote our backend with many global variables.
 We knew this would have to change and that sessions were the solution, but we didn't
 have experience implementing anything but basic login credentials. For our game we
@@ -32,11 +28,15 @@ However we ran into a problem with it's default button styling. We didn't like i
 it was hard to change the defaults. Instead of going back to a more familiar framework
 like Bootstrap, we ended up solving the problem with our own custom classes and ids.
 
-**API calls:** Out team had a varied experience with API calls. Some were comfortable
+**API calls:** Our team had varied experience with API calls. Some were comfortable
 using older modules and call backs, but we ended up using Axios with promises. For a time
 we had code dependent on multiple calls firing at once. We solved this using Axios's
 .all and .spread prototypes. Later this got depreciated when the various API calls
 got moved to different routes and one other was removed with a buggy deleted feature.
+
+**Git:** This was our first group project and learning how to keep everyones versions in sync 
+was definitely a learning experience, but it definitely paid off as we are all now comfortable
+with git.
 
 ### Major Contributors
 [Paul Como](https://github.com/pcomo24)
